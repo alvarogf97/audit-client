@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.core.exceptions;
+package com.example.alvaro.client_audit.exceptions;
 
 public class ConnectionException extends RuntimeException {
 

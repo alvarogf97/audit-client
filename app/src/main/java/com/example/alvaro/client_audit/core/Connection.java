@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.core.exceptions.ConnectionException;
+import com.example.alvaro.client_audit.exceptions.ConnectionException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -206,6 +206,17 @@ public class Connection{
         }
 
         return result;
+    }
+
+    public boolean check_device(String ip, int port){
+        boolean status = false;
+        String cwd = this.connect(ip, port);
+        if(cwd != null){
+            this.close();
+            status = true;
+        }
+
+        return status;
     }
 
 }
