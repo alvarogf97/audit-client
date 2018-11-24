@@ -8,6 +8,8 @@ package com.example.alvaro.client_audit.core;
  * Reference - https://gist.github.com/sharonbn/4104301"
  */
 
+import android.util.Log;
+
 import org.spongycastle.cert.X509CertificateHolder;
 import org.spongycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.spongycastle.jce.provider.BouncyCastleProvider;
@@ -28,6 +30,7 @@ import java.security.KeyStore;
 import java.security.Security;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 
 public class SslUtil {
 
@@ -114,7 +117,7 @@ public class SslUtil {
             return context.getSocketFactory();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("SSL::Factory", Arrays.toString(e.getStackTrace()));
         }
 
         return null;

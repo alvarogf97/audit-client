@@ -15,10 +15,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         h = (TextView) findViewById(R.id.hello);
-        h.setText("addadfasdf");
+
         Connection.set_resources_context(this.getResources());
         String cwd = Connection.get_connection().connect("192.168.1.112",5000);
+
         if(cwd != null){
             String ipconfig = Connection.get_connection().execute_command("ipconfig");
             Log.e("L",ipconfig);

@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class Connection{
                     SSLSocketFactory factory = (SSLSocketFactory) objects[1];
                     String host = (String) objects[2];
                     int port = (int) objects[3];
-                    Socket socket = factory.createSocket(host,port);
+                    Socket socket = factory.createSocket();
+                    socket.connect(new InetSocketAddress(host,port),1000);
                     DataInputStream dIn = new DataInputStream(socket.getInputStream());
                     String response = this.recv_msg(dIn);
                     dIn.close();
