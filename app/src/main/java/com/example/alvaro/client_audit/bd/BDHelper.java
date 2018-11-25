@@ -12,8 +12,8 @@ public class BDHelper {
     public static final String DEVICE_PORT = "PORT";
 
     private static final String CREATE_tDevice = "create table " + DEVICE_TABLE
-            + "(" +  DEVICE_ID + " integer primary key autoincrement not null, "
-            +  DEVICE_NAME + " text not null, "
+            + "(" +  DEVICE_ID + " integer primary key autoincrement not null unique, "
+            +  DEVICE_NAME + " text not null unique, "
             +  DEVICE_IP + " text not null unique, "
             +  DEVICE_PORT + " integer not null);";
 

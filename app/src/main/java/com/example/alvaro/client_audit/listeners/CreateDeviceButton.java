@@ -26,16 +26,21 @@ public class CreateDeviceButton implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         try {
+            v.setEnabled(false);
             String d_name = this.device_name.getText().toString();
             String d_ip = this.device_ip.getText().toString();
             int d_port = Integer.parseInt(this.device_port.getText().toString());
             if(DeviceBook.get_instance().add_device(d_name, d_ip, d_port)){
+                v.setEnabled(true);
                 this.activity.finish();
             }else{
                 this.make_toast();
+                v.setEnabled(true);
             }
         }catch(Exception e){
             Log.e("CreateDevice::onClick", Arrays.toString(e.getStackTrace()));
+            this.make_toast();
+            v.setEnabled(true);
         }
 
     }

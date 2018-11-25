@@ -41,7 +41,7 @@ public class Device {
         this.name = name;
         this.ip = ip;
         this.port = port;
-        this.status = Connection.get_connection().check_device(this.ip,this.port);
+        this.status = Connection.get_connection().check_device_foreground(this.ip,this.port);
     }
 
     public Device(String name, String ip, int port){
@@ -96,6 +96,10 @@ public class Device {
 
     public void check_status(){
         this.status = Connection.get_connection().check_device(this.ip,this.port);
+    }
+
+    public void check_status_foreground(){
+        this.status = Connection.get_connection().check_device_foreground(this.ip,this.port);
     }
 
     public void delete(){

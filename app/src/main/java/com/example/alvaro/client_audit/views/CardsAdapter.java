@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.entities.Device;
 
@@ -37,7 +36,12 @@ public class CardsAdapter extends ArrayAdapter<Device> {
 
         Device device = getItem(position);
 
-        holder.imageView.setImageResource(R.drawable.offline);
+        if(device.get_status()){
+            holder.imageView.setImageResource(R.drawable.online);
+        }else{
+            holder.imageView.setImageResource(R.drawable.offline);
+        }
+
         holder.tvName.setText(device.get_name());
         holder.tvIp.setText(device.get_ip());
         holder.tvPort.setText(String.valueOf(device.get_port()));
@@ -58,4 +62,5 @@ public class CardsAdapter extends ArrayAdapter<Device> {
             tvPort = (TextView) view.findViewById(R.id.text_port);
         }
     }
+
 }

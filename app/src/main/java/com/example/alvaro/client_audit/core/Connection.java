@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,14 +32,18 @@ public class Connection{
                     String host = (String) objects[2];
                     int port = (int) objects[3];
                     Socket socket = factory.createSocket();
-                    socket.connect(new InetSocketAddress(host,port),1000);
+                    Log.e("connectHandler",host + ":" + String.valueOf(port));
+                    socket.connect(new InetSocketAddress(host,port),2000);
+                    Log.e("connectHandler","after connections");
                     DataInputStream dIn = new DataInputStream(socket.getInputStream());
                     String response = this.recv_msg(dIn);
                     dIn.close();
                     result.add(socket);
                     result.add(response);
+                }catch(SocketTimeoutException e){
+                    Log.d("Conn::Handler::timeout",Arrays.toString(e.getStackTrace()));
                 }catch(Exception e){
-                    Log.d("Conn::Handler::create",Arrays.toString(e.getStackTrace()));
+                    Log.d("Conn::Handler::ex",Arrays.toString(e.getStackTrace()));
                 }
             }else{
                 DataInputStream dIn = (DataInputStream) objects[1];
@@ -48,6 +53,7 @@ public class Connection{
                 String res = this.recv_msg(dIn);
                 result.add(res);
             }
+            Log.e("Handler","finish back");
             return result;
         }
 
@@ -55,7 +61,7 @@ public class Connection{
         private utils functions
         */
 
-        private byte [] combine(byte [] array1, byte [] array2){
+        private static byte [] combine(byte [] array1, byte [] array2){
             byte [] result = new byte[array1.length+array2.length];
             for(int i = 0; i<array1.length; i++){
                 result[i] = array1[i];
@@ -67,7 +73,7 @@ public class Connection{
             return result;
         }
 
-        private void send_msg(DataOutputStream dOut, String msg){
+        private static void send_msg(DataOutputStream dOut, String msg){
             try {
                 byte [] msg_bytes = msg.getBytes("UTF-8");
                 byte [] msg_tam = ByteBuffer.allocate(4).putInt(msg_bytes.length).array();
@@ -79,7 +85,7 @@ public class Connection{
             }
         }
 
-        private String recv_msg(DataInputStream dIn){
+        private static String recv_msg(DataInputStream dIn){
             String result = "";
             try {
                 int msg_len = ByteBuffer.wrap(recvall(dIn,4)).getInt();
@@ -90,7 +96,7 @@ public class Connection{
             return result;
         }
 
-        private byte[] recvall(DataInputStream dIn, int tam) throws IOException {
+        private static byte[] recvall(DataInputStream dIn, int tam) throws IOException {
             int position = 0;
             byte [] data = new byte[tam];
             while(position < tam){
@@ -173,7 +179,9 @@ public class Connection{
         }
 
         try {
+            Log.e("connect","trying to connect");
             List<Object> res = new ConnectionHandler().execute("create",factory,host,port).get();
+            Log.e("length",String.valueOf(res.size()));
             this.connection = (Socket)res.get(0);
             result = (String)res.get(1);
             this.dIn = new DataInputStream(this.connection.getInputStream());
@@ -215,7 +223,26 @@ public class Connection{
             this.close();
             status = true;
         }
+        return status;
+    }
 
+    public boolean check_device_foreground(String ip, int port){
+        boolean status = false;
+        try{
+            Socket socket = factory.createSocket();
+            socket.connect(new InetSocketAddress(ip,port),2000);
+            DataInputStream dIn = new DataInputStream(socket.getInputStream());
+            String response = ConnectionHandler.recv_msg(dIn);
+            if(response != null){
+                status = true;
+                dIn.close();
+                socket.close();
+            }
+        }catch(SocketTimeoutException e){
+            Log.e("Conn::Handler::timeout",Arrays.toString(e.getStackTrace()));
+        }catch(Exception e){
+            Log.e("Conn::Handler::ex",Arrays.toString(e.getStackTrace()));
+        }
         return status;
     }
 
