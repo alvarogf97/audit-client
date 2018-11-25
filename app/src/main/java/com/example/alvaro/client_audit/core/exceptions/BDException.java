@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.exceptions;
+package com.example.alvaro.client_audit.core.exceptions;
 
 public class BDException extends RuntimeException {
 

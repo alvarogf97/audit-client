@@ -1,12 +1,11 @@
 package com.example.alvaro.client_audit.listeners;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.alvaro.client_audit.entities.DeviceBook;
+import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import java.util.Arrays;
 
 public class CreateDeviceButton implements View.OnClickListener {

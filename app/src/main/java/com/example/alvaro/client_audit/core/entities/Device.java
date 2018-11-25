@@ -1,15 +1,15 @@
-package com.example.alvaro.client_audit.entities;
+package com.example.alvaro.client_audit.core.entities;
 
 import android.content.ContentValues;
-import com.example.alvaro.client_audit.bd.BD;
+import com.example.alvaro.client_audit.core.bd.BD;
 import com.example.alvaro.client_audit.core.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import static com.example.alvaro.client_audit.bd.BDHelper.DEVICE_ID;
-import static com.example.alvaro.client_audit.bd.BDHelper.DEVICE_IP;
-import static com.example.alvaro.client_audit.bd.BDHelper.DEVICE_NAME;
-import static com.example.alvaro.client_audit.bd.BDHelper.DEVICE_PORT;
-import static com.example.alvaro.client_audit.bd.BDHelper.DEVICE_TABLE;
+import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_ID;
+import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_IP;
+import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_NAME;
+import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_PORT;
+import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_TABLE;
 
 public class Device {
 

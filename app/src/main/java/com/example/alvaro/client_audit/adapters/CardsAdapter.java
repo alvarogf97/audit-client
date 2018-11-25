@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.entities.Device;
+import com.example.alvaro.client_audit.core.entities.Device;
 
 
 public class CardsAdapter extends ArrayAdapter<Device> {

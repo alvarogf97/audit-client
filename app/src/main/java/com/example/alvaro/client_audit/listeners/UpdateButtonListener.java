@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.alvaro.client_audit.activities.HomeActivity;
-import com.example.alvaro.client_audit.entities.DeviceBook;
+import com.example.alvaro.client_audit.core.entities.DeviceBook;
 
 public class UpdateButtonListener implements View.OnClickListener {
 

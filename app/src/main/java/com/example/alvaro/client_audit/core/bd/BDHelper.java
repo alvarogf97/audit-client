@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.bd;
+package com.example.alvaro.client_audit.core.bd;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

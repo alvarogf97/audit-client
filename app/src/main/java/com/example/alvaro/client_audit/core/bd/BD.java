@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.bd;
+package com.example.alvaro.client_audit.core.bd;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.alvaro.client_audit.exceptions.BDException;
+import com.example.alvaro.client_audit.core.exceptions.BDException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

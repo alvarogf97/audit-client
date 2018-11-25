@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.entities;
+package com.example.alvaro.client_audit.core.entities;
 
 
 import android.util.Log;
