@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Client_Audit</string>
+    <string name="app_name">Audit</string>
+    <string name="name">Name:</string>>
+    <string name="ip">IP:</string>
+    <string name="port">Port:</string>
+    <string name="create">create</string>
 </resources>

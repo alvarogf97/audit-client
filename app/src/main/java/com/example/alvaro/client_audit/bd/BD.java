@@ -16,7 +16,7 @@ import java.util.List;
 public class BD extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "database.db";
+	private static final String DATABASE_NAME = "audit.db";
 	private static BD instance = null;
 
 	private BD(Context context){
