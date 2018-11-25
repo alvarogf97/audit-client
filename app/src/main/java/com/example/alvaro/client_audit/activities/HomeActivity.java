@@ -13,10 +13,9 @@ import com.example.alvaro.client_audit.core.Connection;
 import com.example.alvaro.client_audit.entities.DeviceBook;
 import com.example.alvaro.client_audit.listeners.AddButtonListener;
 import com.example.alvaro.client_audit.listeners.UpdateButtonListener;
-import com.example.alvaro.client_audit.views.CardsAdapter;
+import com.example.alvaro.client_audit.adapters.CardsAdapter;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
-import com.github.ybq.android.spinkit.style.Wave;
 
 public class HomeActivity extends AppCompatActivity {
 

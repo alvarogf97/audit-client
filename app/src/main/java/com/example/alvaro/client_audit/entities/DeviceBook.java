@@ -2,7 +2,7 @@ package com.example.alvaro.client_audit.entities;
 
 
 import android.util.Log;
-import com.example.alvaro.client_audit.views.CardsAdapter;
+import com.example.alvaro.client_audit.adapters.CardsAdapter;
 import java.util.Arrays;
 import java.util.List;
 
