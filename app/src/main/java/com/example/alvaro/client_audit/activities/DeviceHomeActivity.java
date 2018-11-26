@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
@@ -18,6 +19,8 @@ public class DeviceHomeActivity extends AppCompatActivity {
     private TextView device_ip;
     private TextView device_port;
     private TextView device_status;
+    private Button b_connect;
+    private FloatingActionButton edit_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class DeviceHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_home);
 
         this.delete_button = (FloatingActionButton) findViewById(R.id.delete_button);
+        this.edit_button = (FloatingActionButton) findViewById(R.id.button_edit);
+        this.b_connect = (Button) findViewById(R.id.button_connect);
         this.device_name = (TextView) findViewById(R.id.device_device_name);
         this.device_ip = (TextView) findViewById(R.id.device_device_ip);
         this.device_port = (TextView) findViewById(R.id.device_device_port);

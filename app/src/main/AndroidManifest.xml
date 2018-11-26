@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AddDeviceActivity" />
-        <activity android:name=".activities.DeviceHomeActivity"></activity>
+        <activity android:name=".activities.DeviceHomeActivity" />
+        <activity android:name=".activities.EditDeviceActivity" />
+        <activity android:name=".activities.InsideDeviceActivity"></activity>
     </application>
 
 </manifest>
