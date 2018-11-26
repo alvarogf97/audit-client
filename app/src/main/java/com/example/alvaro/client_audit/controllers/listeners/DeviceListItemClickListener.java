@@ -2,6 +2,7 @@ package com.example.alvaro.client_audit.controllers.listeners;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -20,6 +21,7 @@ public class DeviceListItemClickListener implements AdapterView.OnItemClickListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Device selected_device = (Device) parent.getItemAtPosition(position);
+        Log.e("ItemClick",selected_device.get_name());
         DeviceBook.get_instance().set_selected_device(selected_device);
         Intent intent = new Intent(this.context,DeviceHomeActivity.class);
         this.context.startActivity(intent);
