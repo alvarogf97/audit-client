@@ -74,7 +74,7 @@
             android:layout_height="47dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="210dp"
             android:backgroundTint="@color/colorPrimary"
             android:elevation="20dp"
             android:text="@string/connect"

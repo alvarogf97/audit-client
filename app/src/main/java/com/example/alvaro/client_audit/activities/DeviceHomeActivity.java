@@ -4,11 +4,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.controllers.listeners.DeleteDeviceButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.EditButtonListener;
 import com.example.alvaro.client_audit.core.entities.Device;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 
@@ -42,6 +44,11 @@ public class DeviceHomeActivity extends AppCompatActivity {
         this.device_name.setText(device.get_name());
         this.device_ip.setText(device.get_ip());
         this.device_port.setText(String.valueOf(device.get_port()));
+        this.edit_button.setOnClickListener(new EditButtonListener(this.getApplicationContext()));
+
+        if(!device.get_status()){
+            this.b_connect.setVisibility(View.GONE);
+        }
 
         if(device.get_status()){
             this.device_status.setText("Online");

@@ -3,6 +3,8 @@ package com.example.alvaro.client_audit.core.entities;
 
 import android.util.Log;
 import com.example.alvaro.client_audit.controllers.adapters.CardsAdapter;
+import com.example.alvaro.client_audit.core.Validator;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,14 +34,16 @@ public class DeviceBook {
 
     public boolean add_device(String name, String ip, int port){
         boolean res = false;
-        try{
-            Device d = new Device(name, ip, port);
-            this.devices.add(d);
-            adapter.clear();
-            adapter.addAll(this.devices);
-            res = true;
-        }catch (Exception e){
-            Log.e("DeviceBook::add", Arrays.toString(e.getStackTrace()));
+        if(Validator.validate(name,ip,port)){
+            try{
+                Device d = new Device(name, ip, port);
+                this.devices.add(d);
+                adapter.clear();
+                adapter.addAll(this.devices);
+                res = true;
+            }catch (Exception e){
+                Log.e("DeviceBook::add", Arrays.toString(e.getStackTrace()));
+            }
         }
         return res;
     }
