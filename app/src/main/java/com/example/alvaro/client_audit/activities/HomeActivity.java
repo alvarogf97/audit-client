@@ -8,12 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import com.example.alvaro.client_audit.R;
+import com.example.alvaro.client_audit.controllers.listeners.DeviceListItemClickListener;
 import com.example.alvaro.client_audit.core.bd.BD;
 import com.example.alvaro.client_audit.core.Connection;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
-import com.example.alvaro.client_audit.listeners.AddButtonListener;
-import com.example.alvaro.client_audit.listeners.UpdateButtonListener;
-import com.example.alvaro.client_audit.adapters.CardsAdapter;
+import com.example.alvaro.client_audit.controllers.listeners.AddButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.UpdateButtonListener;
+import com.example.alvaro.client_audit.controllers.adapters.CardsAdapter;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
 
@@ -56,11 +57,10 @@ public class HomeActivity extends AppCompatActivity {
         BD.setInstanceContext(this.getApplicationContext());
         this.add_button.setOnClickListener(new AddButtonListener(this.getApplicationContext()));
         this.uptade_button.setOnClickListener(new UpdateButtonListener(this));
+        this.cards.setOnItemClickListener(new DeviceListItemClickListener(this.getApplicationContext()));
         cardsAdapter = new CardsAdapter(this);
         cards.setAdapter(cardsAdapter);
         new GetInBack().execute(this,cardsAdapter);
-
-        this.stop_animation();
 
     }
 

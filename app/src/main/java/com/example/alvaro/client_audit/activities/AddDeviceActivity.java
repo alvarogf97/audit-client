@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.listeners.CreateDeviceButton;
+import com.example.alvaro.client_audit.controllers.listeners.CreateDeviceButton;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -24,6 +24,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         device_ip = (TextView) findViewById(R.id.device_ip);
         device_port = (TextView) findViewById(R.id.device_port);
 
+        b_create.setEnabled(true);
         b_create.setOnClickListener(new CreateDeviceButton(this,device_name,device_ip,device_port));
     }
 

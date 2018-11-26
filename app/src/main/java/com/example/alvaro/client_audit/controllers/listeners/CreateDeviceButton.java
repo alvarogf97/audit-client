@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.listeners;
+package com.example.alvaro.client_audit.controllers.listeners;
 
 import android.app.Activity;
 import android.util.Log;
@@ -30,7 +30,6 @@ public class CreateDeviceButton implements View.OnClickListener {
             String d_ip = this.device_ip.getText().toString();
             int d_port = Integer.parseInt(this.device_port.getText().toString());
             if(DeviceBook.get_instance().add_device(d_name, d_ip, d_port)){
-                v.setEnabled(true);
                 this.activity.finish();
             }else{
                 this.make_toast();

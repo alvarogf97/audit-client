@@ -2,7 +2,7 @@ package com.example.alvaro.client_audit.core.entities;
 
 
 import android.util.Log;
-import com.example.alvaro.client_audit.adapters.CardsAdapter;
+import com.example.alvaro.client_audit.controllers.adapters.CardsAdapter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +11,7 @@ public class DeviceBook {
     private static DeviceBook instance;
     private static CardsAdapter adapter;
     private List<Device> devices;
+    private Device selectedDevice;
 
     private DeviceBook(){
         this.devices = Device.get_all();
@@ -59,6 +60,14 @@ public class DeviceBook {
     public void update_adapter(){
         adapter.clear();
         adapter.addAll(this.devices);
+    }
+
+    public void set_selected_device(Device device){
+        this.selectedDevice = device;
+    }
+
+    public Device get_selected_device(){
+        return this.selectedDevice;
     }
 
     public List<Device> getDevices(){

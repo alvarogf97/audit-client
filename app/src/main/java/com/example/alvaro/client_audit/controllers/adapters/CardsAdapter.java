@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.adapters;
+package com.example.alvaro.client_audit.controllers.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
