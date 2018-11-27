@@ -64,7 +64,7 @@ public class Device {
         this.id = Integer.parseInt(BD.getInstance().select(DEVICE_TABLE,columns,where,whereargs,
                 null,null, null).get(0)[0]);
 
-        this.status = Connection.get_connection().check_device(this.ip,this.port);
+        this.status = Connection.get_connection().check_device_foreground(this.ip,this.port);
     }
 
     public void set_ip(String ip){

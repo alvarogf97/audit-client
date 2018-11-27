@@ -38,8 +38,6 @@ public class DeviceBook {
             try{
                 Device d = new Device(name, ip, port);
                 this.devices.add(d);
-                adapter.clear();
-                adapter.addAll(this.devices);
                 res = true;
             }catch (Exception e){
                 Log.e("DeviceBook::add", Arrays.toString(e.getStackTrace()));

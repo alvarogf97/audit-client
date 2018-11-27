@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.core.Validator;
 import com.example.alvaro.client_audit.core.entities.Device;

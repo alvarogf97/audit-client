@@ -23,6 +23,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
     private TextView device_status;
     private Button b_connect;
     private FloatingActionButton edit_button;
+    private Device device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +39,32 @@ public class DeviceHomeActivity extends AppCompatActivity {
         this.device_status = (TextView) findViewById(R.id.device_device_status);
 
         this.delete_button.setOnClickListener(new DeleteDeviceButtonListener(this));
-
-        Device device = DeviceBook.get_instance().get_selected_device();
-        Log.e("DeviceHome",device.toString());
-        this.device_name.setText(device.get_name());
-        this.device_ip.setText(device.get_ip());
-        this.device_port.setText(String.valueOf(device.get_port()));
         this.edit_button.setOnClickListener(new EditButtonListener(this.getApplicationContext()));
 
-        if(!device.get_status()){
-            this.b_connect.setVisibility(View.GONE);
-        }
+        this.device = DeviceBook.get_instance().get_selected_device();
 
-        if(device.get_status()){
+        this.update_device_info();
+
+    }
+
+    public void update_device_info(){
+        this.device_name.setText(this.device.get_name());
+        this.device_ip.setText(this.device.get_ip());
+        this.device_port.setText(String.valueOf(this.device.get_port()));
+
+        if(this.device.get_status()){
             this.device_status.setText("Online");
         }else{
             this.device_status.setText("Offline");
         }
 
+        if(!this.device.get_status()){
+            this.b_connect.setVisibility(View.GONE);
+        }
+    }
+
+    public void onResume(){
+        super.onResume();
+        this.update_device_info();
     }
 }
