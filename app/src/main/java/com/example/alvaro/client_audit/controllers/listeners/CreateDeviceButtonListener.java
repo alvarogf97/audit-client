@@ -11,7 +11,7 @@ import com.example.alvaro.client_audit.activities.AddDeviceActivity;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import java.util.Arrays;
 
-public class CreateDeviceButton implements View.OnClickListener {
+public class CreateDeviceButtonListener implements View.OnClickListener {
 
     private class CreateInBackground extends AsyncTask<Object,Void,Object []>{
 
@@ -38,7 +38,7 @@ public class CreateDeviceButton implements View.OnClickListener {
     private TextView device_ip;
     private TextView device_port;
 
-    public CreateDeviceButton(Activity activity, TextView device_name, TextView device_ip, TextView device_port){
+    public CreateDeviceButtonListener(Activity activity, TextView device_name, TextView device_ip, TextView device_port){
         this.activity = activity;
         this.device_name = device_name;
         this.device_ip = device_ip;

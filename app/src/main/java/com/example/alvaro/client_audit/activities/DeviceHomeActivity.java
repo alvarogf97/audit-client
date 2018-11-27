@@ -3,12 +3,12 @@ package com.example.alvaro.client_audit.activities;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
+import com.example.alvaro.client_audit.controllers.listeners.ConnectButtonListener;
 import com.example.alvaro.client_audit.controllers.listeners.DeleteDeviceButtonListener;
 import com.example.alvaro.client_audit.controllers.listeners.EditButtonListener;
 import com.example.alvaro.client_audit.core.entities.Device;
@@ -40,6 +40,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
 
         this.delete_button.setOnClickListener(new DeleteDeviceButtonListener(this));
         this.edit_button.setOnClickListener(new EditButtonListener(this.getApplicationContext()));
+        this.b_connect.setOnClickListener(new ConnectButtonListener(this));
 
         this.device = DeviceBook.get_instance().get_selected_device();
 
@@ -60,6 +61,8 @@ public class DeviceHomeActivity extends AppCompatActivity {
 
         if(!this.device.get_status()){
             this.b_connect.setVisibility(View.GONE);
+        }else{
+            this.b_connect.setVisibility(View.VISIBLE);
         }
     }
 

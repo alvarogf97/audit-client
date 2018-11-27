@@ -2,19 +2,17 @@ package com.example.alvaro.client_audit.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.controllers.listeners.CreateDeviceButton;
+import com.example.alvaro.client_audit.controllers.listeners.CreateDeviceButtonListener;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
 
-import org.w3c.dom.Text;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -22,9 +20,6 @@ public class AddDeviceActivity extends AppCompatActivity {
     private TextView device_name;
     private TextView device_ip;
     private TextView device_port;
-    private TextView device_name_text;
-    private TextView device_ip_text;
-    private TextView device_port_text;
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
 
@@ -37,13 +32,10 @@ public class AddDeviceActivity extends AppCompatActivity {
         device_name = (TextView) findViewById(R.id.device_name);
         device_ip = (TextView) findViewById(R.id.device_ip);
         device_port = (TextView) findViewById(R.id.device_port);
-        device_name_text = (TextView) findViewById(R.id.device_name_text);
-        device_ip_text = (TextView) findViewById(R.id.device_ip_text);
-        device_port_text = (TextView) findViewById(R.id.device_port_text);
         this.loader = (SpinKitView) findViewById(R.id.create_anim_load);
 
         b_create.setEnabled(true);
-        b_create.setOnClickListener(new CreateDeviceButton(this,device_name,device_ip,device_port));
+        b_create.setOnClickListener(new CreateDeviceButtonListener(this,device_name,device_ip,device_port));
     }
 
     public void start_animation(){
