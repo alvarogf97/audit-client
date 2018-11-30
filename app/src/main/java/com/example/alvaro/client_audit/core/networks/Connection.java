@@ -1,10 +1,14 @@
-package com.example.alvaro.client_audit.core;
+package com.example.alvaro.client_audit.core.networks;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.core.exceptions.ConnectionException;
+import com.example.alvaro.client_audit.core.utils.JsonParsers;
+
+import org.json.JSONObject;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -33,10 +37,10 @@ public class Connection{
                     int port = (int) objects[3];
                     Socket socket = factory.createSocket();
                     Log.e("connectHandler",host + ":" + String.valueOf(port));
-                    socket.connect(new InetSocketAddress(host,port),2000);
+                    socket.connect(new InetSocketAddress(host,port),1000);
                     Log.e("connectHandler","after connections");
                     DataInputStream dIn = new DataInputStream(socket.getInputStream());
-                    String response = this.recv_msg(dIn);
+                    String response = recv_msg(dIn);
                     dIn.close();
                     result.add(socket);
                     result.add(response);
@@ -49,8 +53,8 @@ public class Connection{
                 DataInputStream dIn = (DataInputStream) objects[1];
                 DataOutputStream dOut = (DataOutputStream) objects[2];
                 String msg = (String) objects[3];
-                this.send_msg(dOut,msg);
-                String res = this.recv_msg(dIn);
+                send_msg(dOut,msg);
+                String res = recv_msg(dIn);
                 result.add(res);
             }
             Log.e("Handler","finish back");
@@ -166,7 +170,7 @@ public class Connection{
         public functions
      */
 
-    public String connect(String host, int port){
+    public JSONObject connect(String host, int port){
 
         String result = null;
 
@@ -190,7 +194,7 @@ public class Connection{
             Log.e("Conn::connect()",Arrays.toString(e.getStackTrace()));
         }
 
-        return result;
+        return JsonParsers.parse_string(result);
     }
 
     public void close(){
@@ -203,12 +207,12 @@ public class Connection{
         }
     }
 
-    public String execute_command(String msg){
+    public JSONObject execute_command(String msg){
 
-        String result = null;
+        JSONObject result = null;
 
         try {
-            result = (String) new ConnectionHandler().execute("command",dIn,dOut,msg).get().get(0);
+            result = JsonParsers.parse_string((String) new ConnectionHandler().execute("command",dIn,dOut,msg).get().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -218,8 +222,8 @@ public class Connection{
 
     public boolean check_device(String ip, int port){
         boolean status = false;
-        String cwd = this.connect(ip, port);
-        if(cwd != null){
+        JSONObject response = this.connect(ip, port);
+        if(response != null){
             this.close();
             status = true;
         }
@@ -230,9 +234,9 @@ public class Connection{
         boolean status = false;
         try{
             Socket socket = factory.createSocket();
-            socket.connect(new InetSocketAddress(ip,port),2000);
+            socket.connect(new InetSocketAddress(ip,port),1000);
             DataInputStream dIn = new DataInputStream(socket.getInputStream());
-            String response = ConnectionHandler.recv_msg(dIn);
+            JSONObject response = JsonParsers.parse_string(ConnectionHandler.recv_msg(dIn));
             if(response != null){
                 status = true;
                 dIn.close();

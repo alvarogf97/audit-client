@@ -5,9 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.core.Connection;
+import com.example.alvaro.client_audit.core.networks.Connection;
 
 public class InsideDeviceActivity extends AppCompatActivity {
 

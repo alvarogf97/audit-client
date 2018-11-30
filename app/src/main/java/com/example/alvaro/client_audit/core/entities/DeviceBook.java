@@ -3,7 +3,7 @@ package com.example.alvaro.client_audit.core.entities;
 
 import android.util.Log;
 import com.example.alvaro.client_audit.controllers.adapters.CardsAdapter;
-import com.example.alvaro.client_audit.core.Validator;
+import com.example.alvaro.client_audit.core.utils.Validator;
 
 import java.util.Arrays;
 import java.util.List;

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.controllers.listeners.CreateDeviceButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.addDeviceActivityListeners.CreateDeviceButtonListener;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.ThreeBounce;

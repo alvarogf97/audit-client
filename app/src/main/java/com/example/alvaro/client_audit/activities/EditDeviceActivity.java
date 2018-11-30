@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.controllers.listeners.SaveButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.editDeviceActivityListeners.SaveButtonListener;
 import com.example.alvaro.client_audit.core.entities.Device;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import com.github.ybq.android.spinkit.SpinKitView;

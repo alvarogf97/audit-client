@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.core;
+package com.example.alvaro.client_audit.core.networks;
 /**
  * Utility class to read encrypted PEM files and generate a
  * SSL Socket Factory based on the provided certificates.

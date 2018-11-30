@@ -1,15 +1,14 @@
-package com.example.alvaro.client_audit.controllers.listeners;
+package com.example.alvaro.client_audit.controllers.listeners.editDeviceActivityListeners;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.AddDeviceActivity;
 import com.example.alvaro.client_audit.activities.EditDeviceActivity;
-import com.example.alvaro.client_audit.core.Validator;
+import com.example.alvaro.client_audit.core.utils.Validator;
 import com.example.alvaro.client_audit.core.entities.Device;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 

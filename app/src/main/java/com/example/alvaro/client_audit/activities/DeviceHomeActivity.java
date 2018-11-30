@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.controllers.listeners.ConnectButtonListener;
-import com.example.alvaro.client_audit.controllers.listeners.DeleteDeviceButtonListener;
-import com.example.alvaro.client_audit.controllers.listeners.EditButtonListener;
-import com.example.alvaro.client_audit.controllers.listeners.UpdateSingleDeviceButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.deviceHomeActivityListeners.ConnectButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.deviceHomeActivityListeners.DeleteDeviceButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.deviceHomeActivityListeners.EditButtonListener;
+import com.example.alvaro.client_audit.controllers.listeners.deviceHomeActivityListeners.UpdateSingleDeviceButtonListener;
 import com.example.alvaro.client_audit.core.entities.Device;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import com.github.ybq.android.spinkit.SpinKitView;

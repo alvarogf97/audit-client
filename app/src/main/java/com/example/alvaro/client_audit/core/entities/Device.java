@@ -2,7 +2,7 @@ package com.example.alvaro.client_audit.core.entities;
 
 import android.content.ContentValues;
 import com.example.alvaro.client_audit.core.bd.BD;
-import com.example.alvaro.client_audit.core.Connection;
+import com.example.alvaro.client_audit.core.networks.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.alvaro.client_audit.core.bd.BDHelper.DEVICE_ID;
