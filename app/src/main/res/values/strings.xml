@@ -7,4 +7,14 @@
     <string name="content_image_view">imageview</string>
     <string name="connect">Connect</string>
     <string name="save">save</string>
+
+    <string name="Hardware">Hardware</string>
+    <string name="Ports">Ports</string>
+    <string name="Processes">Processes</string>
+    <string name="Network">Network</string>
+    <string name="Upnp">Upnp devices</string>
+    <string name="Firewall">Firewall</string>
+    <string name="Vulnerabilities">Vulnerabilities</string>
+    <string name="Audit">Audit</string>
+
 </resources>
