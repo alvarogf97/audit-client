@@ -1,5 +1,6 @@
 package com.example.alvaro.client_audit.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.controllers.listeners.homeActivityListeners.DeviceListItemClickListener;
 import com.example.alvaro.client_audit.core.bd.BD;
+import com.example.alvaro.client_audit.core.exceptions.CloseConnectionExceptionHandler;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.example.alvaro.client_audit.core.entities.DeviceBook;
 import com.example.alvaro.client_audit.controllers.listeners.homeActivityListeners.AddButtonListener;
@@ -45,6 +49,16 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        new CloseConnectionExceptionHandler(this.getApplicationContext());
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null){
+            String toast_text = bundle.getString(CloseConnectionExceptionHandler.EXTRA_CLOSE_HANDLER);
+            if(toast_text != null){
+                Toast toast = Toast.makeText(this.getApplicationContext(),toast_text, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
 
         this.loader = (SpinKitView) findViewById(R.id.anim_load);
         this.cards = (ListView) findViewById(R.id.list);
