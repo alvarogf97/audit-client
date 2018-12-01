@@ -1,10 +1,12 @@
 package com.example.alvaro.client_audit.activities.actionActivities;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
@@ -13,14 +15,16 @@ import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PortsActivity extends AsynkTaskActivity {
+public class ProcessesActivity extends AsynkTaskActivity {
 
     private TreeNode root;
     private List<TreeNode> nodes;
@@ -33,10 +37,10 @@ public class PortsActivity extends AsynkTaskActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ports);
+        setContentView(R.layout.activity_processes);
 
-        this.layout = (RelativeLayout) findViewById(R.id.ports_layout);
-        loader = (SpinKitView) findViewById(R.id.ports_anim_load);
+        this.layout = (RelativeLayout) findViewById(R.id.process_layout);
+        loader = (SpinKitView) findViewById(R.id.processes_anim_load);
         this.start_animation();
 
     }
@@ -52,7 +56,7 @@ public class PortsActivity extends AsynkTaskActivity {
             }
             JSONObject query = new JSONObject();
             try {
-                query.put("command","ports");
+                query.put("command","ps");
                 Connection.get_connection().execute_command(query, this);
                 in_process = true;
             } catch (JSONException e) {
@@ -94,30 +98,16 @@ public class PortsActivity extends AsynkTaskActivity {
 
     public List<TreeNode> getNodes(JSONArray data) throws JSONException {
         List<TreeNode> nodes = new ArrayList<>();
-
         for(int i = 0; i<data.length(); i++){
-            JSONObject port_data = data.getJSONObject(i);
-            String port = String.valueOf(port_data.getInt("port"));
-            NodeTreeViewAdapter.NodeItem node =
-                    new NodeTreeViewAdapter.NodeItem(port,"", R.drawable.ic_port,0);
-            TreeNode new_node = new TreeNode(node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
-            JSONArray processes_data = port_data.getJSONArray("processes");
-            List<TreeNode> processes_nodes = new ArrayList<>();
-            for(int j = 0; j<processes_data.length(); j++){
-                JSONObject process_data = processes_data.getJSONObject(j);
-                String pid = String.valueOf(process_data.getInt("pid"));
-                String name = process_data.getString("name");
-                NodeTreeViewAdapter.NodeItem process_node =
+            JSONObject process_data = data.getJSONObject(i);
+            String pid = String.valueOf(process_data.getInt("pid"));
+            String name = process_data.getString("name");
+            NodeTreeViewAdapter.NodeItem process_node =
                         new NodeTreeViewAdapter.NodeItem(name,pid, R.drawable.ic_process,1);
-                TreeNode new_process_node = new TreeNode(process_node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
-                processes_nodes.add(new_process_node);
+            TreeNode new_process_node = new TreeNode(process_node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
+            nodes.add(new_process_node);
             }
-            new_node.addChildren(processes_nodes);
-            nodes.add(new_node);
-        }
 
         return nodes;
     }
-
-
 }

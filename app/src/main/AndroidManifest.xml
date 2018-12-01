@@ -24,7 +24,8 @@
         <activity android:name=".activities.InsideDeviceActivity" />
         <activity android:name=".activities.actionActivities.HardwareActivity" />
         <activity android:name=".activities.AsynkTaskActivity" />
-        <activity android:name=".activities.actionActivities.PortsActivity"></activity>
+        <activity android:name=".activities.actionActivities.PortsActivity" />
+        <activity android:name=".activities.actionActivities.ProcessesActivity"></activity>
     </application>
 
 </manifest>
