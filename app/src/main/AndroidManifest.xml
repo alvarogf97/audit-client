@@ -22,7 +22,8 @@
         <activity android:name=".activities.DeviceHomeActivity" />
         <activity android:name=".activities.EditDeviceActivity" />
         <activity android:name=".activities.InsideDeviceActivity" />
-        <activity android:name=".activities.HardwareActivity"></activity>
+        <activity android:name=".activities.actionActivities.HardwareActivity" />
+        <activity android:name=".activities.AsynkTaskActivity"></activity>
     </application>
 
 </manifest>

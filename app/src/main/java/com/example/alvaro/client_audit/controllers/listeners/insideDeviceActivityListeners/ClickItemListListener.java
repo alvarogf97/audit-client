@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.HardwareActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.HardwareActivity;
 
 public class ClickItemListListener implements AdapterView.OnItemClickListener {
 

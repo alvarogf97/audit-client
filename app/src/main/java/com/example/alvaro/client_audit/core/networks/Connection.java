@@ -4,9 +4,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alvaro.client_audit.R;
+import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
 import com.example.alvaro.client_audit.core.exceptions.ConnectionException;
 import com.example.alvaro.client_audit.core.utils.JsonParsers;
+import com.unnamed.b.atv.model.TreeNode;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataInputStream;
@@ -30,6 +33,7 @@ public class Connection{
         protected List<Object> doInBackground(Object... objects) {
             List<Object> result = new ArrayList<>();
             String command = (String) objects[0];
+            result.add(command);
             if(command.equals("create")){
                 try{
                     SSLSocketFactory factory = (SSLSocketFactory) objects[1];
@@ -53,12 +57,22 @@ public class Connection{
                 DataInputStream dIn = (DataInputStream) objects[1];
                 DataOutputStream dOut = (DataOutputStream) objects[2];
                 String msg = (String) objects[3];
+                AsynkTaskActivity activity = (AsynkTaskActivity) objects[4];
                 send_msg(dOut,msg);
                 String res = recv_msg(dIn);
                 result.add(res);
+                result.add(activity);
             }
-            Log.e("Handler","finish back");
             return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Object> objects) {
+            if(!(objects.get(0)).equals("create")){
+                String result = (String) objects.get(1);
+                AsynkTaskActivity activity = (AsynkTaskActivity) objects.get(2);
+                activity.stop_animation(JsonParsers.parse_string(result));
+            }
         }
 
         /*
@@ -186,8 +200,8 @@ public class Connection{
             Log.e("connect","trying to connect");
             List<Object> res = new ConnectionHandler().execute("create",factory,host,port).get();
             Log.e("length",String.valueOf(res.size()));
-            this.connection = (Socket)res.get(0);
-            result = (String)res.get(1);
+            this.connection = (Socket)res.get(1);
+            result = (String)res.get(2);
             this.dIn = new DataInputStream(this.connection.getInputStream());
             this.dOut = new DataOutputStream(this.connection.getOutputStream());
         } catch (Exception e) {
@@ -207,18 +221,15 @@ public class Connection{
         }
     }
 
-    public JSONObject execute_command(JSONObject jsonObject){
-
-        JSONObject result = null;
+    public void execute_command(JSONObject jsonObject, AsynkTaskActivity activity){
 
         try {
-            result = JsonParsers.parse_string((String) new ConnectionHandler().execute("command",
-                    dIn,dOut,jsonObject.toString()).get().get(0));
+            new ConnectionHandler().execute("command",
+                    dIn,dOut,jsonObject.toString(),activity);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return result;
     }
 
     public boolean check_device(String ip, int port){
