@@ -7,8 +7,8 @@ import android.util.Log;
 import android.widget.ListView;
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.controllers.adapters.MenuAdapter;
+import com.example.alvaro.client_audit.controllers.listeners.insideDeviceActivityListeners.ClickItemListListener;
 import com.example.alvaro.client_audit.core.networks.Connection;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +41,7 @@ public class InsideDeviceActivity extends AppCompatActivity {
         MenuAdapter menuAdapter = new MenuAdapter(this);
         this.menu.setAdapter(menuAdapter);
         menuAdapter.addAll(this.menu_items);
+        this.menu.setOnItemClickListener(new ClickItemListListener(this));
 
     }
 

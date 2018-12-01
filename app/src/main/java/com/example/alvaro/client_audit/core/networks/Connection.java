@@ -207,12 +207,13 @@ public class Connection{
         }
     }
 
-    public JSONObject execute_command(String msg){
+    public JSONObject execute_command(JSONObject jsonObject){
 
         JSONObject result = null;
 
         try {
-            result = JsonParsers.parse_string((String) new ConnectionHandler().execute("command",dIn,dOut,msg).get().get(0));
+            result = JsonParsers.parse_string((String) new ConnectionHandler().execute("command",
+                    dIn,dOut,jsonObject.toString()).get().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
