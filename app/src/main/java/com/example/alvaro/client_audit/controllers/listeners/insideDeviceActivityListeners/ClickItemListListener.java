@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.actionActivities.HardwareActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.PortsActivity;
 
 public class ClickItemListListener implements AdapterView.OnItemClickListener {
 
@@ -25,7 +26,8 @@ public class ClickItemListListener implements AdapterView.OnItemClickListener {
             Intent intent = new Intent(this.activity.getApplicationContext(),HardwareActivity.class);
             this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Ports).equals(selected_menu_option)){
-            this.make_toast();
+            Intent intent = new Intent(this.activity.getApplicationContext(),PortsActivity.class);
+            this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Processes).equals(selected_menu_option)){
             this.make_toast();
         }else if(this.activity.getString(R.string.Network).equals(selected_menu_option)){

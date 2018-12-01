@@ -1,13 +1,12 @@
 package com.example.alvaro.client_audit.activities.actionActivities;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
-import com.example.alvaro.client_audit.controllers.adapters.HardwareTreeViewAdapter;
+import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.unnamed.b.atv.model.TreeNode;
@@ -64,7 +63,6 @@ public class HardwareActivity extends AsynkTaskActivity {
         } catch (JSONException e) {
             nodes = new ArrayList<>();
         }
-        Log.d("ENDND",String.valueOf(nodes.size()));
         root = TreeNode.root();
         root.addChildren(nodes);
         tView = new AndroidTreeView(this, root);
@@ -81,9 +79,9 @@ public class HardwareActivity extends AsynkTaskActivity {
             for(int i = 0; i < data_list.length(); i++){
                 if(data_list.get(i).getClass().isPrimitive() || data_list.get(i) instanceof String){
                     String value = data_list.get(i).toString();
-                    HardwareTreeViewAdapter.HardwareNodeItem node =
-                            new HardwareTreeViewAdapter.HardwareNodeItem(value,"", get_image(value),level);
-                    TreeNode new_node = new TreeNode(node).setViewHolder(new HardwareTreeViewAdapter(this.getApplicationContext()));
+                    NodeTreeViewAdapter.NodeItem node =
+                            new NodeTreeViewAdapter.NodeItem(value,"", get_image(value),level);
+                    TreeNode new_node = new TreeNode(node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
                     nodes.add(new_node);
                 }else{
                     nodes.addAll(getNodes(data_list.get(i),level));
@@ -97,14 +95,14 @@ public class HardwareActivity extends AsynkTaskActivity {
                 String value = "";
                 if(data.get(key).getClass().isPrimitive() || data.get(key) instanceof String){
                     value = data.get(key).toString();
-                    HardwareTreeViewAdapter.HardwareNodeItem node =
-                            new HardwareTreeViewAdapter.HardwareNodeItem(key,value, get_image(key),level);
-                    TreeNode new_node = new TreeNode(node).setViewHolder(new HardwareTreeViewAdapter(this.getApplicationContext()));
+                    NodeTreeViewAdapter.NodeItem node =
+                            new NodeTreeViewAdapter.NodeItem(key,value, get_image(key),level);
+                    TreeNode new_node = new TreeNode(node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
                     nodes.add(new_node);
                 }else{
-                    HardwareTreeViewAdapter.HardwareNodeItem node =
-                            new HardwareTreeViewAdapter.HardwareNodeItem(key,value, get_image(key),level);
-                    TreeNode new_node = new TreeNode(node).setViewHolder(new HardwareTreeViewAdapter(this.getApplicationContext()));
+                    NodeTreeViewAdapter.NodeItem node =
+                            new NodeTreeViewAdapter.NodeItem(key,value, get_image(key),level);
+                    TreeNode new_node = new TreeNode(node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
                     new_node.addChildren(getNodes(data.get(key),level+1));
                     nodes.add(new_node);
                 }

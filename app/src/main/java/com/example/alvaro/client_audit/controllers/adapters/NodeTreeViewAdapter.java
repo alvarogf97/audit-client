@@ -12,14 +12,14 @@ import android.widget.TextView;
 import com.example.alvaro.client_audit.R;
 import com.unnamed.b.atv.model.TreeNode;
 
-public class HardwareTreeViewAdapter extends TreeNode.BaseNodeViewHolder<HardwareTreeViewAdapter.HardwareNodeItem> {
+public class NodeTreeViewAdapter extends TreeNode.BaseNodeViewHolder<NodeTreeViewAdapter.NodeItem> {
 
-    public HardwareTreeViewAdapter(Context context) {
+    public NodeTreeViewAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public View createNodeView(TreeNode node, HardwareNodeItem value) {
+    public View createNodeView(TreeNode node, NodeItem value) {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View view = inflater.inflate(R.layout.hardware_node, null, false);
         TextView node_name = (TextView) view.findViewById(R.id.node_name);
@@ -43,14 +43,14 @@ public class HardwareTreeViewAdapter extends TreeNode.BaseNodeViewHolder<Hardwar
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
-    public static class HardwareNodeItem{
+    public static class NodeItem {
 
         public int image;
         public int level;
         public String name;
         public String value;
 
-        public HardwareNodeItem(String name, String value, int image, int level){
+        public NodeItem(String name, String value, int image, int level){
             this.name = name;
             this.value = value;
             this.image = image;

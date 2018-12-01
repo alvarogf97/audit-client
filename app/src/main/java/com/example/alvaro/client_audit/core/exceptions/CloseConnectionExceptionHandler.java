@@ -2,9 +2,12 @@ package com.example.alvaro.client_audit.core.exceptions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.alvaro.client_audit.activities.HomeActivity;
 import com.example.alvaro.client_audit.core.networks.Connection;
+
+import java.util.Arrays;
 
 public class CloseConnectionExceptionHandler implements Thread.UncaughtExceptionHandler {
 
@@ -20,6 +23,7 @@ public class CloseConnectionExceptionHandler implements Thread.UncaughtException
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+        Log.e("Uncaught exception", Arrays.toString(e.getStackTrace()));
         Connection.get_connection().close();
         Intent intent = new Intent(this.context,HomeActivity.class);
         intent.putExtra(CloseConnectionExceptionHandler.EXTRA_CLOSE_HANDLER,"Connection closed");
