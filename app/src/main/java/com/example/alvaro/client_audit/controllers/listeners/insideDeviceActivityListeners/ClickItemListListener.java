@@ -10,6 +10,7 @@ import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.actionActivities.HardwareActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.PortsActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.ProcessesActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.VulnersActivity;
 
 public class ClickItemListListener implements AdapterView.OnItemClickListener {
 
@@ -39,7 +40,8 @@ public class ClickItemListListener implements AdapterView.OnItemClickListener {
         }else if(this.activity.getString(R.string.Firewall).equals(selected_menu_option)){
             this.make_toast();
         }else if(this.activity.getString(R.string.Vulnerabilities).equals(selected_menu_option)){
-            this.make_toast();
+            Intent intent = new Intent(this.activity.getApplicationContext(),VulnersActivity.class);
+            this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Audit).equals(selected_menu_option)){
             this.make_toast();
         }else{

@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_vulner" />
-                            <entry key="sourceFile" value="C:\Users\Alvaro\Desktop\vulner.svg" />
+                            <entry key="outputName" value="ic_bug" />
+                            <entry key="sourceFile" value="C:\Users\Alvaro\Desktop\bug.svg" />
                           </map>
                         </option>
                       </PersistentState>
