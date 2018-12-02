@@ -19,7 +19,7 @@
         android:layout_marginEnd="25dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:text="node name" />
+        android:hint="@string/search" />
 
     <RelativeLayout
         android:id="@+id/process_layout"

@@ -18,8 +18,8 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="25dp"
         android:ems="10"
-        android:inputType="number"
-        tools:text="node name" />
+        android:hint="@string/search"
+        android:inputType="number" />
 
     <RelativeLayout
         android:id="@+id/ports_layout"

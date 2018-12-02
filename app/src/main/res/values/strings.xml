@@ -16,5 +16,6 @@
     <string name="Firewall">Firewall</string>
     <string name="Vulnerabilities">Vulnerabilities</string>
     <string name="Audit">Audit</string>
+    <string name="search">search</string>
 
 </resources>
