@@ -5,6 +5,7 @@
     android:id="@+id/hardware_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:backgroundTint="@android:color/background_light"
     android:backgroundTintMode="src_over"
     tools:context=".activities.actionActivities.HardwareActivity">

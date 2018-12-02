@@ -54,11 +54,6 @@ public class Connection{
                     Log.d("Conn::Handler::ex",Arrays.toString(e.getStackTrace()));
                 }
             }else{
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Log.e("interrupted execute",Arrays.toString(e.getStackTrace()));
-                }
                 DataInputStream dIn = (DataInputStream) objects[1];
                 DataOutputStream dOut = (DataOutputStream) objects[2];
                 String msg = (String) objects[3];
