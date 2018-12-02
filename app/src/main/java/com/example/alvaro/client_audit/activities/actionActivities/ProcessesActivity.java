@@ -128,6 +128,7 @@ public class ProcessesActivity extends AsynkTaskActivity {
         root.addChildren(nodes);
         tView = new AndroidTreeView(this, root);
         tView.setDefaultNodeClickListener(new OnNodeClickListener(this));
+        tView.setDefaultAnimation(true);
         this.layout.removeAllViews();
         this.layout.addView(tView.getView());
     }
