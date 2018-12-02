@@ -22,6 +22,10 @@ import com.github.ybq.android.spinkit.style.ThreeBounce;
 
 public class HomeActivity extends AppCompatActivity {
 
+
+    /*
+        Async task to check devices connection
+     */
     private static class GetInBack extends AsyncTask<Object,Void,HomeActivity> {
         @Override
         protected HomeActivity doInBackground(Object... objects) {
@@ -44,6 +48,9 @@ public class HomeActivity extends AppCompatActivity {
     private CardsAdapter cardsAdapter;
 
     @Override
+    /*
+        On create
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -76,6 +83,9 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    /*
+        start animation while asyncTask
+     */
     public void start_animation(){
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
@@ -85,6 +95,9 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("startAnim","started");
     }
 
+    /*
+        called by asyncTask when it terminates
+     */
     public void stop_animation(){
         DeviceBook.get_instance().update_adapter();
         this.cards.setVisibility(View.VISIBLE);

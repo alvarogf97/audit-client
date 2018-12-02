@@ -18,6 +18,9 @@ public class InsideDeviceActivity extends AppCompatActivity {
     private ListView menu;
     private List<String> menu_items;
 
+    /*
+        On create
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,9 @@ public class InsideDeviceActivity extends AppCompatActivity {
 
     }
 
+    /*
+        On Destroy
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

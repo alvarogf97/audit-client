@@ -23,7 +23,7 @@
         <activity android:name=".activities.EditDeviceActivity" />
         <activity android:name=".activities.InsideDeviceActivity" />
         <activity android:name=".activities.actionActivities.HardwareActivity" />
-        <activity android:name=".activities.AsynkTaskActivity" />
+        <activity android:name=".activities.AsyncTaskActivity" />
         <activity android:name=".activities.actionActivities.PortsActivity" />
         <activity android:name=".activities.actionActivities.ProcessesActivity" />
         <activity android:name=".activities.actionActivities.VulnersActivity"></activity>

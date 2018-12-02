@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.FilterTextListener;
 import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PortsActivity extends AsynkTaskActivity {
+public class PortsActivity extends AsyncTaskActivity {
 
     private TreeNode root;
     private List<TreeNode> nodes;
@@ -33,6 +33,10 @@ public class PortsActivity extends AsynkTaskActivity {
     private TextView search;
     private String filter;
     private boolean in_process = false;
+
+    /*
+        On create
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,10 @@ public class PortsActivity extends AsynkTaskActivity {
         this.start_animation();
 
     }
+
+    /*
+        start animation while asyncTask
+     */
 
     @Override
     public void start_animation() {
@@ -67,6 +75,10 @@ public class PortsActivity extends AsynkTaskActivity {
             }
         }
     }
+
+    /*
+        called by asyncTask when it terminates
+     */
 
     @Override
     public void stop_animation(Object... objects) {
@@ -99,6 +111,11 @@ public class PortsActivity extends AsynkTaskActivity {
         in_process =false;
     }
 
+    /*
+        Construct TreeView
+            * recursive method
+     */
+
     public List<TreeNode> getNodes(JSONArray data, String filter) throws JSONException {
         List<TreeNode> nodes = new ArrayList<>();
 
@@ -129,6 +146,10 @@ public class PortsActivity extends AsynkTaskActivity {
         return nodes;
     }
 
+    /*
+        method to change view when editText changes
+     */
+
     public void setNodes(List<TreeNode> nodes){
         root = TreeNode.root();
         root.addChildren(nodes);
@@ -137,6 +158,10 @@ public class PortsActivity extends AsynkTaskActivity {
         this.layout.removeAllViews();
         this.layout.addView(tView.getView());
     }
+
+    /*
+        getter's & setter's
+     */
 
     public void setFilter(String filter){
         this.filter = filter;

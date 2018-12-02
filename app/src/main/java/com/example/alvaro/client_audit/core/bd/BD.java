@@ -25,14 +25,13 @@ public class BD extends SQLiteOpenHelper {
 
 	public static BD getInstance(){
 		if(instance == null){
-			throw new BDException("Hay que inicializar la base de datos");
+			throw new BDException("Initialization required");
 		}
 		return instance;
 	}
 
 	public void onCreate(SQLiteDatabase bd){
-		Log.d("BD", "Creando base de datos");
-		//Creamos la tablas de la base de datos
+		Log.d("BD", "Creating database");
 		BDHelper.CREATE_TABLES(bd);
 	}
 
@@ -51,16 +50,14 @@ public class BD extends SQLiteOpenHelper {
 		String[] fila = null;
 
 		Cursor data = bd.query(table, columns, where, whereargs, group, having, orderBy);
-		Log.d("BD", "ejecutando query");
+		Log.d("BD", "executing query");
 		if(data.moveToFirst()){
 			do{
 				fila = new String[data.getColumnCount()];
 				for(int i = 0; i<fila.length; i++){
 					fila[i] = data.getString(i);
-					Log.d("BD", fila[i]);
 				}
 				res.add(fila);
-				Log.d("BD", Arrays.toString(fila));
 			}while(data.moveToNext());
 		}
 

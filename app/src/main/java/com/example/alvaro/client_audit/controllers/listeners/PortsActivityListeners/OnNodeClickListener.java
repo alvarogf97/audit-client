@@ -1,8 +1,7 @@
 package com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners;
 
-import android.app.Activity;
 import android.util.Log;
-import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.unnamed.b.atv.model.TreeNode;
@@ -14,9 +13,9 @@ import java.util.Arrays;
 
 public class OnNodeClickListener implements TreeNode.TreeNodeClickListener {
 
-    private AsynkTaskActivity activity;
+    private AsyncTaskActivity activity;
 
-    public OnNodeClickListener(AsynkTaskActivity activity){
+    public OnNodeClickListener(AsyncTaskActivity activity){
         this.activity = activity;
     }
 

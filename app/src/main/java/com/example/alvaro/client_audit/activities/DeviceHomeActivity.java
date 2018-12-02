@@ -30,6 +30,9 @@ public class DeviceHomeActivity extends AppCompatActivity {
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
 
+    /*
+        On create
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,10 @@ public class DeviceHomeActivity extends AppCompatActivity {
 
     }
 
+
+    /*
+        change view to show device info
+     */
     public void update_device_info(){
         this.device_name.setText(this.device.get_name());
         this.device_ip.setText(this.device.get_ip());
@@ -74,17 +81,26 @@ public class DeviceHomeActivity extends AppCompatActivity {
         }
     }
 
+    /*
+        On resume
+     */
     public void onResume(){
         super.onResume();
         this.update_device_info();
     }
 
+    /*
+        start animation while asyncTask
+    */
     public void start_animation(){
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
         b_connect.setVisibility(View.GONE);
     }
 
+    /*
+        called by asyncTask when it terminates
+     */
     public void stop_animation(){
         DeviceBook.get_instance().update_adapter();
         b_connect.setVisibility(View.VISIBLE);

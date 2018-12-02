@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class HardwareActivity extends AsynkTaskActivity {
+public class HardwareActivity extends AsyncTaskActivity {
 
     private TreeNode root;
     private List<TreeNode> nodes;
@@ -27,6 +27,10 @@ public class HardwareActivity extends AsynkTaskActivity {
     private JSONObject response;
     private RelativeLayout layout;
     private SpinKitView loader;
+
+    /*
+        On create
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +53,18 @@ public class HardwareActivity extends AsynkTaskActivity {
 
     }
 
+    /*
+        start animation while asyncTask
+     */
     @Override
     public void start_animation() {
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
     }
+
+    /*
+        called by asyncTask when it terminates
+     */
 
     @Override
     public void stop_animation(Object... objects) {
@@ -70,6 +81,11 @@ public class HardwareActivity extends AsynkTaskActivity {
         this.layout.addView(tView.getView());
         loader.setVisibility(View.GONE);
     }
+
+    /*
+        Construct TreeView
+            * recursive method
+     */
 
     public List<TreeNode> getNodes(Object data_json, int level) throws JSONException {
         Log.d("JSON",data_json.toString());
@@ -111,6 +127,10 @@ public class HardwareActivity extends AsynkTaskActivity {
 
         return nodes;
     }
+
+    /*
+        get associated image
+     */
 
     private int get_image(String str){
         int result;

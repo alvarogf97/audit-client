@@ -1,6 +1,5 @@
 package com.example.alvaro.client_audit.activities.actionActivities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.ProcesseActivitiListeners.FilterTextListener;
@@ -21,13 +20,12 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProcessesActivity extends AsynkTaskActivity {
+public class ProcessesActivity extends AsyncTaskActivity {
 
     private TreeNode root;
     private List<TreeNode> nodes;
@@ -38,6 +36,10 @@ public class ProcessesActivity extends AsynkTaskActivity {
     private String filter;
     private TextView search;
     private boolean in_process = false;
+
+    /*
+        On create
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,10 @@ public class ProcessesActivity extends AsynkTaskActivity {
         this.start_animation();
 
     }
+
+    /*
+        start animation while asyncTask
+     */
 
     @Override
     public void start_animation() {
@@ -73,6 +79,10 @@ public class ProcessesActivity extends AsynkTaskActivity {
             }
         }
     }
+
+    /*
+        called by asyncTask when it terminates
+     */
 
     @Override
     public void stop_animation(Object... objects) {
@@ -106,6 +116,11 @@ public class ProcessesActivity extends AsynkTaskActivity {
         in_process =false;
     }
 
+    /*
+        Construct TreeView
+            * recursive method
+     */
+
     public List<TreeNode> getNodes(JSONArray data, String filter) throws JSONException {
         List<TreeNode> nodes = new ArrayList<>();
         for(int i = 0; i<data.length(); i++){
@@ -123,6 +138,10 @@ public class ProcessesActivity extends AsynkTaskActivity {
         return nodes;
     }
 
+    /*
+        method to change view when editText changes
+     */
+
     public void setNodes(List<TreeNode> nodes){
         root = TreeNode.root();
         root.addChildren(nodes);
@@ -132,6 +151,10 @@ public class ProcessesActivity extends AsynkTaskActivity {
         this.layout.removeAllViews();
         this.layout.addView(tView.getView());
     }
+
+    /*
+        getter's & setter's
+     */
 
     public void setFilter(String filter){
         this.filter = filter;

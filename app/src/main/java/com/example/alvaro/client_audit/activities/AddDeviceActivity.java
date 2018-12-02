@@ -23,6 +23,10 @@ public class AddDeviceActivity extends AppCompatActivity {
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
 
+    /*
+        On create
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +42,19 @@ public class AddDeviceActivity extends AppCompatActivity {
         b_create.setOnClickListener(new CreateDeviceButtonListener(this,device_name,device_ip,device_port));
     }
 
+    /*
+        start animation while asyncTask
+     */
+
     public void start_animation(){
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
         b_create.setEnabled(false);
     }
+
+    /*
+        called by asyncTask when it terminates
+     */
 
     public void stop_animation(boolean res){
         this.loader.setVisibility(View.GONE);
@@ -54,6 +66,10 @@ public class AddDeviceActivity extends AppCompatActivity {
             this.finish();
         }
     }
+
+    /*
+        toast maker
+     */
 
     public void make_toast(){
         Toast toast = Toast.makeText(this.getApplicationContext(), "Cannot create device", Toast.LENGTH_SHORT);

@@ -4,12 +4,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.AsynkTaskActivity;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.core.exceptions.ConnectionException;
 import com.example.alvaro.client_audit.core.utils.JsonParsers;
-import com.unnamed.b.atv.model.TreeNode;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataInputStream;
@@ -57,7 +55,7 @@ public class Connection{
                 DataInputStream dIn = (DataInputStream) objects[1];
                 DataOutputStream dOut = (DataOutputStream) objects[2];
                 String msg = (String) objects[3];
-                AsynkTaskActivity activity = (AsynkTaskActivity) objects[4];
+                AsyncTaskActivity activity = (AsyncTaskActivity) objects[4];
                 send_msg(dOut,msg);
                 String res = recv_msg(dIn);
                 result.add(res);
@@ -70,7 +68,7 @@ public class Connection{
         protected void onPostExecute(List<Object> objects) {
             if(!(objects.get(0)).equals("create")){
                 String result = (String) objects.get(1);
-                AsynkTaskActivity activity = (AsynkTaskActivity) objects.get(2);
+                AsyncTaskActivity activity = (AsyncTaskActivity) objects.get(2);
                 activity.stop_animation(JsonParsers.parse_string(result));
             }
         }
@@ -221,7 +219,7 @@ public class Connection{
         }
     }
 
-    public void execute_command(JSONObject jsonObject, AsynkTaskActivity activity){
+    public void execute_command(JSONObject jsonObject, AsyncTaskActivity activity){
 
         try {
             new ConnectionHandler().execute("command",
