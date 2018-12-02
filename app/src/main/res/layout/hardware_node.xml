@@ -35,8 +35,8 @@
 
             <TextView
                 android:id="@+id/node_name"
-                android:layout_width="271dp"
-                android:layout_height="29dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"

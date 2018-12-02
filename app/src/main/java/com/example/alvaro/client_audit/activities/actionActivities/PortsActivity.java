@@ -61,6 +61,7 @@ public class PortsActivity extends AsyncTaskActivity {
         if(!in_process){
             loader.setVisibility(View.VISIBLE);
             loader.setIndeterminateDrawable(this.w);
+            search.setEnabled(false);
             if(tView != null){
                 this.layout.removeAllViews();
                 this.layout.addView(loader);
@@ -97,6 +98,7 @@ public class PortsActivity extends AsyncTaskActivity {
                 tView.setDefaultAnimation(true);
                 this.layout.addView(tView.getView());
                 loader.setVisibility(View.GONE);
+                search.setEnabled(true);
             }else{
                 String result = response.getString("data");
                 Toast toast = Toast.makeText(this.getApplicationContext(),result,Toast.LENGTH_SHORT);

@@ -1,11 +1,11 @@
-package com.example.alvaro.client_audit.controllers.listeners.ProcesseActivitiListeners;
+package com.example.alvaro.client_audit.controllers.listeners.vulnersActivityListener;
 
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
-import com.example.alvaro.client_audit.activities.actionActivities.ProcessesActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.VulnersActivity;
 import com.unnamed.b.atv.model.TreeNode;
 
 import org.json.JSONException;
@@ -16,12 +16,12 @@ import java.util.List;
 
 public class FilterTextListener implements TextWatcher {
 
-    private class GetNodes extends AsyncTask<ProcessesActivity,Void,List<Object>> {
+    private class GetNodes extends AsyncTask<VulnersActivity,Void,List<Object>> {
 
         @Override
-        protected List<Object> doInBackground(ProcessesActivity... processesActivities) {
+        protected List<Object> doInBackground(VulnersActivity... vulnersActivities) {
             List<Object> result = new ArrayList<>();
-            ProcessesActivity activity = processesActivities[0];
+            VulnersActivity activity = vulnersActivities[0];
             List<TreeNode> nodes = new ArrayList<>();
             try {
                 nodes = activity.getNodes(activity.getResponse().getJSONArray("data"), activity.getFilter());
@@ -35,15 +35,15 @@ public class FilterTextListener implements TextWatcher {
 
         @Override
         protected void onPostExecute(List<Object> objects) {
-            ProcessesActivity activity = (ProcessesActivity) objects.get(0);
+            VulnersActivity activity = (VulnersActivity) objects.get(0);
             List<TreeNode> nodes = (List<TreeNode>) objects.get(1);
             activity.setNodes(nodes);
         }
     }
 
-    private ProcessesActivity activity;
+    private VulnersActivity activity;
 
-    public FilterTextListener(ProcessesActivity activity){
+    public FilterTextListener(VulnersActivity activity){
         this.activity = activity;
     }
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    tools:context=".activities.actionActivities.ProcessesActivity">
+
+    <EditText
+        android:id="@+id/search_upnp_node"
+        android:layout_width="334dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/search" />
+
+    <RelativeLayout
+        android:id="@+id/upnp_layout"
+        android:layout_width="match_parent"
+        android:layout_height="395dp"
+        android:layout_alignTop="@+id/search_upnp_node"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="80dp">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/upnp_anim_load"
+            android:layout_width="187dp"
+            android:layout_height="78dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:SpinKit_Color="@color/design_default_color_primary" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/upnp_rescan_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="271dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="503dp"
+        android:text="@string/rescan"
+        android:textAlignment="center" />
+
+</RelativeLayout>

@@ -11,7 +11,7 @@ import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
-import com.example.alvaro.client_audit.controllers.listeners.ProcesseActivitiListeners.FilterTextListener;
+import com.example.alvaro.client_audit.controllers.listeners.processeActivitiListeners.FilterTextListener;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.unnamed.b.atv.model.TreeNode;
