@@ -17,5 +17,6 @@
     <string name="Vulnerabilities">Vulnerabilities</string>
     <string name="Audit">Audit</string>
     <string name="search">search</string>
+    <string name="rescan">re-scan</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.alvaro.client_audit.activities.actionActivities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.VulnersActivityListener.FilterTextListener;
+import com.example.alvaro.client_audit.controllers.listeners.VulnersActivityListener.ReScanButtonClickListener;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.unnamed.b.atv.model.TreeNode;
@@ -36,6 +38,7 @@ public class VulnersActivity extends AsyncTaskActivity {
     private String filter;
     private TextView search;
     private TextView status;
+    private Button rescan;
 
     /*
         On create
@@ -52,14 +55,20 @@ public class VulnersActivity extends AsyncTaskActivity {
         filter = search.getText().toString();
         this.layout = (RelativeLayout) findViewById(R.id.vulner_layout);
         loader = (SpinKitView) findViewById(R.id.vulner_anim_load);
+        rescan = (Button) findViewById(R.id.rescan_button);
+        rescan.setOnClickListener(new ReScanButtonClickListener(this));
         this.start_animation();
     }
 
 
-    public void execute_query(){
+    public void execute_query(boolean is_new){
         JSONObject query = new JSONObject();
         try {
-            query.put("command","vulners");
+            String command = "vulners";
+            if(is_new){
+                command += " new";
+            }
+            query.put("command",command);
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("vulners", Arrays.toString(e.getStackTrace()));
@@ -72,6 +81,7 @@ public class VulnersActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        rescan.setEnabled(false);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
         status.setVisibility(View.VISIBLE);
@@ -79,9 +89,24 @@ public class VulnersActivity extends AsyncTaskActivity {
         if(tView != null){
             this.layout.removeAllViews();
             this.layout.addView(loader);
+            this.layout.addView(status);
         }
-        execute_query();
+        execute_query(false);
     }
+
+    public void re_scan(){
+        loader.setVisibility(View.VISIBLE);
+        loader.setIndeterminateDrawable(this.w);
+        status.setVisibility(View.VISIBLE);
+        search.setEnabled(false);
+        if(tView != null){
+            this.layout.removeAllViews();
+            this.layout.addView(loader);
+            this.layout.addView(status);
+        }
+        execute_query(true);
+    }
+
 
     /*
         called by asyncTask when it terminates
@@ -105,10 +130,11 @@ public class VulnersActivity extends AsyncTaskActivity {
                 loader.setVisibility(View.GONE);
                 status.setVisibility(View.GONE);
                 search.setEnabled(true);
+                rescan.setEnabled(true);
             }else{
                 String status_str = response.getString("data");
                 this.status.setText(status_str);
-                execute_query();
+                execute_query(false);
             }
         } catch (JSONException e) {
             Log.e("stopVulner",Arrays.toString(e.getStackTrace()));
