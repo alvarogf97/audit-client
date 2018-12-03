@@ -21,5 +21,6 @@
     <string name="input">inputs</string>
     <string name="outputs">outputs</string>
     <string name="execute">execute</string>
+    <string name="cancel">cancel</string>
 
 </resources>

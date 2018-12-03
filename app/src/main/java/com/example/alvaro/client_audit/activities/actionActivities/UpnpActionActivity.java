@@ -1,14 +1,21 @@
 package com.example.alvaro.client_audit.activities.actionActivities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.ArgumentsAdapter;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ArgumentValueChangeListener;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ButtonCancelDialogListener;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ButtonExecuteQueryListener;
 import com.example.alvaro.client_audit.core.entities.Argument;
 import com.example.alvaro.client_audit.core.utils.JsonParsers;
 
@@ -31,9 +38,15 @@ public class UpnpActionActivity extends AsyncTaskActivity {
     private List<Argument> args_out;
     private ArgumentsAdapter adapter_in;
     private ArgumentsAdapter adapter_out;
+    private AlertDialog dialog;
     private String location;
     private String service;
     private String action;
+    private Argument selected_Argument;
+
+    private TextView dialog_arg_name;
+    private TextView dialog_arg_type;
+    private EditText dialog_arg_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +57,10 @@ public class UpnpActionActivity extends AsyncTaskActivity {
         action_name = (TextView) findViewById(R.id.action_name);
         inputs = (ListView) findViewById(R.id.input_list);
         outputs = (ListView) findViewById(R.id.output_list);
+        Button execute = (Button) findViewById(R.id.button_execute);
         adapter_in = new ArgumentsAdapter(this.getApplicationContext());
         adapter_out = new ArgumentsAdapter(this.getApplicationContext());
+        this.create_dialog();
         this.inputs.setAdapter(adapter_in);
 
         this.outputs.setAdapter(adapter_out);
@@ -67,6 +82,28 @@ public class UpnpActionActivity extends AsyncTaskActivity {
 
     }
 
+    public void create_dialog(){
+        LayoutInflater layoutInflater = LayoutInflater.from(UpnpActionActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.argument_dialog, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UpnpActionActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        dialog_arg_name = (TextView) promptView.findViewById(R.id.argument_dialog_name);
+        dialog_arg_type = (TextView) promptView.findViewById(R.id.argument_dialog_type);
+        dialog_arg_value = (EditText) promptView.findViewById(R.id.argument_dialog_value);
+        Button cancel_button = (Button) promptView.findViewById(R.id.argument_dialog_cancel_button);
+
+        dialog_arg_value.addTextChangedListener(new ArgumentValueChangeListener(this));
+        cancel_button.setOnClickListener(new ButtonCancelDialogListener(this));
+
+        alertDialogBuilder.setCancelable(true);
+        dialog = alertDialogBuilder.create();
+    }
+
+    public void hide_dialog(){
+        dialog.hide();
+    }
+
     @Override
     public void start_animation() {
 
@@ -77,7 +114,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
         response = (JSONObject) objects[0];
     }
 
-    private void execute_query() throws JSONException {
+    public void execute_query() throws JSONException {
         JSONObject query = new JSONObject();
         query.put("location",location);
         query.put("service",service);
@@ -100,5 +137,20 @@ public class UpnpActionActivity extends AsyncTaskActivity {
             arguments.put(arg.getName(),arg.getValue());
         }
         return arguments;
+    }
+
+    public void showDialog(){
+        dialog_arg_name.setText(selected_Argument.getName());
+        dialog_arg_type.setText(selected_Argument.getDatatype());
+        dialog_arg_value.setText(selected_Argument.getValue());
+        dialog.show();
+    }
+
+    public Argument getSelected_Argument(){
+        return selected_Argument;
+    }
+
+    public void setSelected_Argument(Argument argument){
+        this.selected_Argument = argument;
     }
 }

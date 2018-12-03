@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.controllers.listeners.upnpActivityListeners;
+package com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +17,8 @@ public class onArgumentClickListener implements AdapterView.OnItemClickListener 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Argument selected_argument = (Argument) parent.getItemAtPosition(position);
-        
+        this.activity.setSelected_Argument(selected_argument);
+        this.activity.showDialog();
     }
 
 }
