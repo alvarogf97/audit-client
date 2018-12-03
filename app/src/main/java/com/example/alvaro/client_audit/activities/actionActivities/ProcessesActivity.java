@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
-import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
+import com.example.alvaro.client_audit.controllers.listeners.portsActivityListeners.OnNodeClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.processeActivitiListeners.FilterTextListener;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;

@@ -18,5 +18,8 @@
     <string name="Audit">Audit</string>
     <string name="search">search</string>
     <string name="rescan">re-scan</string>
+    <string name="input">inputs</string>
+    <string name="outputs">outputs</string>
+    <string name="execute">execute</string>
 
 </resources>

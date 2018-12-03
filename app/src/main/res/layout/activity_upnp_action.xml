@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.actionActivities.UpnpActionActivity">
+
+    <TextView
+        android:id="@+id/action_name"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="24dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="ACTION NAME" />
+
+    <TextView
+        android:id="@+id/input_args"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="124dp"
+        android:text="@string/input"
+        android:textAlignment="center" />
+
+    <ListView
+        android:id="@+id/input_list"
+        android:layout_width="wrap_content"
+        android:layout_height="191dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginEnd="24dp" />
+
+    <TextView
+        android:id="@+id/outputs"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="124dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginBottom="238dp"
+        android:text="@string/outputs"
+        android:textAlignment="center" />
+
+    <ListView
+        android:id="@+id/output_list"
+        android:layout_width="wrap_content"
+        android:layout_height="163dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="61dp" />
+
+    <Button
+        android:id="@+id/button_execute"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="209dp"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="9dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="20dp"
+        android:text="@string/execute"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</RelativeLayout>

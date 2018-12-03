@@ -12,8 +12,6 @@ import com.example.alvaro.client_audit.R;
 import com.unnamed.b.atv.model.TreeNode;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.HashMap;
 
 public class ActionNodeTreeAdapter extends TreeNode.BaseNodeViewHolder<ActionNodeTreeAdapter.Action> {
 
@@ -47,40 +45,19 @@ public class ActionNodeTreeAdapter extends TreeNode.BaseNodeViewHolder<ActionNod
 
     public static class Action{
 
-        public static class Datatype{
-
-            String name;
-            String datatype;
-
-            public Datatype(String name, String datatype){
-                this.name = name;
-                this.datatype = datatype;
-            }
-        }
-
-        String name;
-        HashMap<Datatype,String> args_in;
-        HashMap<Datatype,String> args_out;
-        String url;
-        int level;
+        public String name;
+        public JSONArray args_in;
+        public JSONArray args_out;
+        public String url;
+        public int level;
 
         public Action(String name, JSONArray args_in, JSONArray args_out, String url, int level) throws JSONException {
             this.name = name;
-            this.args_in = parse_JSONArray(args_in);
-            this.args_out = parse_JSONArray(args_out);
+            this.args_in = args_in;
+            this.args_out = args_out;
             this.url = url;
             this.level = level;
         }
     }
 
-    public static HashMap<Action.Datatype,String> parse_JSONArray(JSONArray args) throws JSONException {
-        HashMap<Action.Datatype,String> dictionary = new HashMap<>();
-        for(int i = 0; i<args.length(); i++){
-            JSONObject args_data = args.getJSONObject(i);
-            Action.Datatype datatype = new Action.Datatype(args_data.getString("name"),
-                    args_data.getString("datatype"));
-            dictionary.put(datatype,"");
-        }
-        return dictionary;
-    }
 }

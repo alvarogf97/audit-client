@@ -10,7 +10,7 @@ import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.ActionNodeTreeAdapter;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
-import com.example.alvaro.client_audit.controllers.listeners.PortsActivityListeners.OnNodeClickListener;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActivityListeners.OnNodeClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.upnpActivityListeners.FilterTextListener;
 import com.example.alvaro.client_audit.controllers.listeners.upnpActivityListeners.ReScanButtonClickListener;
 import com.example.alvaro.client_audit.core.networks.Connection;
@@ -31,7 +31,6 @@ public class UpnpActivity extends AsyncTaskActivity {
     private AndroidTreeView tView;
     private SpinKitView loader;
     private JSONObject response;
-    private JSONObject response_execution;
     private JSONObject execution_args;
     private RelativeLayout layout;
     private String filter;
@@ -99,7 +98,7 @@ public class UpnpActivity extends AsyncTaskActivity {
             root = TreeNode.root();
             root.addChildren(nodes);
             tView = new AndroidTreeView(this, root);
-            //tView.setDefaultNodeClickListener(new OnNodeClickListener(this));
+            tView.setDefaultNodeClickListener(new OnNodeClickListener(this));
             tView.setDefaultAnimation(true);
             this.layout.addView(tView.getView());
             loader.setVisibility(View.GONE);
@@ -108,22 +107,6 @@ public class UpnpActivity extends AsyncTaskActivity {
         } catch (Exception e) {
             Log.e("stopAnimationPorts",Arrays.toString(e.getStackTrace()));
         }
-    }
-
-    public void start_execution_animation() {
-        rescan.setEnabled(false);
-        loader.setVisibility(View.VISIBLE);
-        loader.setIndeterminateDrawable(this.w);
-        search.setEnabled(false);
-        if(tView != null){
-            this.layout.removeAllViews();
-            this.layout.addView(loader);
-        }
-        execute_query_action();
-    }
-
-    public void stop_execute_animation(Object... objects) {
-        execution_args = (JSONObject) objects[0];
     }
 
     public void setNodes(List<TreeNode> nodes){
@@ -198,10 +181,6 @@ public class UpnpActivity extends AsyncTaskActivity {
 
     public JSONObject getResponse(){
         return this.response;
-    }
-
-    public JSONObject getExecutionArgs(){
-        return this.execution_args;
     }
 
     public void setExecutionArgs(JSONObject args){
