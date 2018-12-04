@@ -18,5 +18,6 @@ public class ButtonSaveDialogListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         this.activity.getSelected_Argument().setValue(editText.getText().toString());
+        this.activity.hide_dialog();
     }
 }

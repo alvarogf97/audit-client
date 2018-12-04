@@ -117,6 +117,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
     @Override
     public void stop_animation(Object... objects) {
         response = (JSONObject) objects[0];
+        Log.d("DFDSFA",String.valueOf(objects.length));
         try {
             if(response.getBoolean("status")){
                 get_otuputs_response(response.getJSONObject("data"));
@@ -124,7 +125,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
             }else{
                 this.make_toast("invoke fail");
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             Log.e("stopanimationUpnp",Arrays.toString(e.getStackTrace()));
         }
     }
@@ -133,6 +134,8 @@ public class UpnpActionActivity extends AsyncTaskActivity {
         for(Argument arg : this.args_out){
             arg.setValue(response.get(arg.getName()).toString());
         }
+        adapter_out.clear();
+        adapter_out.addAll(args_out);
     }
 
     public void execute_query() throws JSONException {

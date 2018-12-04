@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
 
     <TextView
         android:id="@+id/argument_dialog_name"
@@ -10,8 +12,8 @@
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -23,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/argument_dialog_name"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="0dp"
         android:textAlignment="center"
         tools:text="argument_type" />
 
@@ -33,7 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/argument_dialog_type"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="89dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="83dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -44,8 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="142dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="137dp"
         android:text="@string/cancel" />
 
     <Button
@@ -55,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="211dp"
-        android:layout_marginTop="141dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="136dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/save" />
 
