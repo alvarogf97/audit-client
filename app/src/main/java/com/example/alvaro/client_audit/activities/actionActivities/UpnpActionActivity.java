@@ -9,14 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.ArgumentsAdapter;
-import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ArgumentValueChangeListener;
 import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ButtonCancelDialogListener;
 import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ButtonExecuteQueryListener;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.ButtonSaveDialogListener;
+import com.example.alvaro.client_audit.controllers.listeners.upnpActionActivityListener.onArgumentClickListener;
 import com.example.alvaro.client_audit.core.entities.Argument;
+import com.example.alvaro.client_audit.core.networks.Connection;
 import com.example.alvaro.client_audit.core.utils.JsonParsers;
 
 import org.json.JSONArray;
@@ -62,6 +65,8 @@ public class UpnpActionActivity extends AsyncTaskActivity {
         adapter_out = new ArgumentsAdapter(this.getApplicationContext());
         this.create_dialog();
         this.inputs.setAdapter(adapter_in);
+        this.inputs.setOnItemClickListener(new onArgumentClickListener(this));
+        execute.setOnClickListener(new ButtonExecuteQueryListener(this));
 
         this.outputs.setAdapter(adapter_out);
 
@@ -70,7 +75,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
             args_in = parseJSON_arguments(args.getJSONArray("args_in"));
             args_out = parseJSON_arguments(args.getJSONArray("args_out"));
             service = args.getString("service");
-            location = args.getString("locations");
+            location = args.getString("location");
 
             adapter_in.addAll(args_in);
             adapter_out.addAll(args_out);
@@ -92,8 +97,8 @@ public class UpnpActionActivity extends AsyncTaskActivity {
         dialog_arg_type = (TextView) promptView.findViewById(R.id.argument_dialog_type);
         dialog_arg_value = (EditText) promptView.findViewById(R.id.argument_dialog_value);
         Button cancel_button = (Button) promptView.findViewById(R.id.argument_dialog_cancel_button);
-
-        dialog_arg_value.addTextChangedListener(new ArgumentValueChangeListener(this));
+        Button save_button = (Button) promptView.findViewById(R.id.argument_dialog_save_button);
+        save_button.setOnClickListener(new ButtonSaveDialogListener(this, dialog_arg_value));
         cancel_button.setOnClickListener(new ButtonCancelDialogListener(this));
 
         alertDialogBuilder.setCancelable(true);
@@ -112,14 +117,34 @@ public class UpnpActionActivity extends AsyncTaskActivity {
     @Override
     public void stop_animation(Object... objects) {
         response = (JSONObject) objects[0];
+        try {
+            if(response.getBoolean("status")){
+                get_otuputs_response(response.getJSONObject("data"));
+                this.make_toast("invoke success");
+            }else{
+                this.make_toast("invoke fail");
+            }
+        } catch (JSONException e) {
+            Log.e("stopanimationUpnp",Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    private void get_otuputs_response(JSONObject response) throws JSONException {
+        for(Argument arg : this.args_out){
+            arg.setValue(response.get(arg.getName()).toString());
+        }
     }
 
     public void execute_query() throws JSONException {
         JSONObject query = new JSONObject();
-        query.put("location",location);
-        query.put("service",service);
-        query.put("action",action);
-        query.put("args_in",parseArguments(this.args_in));
+        query.put("command","upnp exec");
+        JSONObject args = new JSONObject();
+        args.put("location",location);
+        args.put("service",service);
+        args.put("action",action);
+        args.put("args_in",parseArguments(this.args_in));
+        query.put("args",args);
+        Connection.get_connection().execute_command(query, this);
     }
 
     private List<Argument> parseJSON_arguments(JSONArray arguments_data) throws JSONException {
@@ -129,6 +154,11 @@ public class UpnpActionActivity extends AsyncTaskActivity {
             arguments.add(new Argument(arg.getString("name"),arg.getString("datatype")));
         }
         return arguments;
+    }
+
+    private void make_toast(String text){
+        Toast toast = Toast.makeText(this.getApplicationContext(),text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private JSONObject parseArguments(List<Argument> arguments_data) throws JSONException {

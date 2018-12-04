@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
@@ -10,8 +10,9 @@
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:text="argument name " />
@@ -20,20 +21,19 @@
         android:id="@+id/argument_dialog_type"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/argument_dialog_name"
+        android:layout_alignEnd="@+id/argument_dialog_name"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="61dp"
+        android:textAlignment="center"
         tools:text="argument_type" />
 
     <EditText
         android:id="@+id/argument_dialog_value"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/argument_dialog_name"
+        android:layout_alignStart="@+id/argument_dialog_type"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-8dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="89dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -42,10 +42,22 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="99dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/argument_dialog_name"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="151dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="142dp"
         android:text="@string/cancel" />
+
+    <Button
+        android:id="@+id/argument_dialog_save_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="211dp"
+        android:layout_marginTop="141dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/save" />
 
 </RelativeLayout>
