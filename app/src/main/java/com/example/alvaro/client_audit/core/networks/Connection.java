@@ -51,7 +51,7 @@ public class Connection{
                 }catch(Exception e){
                     Log.d("Conn::Handler::ex",Arrays.toString(e.getStackTrace()));
                 }
-            }else{
+            }else if(command.equals("command")){
                 DataInputStream dIn = (DataInputStream) objects[1];
                 DataOutputStream dOut = (DataOutputStream) objects[2];
                 String msg = (String) objects[3];
@@ -60,13 +60,21 @@ public class Connection{
                 String res = recv_msg(dIn);
                 result.add(res);
                 result.add(activity);
+            }else{
+                DataInputStream dIn = (DataInputStream) objects[1];
+                DataOutputStream dOut = (DataOutputStream) objects[2];
+                String msg = (String) objects[3];
+                send_msg(dOut,msg);
+                String res = recv_msg(dIn);
+                Log.d("lll",res);
+                result.add(res);
             }
             return result;
         }
 
         @Override
         protected void onPostExecute(List<Object> objects) {
-            if(!(objects.get(0)).equals("create")){
+            if((objects.get(0)).equals("command")){
                 String result = (String) objects.get(1);
                 AsyncTaskActivity activity = (AsyncTaskActivity) objects.get(2);
                 activity.stop_animation(JsonParsers.parse_string(result));
@@ -228,6 +236,23 @@ public class Connection{
             e.printStackTrace();
         }
 
+    }
+
+    public boolean login(JSONObject jsonObject){
+
+        boolean result_login = false;
+        try {
+            List<Object> result = new ConnectionHandler().execute("login",
+                    dIn,dOut,jsonObject.toString()).get();
+            String result_response = (String)result.get(1);
+            Log.e("login",result_response);
+            JSONObject response = JsonParsers.parse_string(result_response);
+            result_login = response.getBoolean("status");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result_login;
     }
 
     public boolean check_device(String ip, int port){

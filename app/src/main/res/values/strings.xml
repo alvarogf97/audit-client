@@ -22,5 +22,7 @@
     <string name="outputs">outputs</string>
     <string name="execute">execute</string>
     <string name="cancel">cancel</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
 
 </resources>
