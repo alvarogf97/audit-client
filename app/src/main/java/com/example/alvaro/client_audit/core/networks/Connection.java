@@ -31,6 +31,7 @@ public class Connection{
         protected List<Object> doInBackground(Object... objects) {
             List<Object> result = new ArrayList<>();
             String command = (String) objects[0];
+            Log.e("ASYNC_COMMAND",command);
             result.add(command);
             if(command.equals("create")){
                 try{
@@ -66,7 +67,6 @@ public class Connection{
                 String msg = (String) objects[3];
                 send_msg(dOut,msg);
                 String res = recv_msg(dIn);
-                Log.d("lll",res);
                 result.add(res);
             }
             return result;
@@ -76,6 +76,7 @@ public class Connection{
         protected void onPostExecute(List<Object> objects) {
             if((objects.get(0)).equals("command")){
                 String result = (String) objects.get(1);
+                Log.e("ASYNC_MSG",result);
                 AsyncTaskActivity activity = (AsyncTaskActivity) objects.get(2);
                 activity.stop_animation(JsonParsers.parse_string(result));
             }

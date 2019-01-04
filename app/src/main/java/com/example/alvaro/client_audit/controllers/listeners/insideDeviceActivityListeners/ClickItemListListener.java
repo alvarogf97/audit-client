@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
+import com.example.alvaro.client_audit.activities.actionActivities.FirewallActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.HardwareActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.PortsActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.ProcessesActivity;
@@ -40,7 +41,8 @@ public class ClickItemListListener implements AdapterView.OnItemClickListener {
             Intent intent = new Intent(this.activity.getApplicationContext(),UpnpActivity.class);
             this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Firewall).equals(selected_menu_option)){
-            this.make_toast();
+            Intent intent = new Intent(this.activity.getApplicationContext(),FirewallActivity.class);
+            this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Vulnerabilities).equals(selected_menu_option)){
             Intent intent = new Intent(this.activity.getApplicationContext(),VulnersActivity.class);
             this.activity.startActivity(intent);
