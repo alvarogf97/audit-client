@@ -3,6 +3,7 @@ package com.example.alvaro.client_audit.activities.actionActivities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,11 +26,19 @@ public class FirewallActivity extends AsyncTaskActivity {
     private ListView action_list;
     private FirewallActionAdapter adapter;
     private TextView test;
+    private TextView action_text;
+    private TextView status_text;
+    private TextView error_text;
+    private ImageView error_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firewall);
+        this.action_text = (TextView) findViewById(R.id.firewall_actions_text);
+        this.status_text = (TextView) findViewById(R.id.firewall_status_text);
+        this.error_text = (TextView) findViewById(R.id.firewall_error_text);
+        this.error_image = (ImageView) findViewById(R.id.firewall_error_image);
         this.loader = (SpinKitView) findViewById(R.id.firewall_anim_load);
         this.action_list = (ListView) findViewById(R.id.firewall_action_list);
         this.test = (TextView) findViewById(R.id.ff_test);
@@ -56,11 +65,20 @@ public class FirewallActivity extends AsyncTaskActivity {
                 this.action_list.setVisibility(View.VISIBLE);
                 this.test.setText(response.getJSONObject("fw_status").toString());
             }else{
-                //TO-DO
+                this.show_error();
             }
         } catch (JSONException e) {
             Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    private void show_error(){
+        this.action_text.setVisibility(View.GONE);
+        this.status_text.setVisibility(View.GONE);
+        this.action_list.setVisibility(View.GONE);
+        this.test.setVisibility(View.GONE);
+        this.error_image.setVisibility(View.VISIBLE);
+        this.error_text.setVisibility(View.VISIBLE);
     }
 
     private List<FirewallAction> getActions(JSONObject response){
