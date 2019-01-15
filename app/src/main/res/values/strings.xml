@@ -24,5 +24,9 @@
     <string name="cancel">cancel</string>
     <string name="login">Login</string>
     <string name="password">password</string>
+    <string name="warning">warning</string>
+    <string name="firewall_incompatible">Whops!, your system is incompatible with this feature :(</string>
+    <string name="actions">Actions</string>
+    <string name="status">Status</string>
 
 </resources>

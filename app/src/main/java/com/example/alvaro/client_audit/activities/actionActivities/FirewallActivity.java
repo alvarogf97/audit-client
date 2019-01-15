@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.FirewallActionAdapter;
@@ -22,13 +24,15 @@ public class FirewallActivity extends AsyncTaskActivity {
     private SpinKitView loader;
     private ListView action_list;
     private FirewallActionAdapter adapter;
+    private TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firewall);
-        loader = (SpinKitView) findViewById(R.id.firewall_anim_load);
+        this.loader = (SpinKitView) findViewById(R.id.firewall_anim_load);
         this.action_list = (ListView) findViewById(R.id.firewall_action_list);
+        this.test = (TextView) findViewById(R.id.ff_test);
         adapter = new FirewallActionAdapter(this);
         this.action_list.setAdapter(adapter);
         this.start_animation();
@@ -45,9 +49,18 @@ public class FirewallActivity extends AsyncTaskActivity {
     @Override
     public void stop_animation(Object... objects) {
         JSONObject response = (JSONObject) objects[0];
-        adapter.addAll(this.getActions(response));
-        loader.setVisibility(View.GONE);
-        this.action_list.setVisibility(View.VISIBLE);
+        try {
+            if(response.getBoolean("status")){
+                adapter.addAll(this.getActions(response));
+                loader.setVisibility(View.GONE);
+                this.action_list.setVisibility(View.VISIBLE);
+                this.test.setText(response.getJSONObject("fw_status").toString());
+            }else{
+                //TO-DO
+            }
+        } catch (JSONException e) {
+            Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
+        }
     }
 
     private List<FirewallAction> getActions(JSONObject response){
@@ -63,7 +76,6 @@ public class FirewallActivity extends AsyncTaskActivity {
         } catch (JSONException e) {
             Log.e("firewall actions",Arrays.toString(e.getStackTrace()));
         }
-        Log.e("nACTIONS",String.valueOf(actions.size()));
         return actions;
     }
 
