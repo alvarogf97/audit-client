@@ -28,5 +28,7 @@
     <string name="firewall_incompatible">Whops!, your system is incompatible with this feature :(</string>
     <string name="actions">Actions</string>
     <string name="status">Status</string>
+    <string name="next">next</string>
+    <string name="update">update</string>
 
 </resources>
