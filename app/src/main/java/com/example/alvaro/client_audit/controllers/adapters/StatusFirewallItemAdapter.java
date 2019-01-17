@@ -37,9 +37,9 @@ public class StatusFirewallItemAdapter extends ArrayAdapter<StatusFirewall> {
 
         holder.name.setText(status_item.getName());
         if(status_item.is_active()){
-            holder.image.setImageResource(R.drawable.online);
+            holder.image.setImageResource(R.drawable.ic_on);
         }else{
-            holder.image.setImageResource(R.drawable.offline);
+            holder.image.setImageResource(R.drawable.ic_off);
         }
 
         return convertView;

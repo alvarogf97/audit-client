@@ -30,5 +30,7 @@
     <string name="status">Status</string>
     <string name="next">next</string>
     <string name="update">update</string>
+    <string name="warning_action">Disable firewall could affect your system by increasing risks against hacker\'s attacks</string>
+    <string name="disable">disable</string>
 
 </resources>

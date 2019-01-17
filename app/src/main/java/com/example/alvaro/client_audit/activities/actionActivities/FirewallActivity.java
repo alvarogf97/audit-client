@@ -7,11 +7,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.FirewallActionAdapter;
 import com.example.alvaro.client_audit.controllers.adapters.StatusFirewallItemAdapter;
+import com.example.alvaro.client_audit.controllers.listeners.firewallActivityListeners.ActionListClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.firewallActivityListeners.ButtonUpdateStatusListener;
 import com.example.alvaro.client_audit.core.entities.FirewallAction;
 import com.example.alvaro.client_audit.core.entities.StatusFirewall;
@@ -38,7 +38,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     private TextView status_text;
     private TextView error_text;
     private ImageView error_image;
-    private List<FirewallAction> actions;
+    public static List<FirewallAction> actions;
     private boolean is_execute_status;
 
     @Override
@@ -60,6 +60,7 @@ public class FirewallActivity extends AsyncTaskActivity {
         adapter_status = new StatusFirewallItemAdapter(this);
         this.action_list.setAdapter(adapter);
         this.status_list.setAdapter(adapter_status);
+        this.action_list.setOnItemClickListener(new ActionListClickListener(this));
         this.start_animation();
     }
 
@@ -77,14 +78,14 @@ public class FirewallActivity extends AsyncTaskActivity {
         JSONObject response = (JSONObject) objects[0];
         try {
             if (response.getBoolean("status") && !this.is_execute_status) {
-                this.actions = this.getActions(response);
-                adapter.addAll(this.filterActions(this.actions));
+                actions = this.getActions(response);
+                adapter.addAll(this.filterActions(actions));
                 loader.setVisibility(View.GONE);
                 this.action_list.setVisibility(View.VISIBLE);
                 this.button_update_Status.setVisibility(View.VISIBLE);
                 this.set_status(response.getJSONObject("fw_status"));
             } else if(response.getBoolean("status") && this.is_execute_status){
-                    this.status_list.setVisibility(View.VISIBLE);
+                this.status_list.setVisibility(View.VISIBLE);
                 this.set_status(response);
                 this.button_update_Status.setEnabled(true);
                 this.loader_status.setVisibility(View.GONE);
@@ -105,6 +106,7 @@ public class FirewallActivity extends AsyncTaskActivity {
             boolean is_active = status_data.getBoolean(key);
             status_items.add(new StatusFirewall(key, is_active));
         }
+        adapter_status.clear();
         adapter_status.addAll(status_items);
     }
 
