@@ -143,7 +143,7 @@ public class FirewallActivity extends AsyncTaskActivity {
             for(int i = 0; i<json_actions.length(); i++){
                 JSONObject json_action = json_actions.getJSONObject(i);
                 FirewallAction action = new FirewallAction(json_action.getString("name"),
-                        json_action.getJSONObject("args"), json_action.getBoolean("show"));
+                        json_action.getJSONObject("args"), json_action.getBoolean("show"), json_action.getString("command"));
                 actions.add(action);
             }
         } catch (JSONException e) {
@@ -172,5 +172,20 @@ public class FirewallActivity extends AsyncTaskActivity {
         } catch (JSONException e) {
             Log.e("descriptor", Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    public static FirewallAction getActionByName(String name){
+        boolean found = false;
+        FirewallAction action = null;
+        int i = 0;
+        while(i<actions.size() && !found){
+            FirewallAction cursor_action = actions.get(i);
+            if(cursor_action.getName().equals(name)){
+                action = cursor_action;
+                found = true;
+            }
+            i++;
+        }
+        return action;
     }
 }

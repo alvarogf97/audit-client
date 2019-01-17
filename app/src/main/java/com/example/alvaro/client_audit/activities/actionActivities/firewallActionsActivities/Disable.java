@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.FirewallActivity;
+import com.example.alvaro.client_audit.controllers.listeners.firewallActivityListeners.DisableFirewallButtonListener;
+import com.example.alvaro.client_audit.core.entities.FirewallAction;
+import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 
 import org.json.JSONException;
@@ -27,6 +31,7 @@ public class Disable extends AsyncTaskActivity {
         setContentView(R.layout.activity_disable);
         this.loader = (SpinKitView) findViewById(R.id.disable_fw_anim_load);
         this.disable_button = (Button) findViewById(R.id.button_disable_firewall);
+        this.disable_button.setOnClickListener(new DisableFirewallButtonListener(this));
     }
 
     @Override
@@ -34,6 +39,7 @@ public class Disable extends AsyncTaskActivity {
         this.disable_button.setEnabled(false);
         this.loader.setIndeterminateDrawable(this.w);
         this.loader.setVisibility(View.VISIBLE);
+        this.execute_query();
     }
 
     @Override
@@ -47,6 +53,7 @@ public class Disable extends AsyncTaskActivity {
                 toast.show();
                 this.finish();
             }else{
+                this.disable_button.setEnabled(true);
                 Toast toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -56,6 +63,14 @@ public class Disable extends AsyncTaskActivity {
     }
 
     private void execute_query(){
-        
+        JSONObject query = new JSONObject();
+        try {
+            FirewallAction action = FirewallActivity.getActionByName("disable");
+            query.put("command",action.getCommand());
+            query.put("args","");
+            Connection.get_connection().execute_command(query, this);
+        } catch (JSONException e) {
+            Log.e("descriptor", Arrays.toString(e.getStackTrace()));
+        }
     }
 }
