@@ -32,5 +32,7 @@
     <string name="update">update</string>
     <string name="warning_action">Disable firewall could affect your system by increasing risks against hacker\'s attacks</string>
     <string name="disable">disable</string>
+    <string name="export">Export firewall settings</string>
+    <string name="export_button">export</string>
 
 </resources>

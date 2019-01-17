@@ -12,6 +12,12 @@ public class Argument {
         this.value = "";
     }
 
+    public Argument(String name){
+        this.name = name;
+        this.datatype = "";
+        this.value = "";
+    }
+
     public Argument(String name, String datatype, String value){
         this.name = name;
         this.datatype = datatype;

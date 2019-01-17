@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.FirewallActionAdapter;
@@ -39,13 +41,17 @@ public class FirewallActivity extends AsyncTaskActivity {
     private TextView error_text;
     private ImageView error_image;
     public static List<FirewallAction> actions;
-    private boolean is_execute_status;
+
+    public boolean is_execute_status;
+    public boolean is_execute_enable;
+    public boolean is_execute_descriptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firewall);
         this.is_execute_status = false;
+        this.is_execute_enable = false;
         this.action_text = (TextView) findViewById(R.id.firewall_actions_text);
         this.status_text = (TextView) findViewById(R.id.firewall_status_text);
         this.error_text = (TextView) findViewById(R.id.firewall_error_text);
@@ -65,7 +71,14 @@ public class FirewallActivity extends AsyncTaskActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        this.update_status();
+    }
+
+    @Override
     public void start_animation() {
+        this.is_execute_descriptor = true;
         this.loader.setVisibility(View.VISIBLE);
         this.action_list.setVisibility(View.GONE);
         this.button_update_Status.setVisibility(View.GONE);
@@ -77,18 +90,33 @@ public class FirewallActivity extends AsyncTaskActivity {
     public void stop_animation(Object... objects) {
         JSONObject response = (JSONObject) objects[0];
         try {
-            if (response.getBoolean("status") && !this.is_execute_status) {
+            if (response.getBoolean("status") && this.is_execute_descriptor) {
                 actions = this.getActions(response);
                 adapter.addAll(this.filterActions(actions));
                 loader.setVisibility(View.GONE);
                 this.action_list.setVisibility(View.VISIBLE);
                 this.button_update_Status.setVisibility(View.VISIBLE);
                 this.set_status(response.getJSONObject("fw_status"));
+                this.is_execute_descriptor = false;
             } else if(response.getBoolean("status") && this.is_execute_status){
+                Log.e("execute_status:","true");
                 this.status_list.setVisibility(View.VISIBLE);
                 this.set_status(response);
                 this.button_update_Status.setEnabled(true);
                 this.loader_status.setVisibility(View.GONE);
+                this.is_execute_status = false;
+            }else if(this.is_execute_enable){
+                Toast toast;
+                if(response.getBoolean("status")){
+                    toast = Toast.makeText(this.getApplicationContext(), "Firewall enabled", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else{
+                    toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                this.action_list.setEnabled(true);
+                this.is_execute_enable = false;
+                this.update_status();
             }else{
                 this.show_error();
             }
@@ -121,6 +149,18 @@ public class FirewallActivity extends AsyncTaskActivity {
             this.button_update_Status.setEnabled(false);
             this.loader_status.setIndeterminateDrawable(this.w);
             this.loader_status.setVisibility(View.VISIBLE);
+        } catch (JSONException e) {
+            Log.e("status", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public void execute_firewall_action(FirewallAction action){
+        JSONObject query = new JSONObject();
+        try {
+            this.action_list.setEnabled(false);
+            query.put("command",action.getCommand());
+            query.put("args",action.getArgs());
+            Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("status", Arrays.toString(e.getStackTrace()));
         }
