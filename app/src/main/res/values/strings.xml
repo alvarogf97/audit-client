@@ -35,5 +35,6 @@
     <string name="export">Export firewall settings</string>
     <string name="export_button">export</string>
     <string name="select_file">Select file to restore firewall settings</string>
+    <string name="error_con">This action will produce application reset</string>
 
 </resources>

@@ -270,7 +270,7 @@ public class Connection{
         boolean status = false;
         try{
             Socket socket = factory.createSocket();
-            socket.connect(new InetSocketAddress(ip,port),1000);
+            socket.connect(new InetSocketAddress(ip,port),2000);
             DataInputStream dIn = new DataInputStream(socket.getInputStream());
             JSONObject response = JsonParsers.parse_string(ConnectionHandler.recv_msg(dIn));
             if(response != null){

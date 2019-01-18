@@ -19,6 +19,8 @@ import com.example.alvaro.client_audit.core.entities.FirewallAction;
 import com.example.alvaro.client_audit.core.entities.StatusFirewall;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ import java.util.List;
 
 public class FirewallActivity extends AsyncTaskActivity {
 
+    private ThreeBounce w_w;
     private SpinKitView loader;
     private SpinKitView loader_status;
     private Button button_update_Status;
@@ -51,6 +54,7 @@ public class FirewallActivity extends AsyncTaskActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firewall);
         this.is_execute_status = false;
+        this.w_w = new ThreeBounce();
         this.is_execute_enable = false;
         this.action_text = (TextView) findViewById(R.id.firewall_actions_text);
         this.status_text = (TextView) findViewById(R.id.firewall_status_text);
@@ -82,6 +86,7 @@ public class FirewallActivity extends AsyncTaskActivity {
         this.loader.setVisibility(View.VISIBLE);
         this.action_list.setVisibility(View.GONE);
         this.button_update_Status.setVisibility(View.GONE);
+        loader.setIndeterminateDrawable(this.w_w);
         loader.setIndeterminateDrawable(this.w);
         execute_query();
     }

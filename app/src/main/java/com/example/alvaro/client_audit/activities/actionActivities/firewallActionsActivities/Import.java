@@ -94,6 +94,8 @@ public class Import extends AsyncTaskActivity {
         try {
             query.put("command",get_files_action.getCommand());
             query.put("args",get_files_action.getArgs());
+            Toast toast = Toast.makeText(this.getApplicationContext(), "Firewall restoring...", Toast.LENGTH_SHORT);
+            toast.show();
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("files_firewall", Arrays.toString(e.getStackTrace()));
