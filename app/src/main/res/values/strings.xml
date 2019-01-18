@@ -34,5 +34,6 @@
     <string name="disable">disable</string>
     <string name="export">Export firewall settings</string>
     <string name="export_button">export</string>
+    <string name="select_file">Select file to restore firewall settings</string>
 
 </resources>
