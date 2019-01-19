@@ -44,6 +44,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     private TextView error_text;
     private ImageView error_image;
     public static List<FirewallAction> actions;
+    public static boolean is_admin;
 
     public boolean is_execute_status;
     public boolean is_execute_enable;
@@ -132,6 +133,7 @@ public class FirewallActivity extends AsyncTaskActivity {
 
     private void set_status(JSONObject response) throws JSONException {
         JSONObject status_data = response.getJSONObject("data");
+        is_admin = response.getBoolean("administrator");
         List<StatusFirewall> status_items = new ArrayList<>();
         Iterator<String> data_iter = status_data.keys();
         while (data_iter.hasNext()){

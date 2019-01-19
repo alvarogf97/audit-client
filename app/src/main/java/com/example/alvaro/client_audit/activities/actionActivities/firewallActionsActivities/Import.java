@@ -12,6 +12,7 @@ import com.example.alvaro.client_audit.controllers.adapters.FileAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.firewallActivityListeners.FileRestoreItemClickListener;
 import com.example.alvaro.client_audit.core.entities.File;
 import com.example.alvaro.client_audit.core.entities.FirewallAction;
+import com.example.alvaro.client_audit.core.exceptions.ConnectionException;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 import org.json.JSONArray;
@@ -94,8 +95,6 @@ public class Import extends AsyncTaskActivity {
         try {
             query.put("command",get_files_action.getCommand());
             query.put("args",get_files_action.getArgs());
-            Toast toast = Toast.makeText(this.getApplicationContext(), "Firewall restoring...", Toast.LENGTH_SHORT);
-            toast.show();
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("files_firewall", Arrays.toString(e.getStackTrace()));
@@ -112,6 +111,11 @@ public class Import extends AsyncTaskActivity {
             args.put("filename",selected_file.getName());
             query.put("args",args);
             Connection.get_connection().execute_command(query, this);
+            if(FirewallActivity.is_admin){
+                Toast toast = Toast.makeText(this.getApplicationContext(), "Firewall restoring...", Toast.LENGTH_SHORT);
+                toast.show();
+                throw new ConnectionException("firewall restored");
+            }
         } catch (JSONException e) {
             Log.e("restore_firewall", Arrays.toString(e.getStackTrace()));
         }
