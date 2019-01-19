@@ -38,5 +38,7 @@
     <string name="error_con">This action will produce application reset</string>
     <string name="rules">Firewall rules</string>
     <string name="delete">delete</string>
+    <string name="create_fw_rule" />
+    <string name="create_fw_new_rule">Create new firewall rule</string>
 
 </resources>
