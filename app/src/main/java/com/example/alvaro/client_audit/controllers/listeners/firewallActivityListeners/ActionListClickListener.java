@@ -7,6 +7,7 @@ import com.example.alvaro.client_audit.activities.actionActivities.FirewallActiv
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Disable;
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Export;
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Import;
+import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.ShowRules;
 import com.example.alvaro.client_audit.core.entities.FirewallAction;
 
 public class ActionListClickListener implements AdapterView.OnItemClickListener {
@@ -32,6 +33,9 @@ public class ActionListClickListener implements AdapterView.OnItemClickListener 
             this.activity.startActivity(intent);
         }else if(selected_action.getName().equals("import settings")){
             Intent intent = new Intent(this.activity.getApplicationContext(), Import.class);
+            this.activity.startActivity(intent);
+        }else if(selected_action.getName().equals("view rules")){
+            Intent intent = new Intent(this.activity.getApplicationContext(), ShowRules.class);
             this.activity.startActivity(intent);
         }
     }
