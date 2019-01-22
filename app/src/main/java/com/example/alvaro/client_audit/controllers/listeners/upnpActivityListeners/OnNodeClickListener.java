@@ -40,6 +40,7 @@ public class OnNodeClickListener implements TreeNode.TreeNodeClickListener {
                 query.put("args_out", action_node.args_out);
                 this.activity.setExecutionArgs(query);
                 Intent intent = new Intent(this.activity.getApplicationContext(), UpnpActionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("args",query.toString());
                 this.activity.startActivity(intent);
             } catch (JSONException e) {

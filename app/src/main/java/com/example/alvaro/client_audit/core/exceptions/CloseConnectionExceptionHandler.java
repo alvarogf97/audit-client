@@ -26,6 +26,7 @@ public class CloseConnectionExceptionHandler implements Thread.UncaughtException
         Log.e("Uncaught exception", Arrays.toString(e.getStackTrace()));
         Connection.get_connection().close();
         Intent intent = new Intent(this.context,HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(CloseConnectionExceptionHandler.EXTRA_CLOSE_HANDLER,"Connection closed");
         context.startActivity(intent);
 

@@ -27,6 +27,7 @@ public class InsideDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inside_device);
 
         Intent intent = this.getIntent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         String cwd = intent.getExtras().getString("cwd");
 
         this.menu_items = new ArrayList<>(Arrays.asList(

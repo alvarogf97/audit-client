@@ -173,11 +173,9 @@ public class Connection{
 
     //TODO
     private Connection(){
-        InputStream ca = res.openRawResource(R.raw.ca_cert);
-        InputStream client_cert = res.openRawResource(R.raw.client_cert);
-        InputStream client_cert_key = res.openRawResource(R.raw.client_key);
-        factory = SslUtil.getSocketFactory(ca,client_cert,client_cert_key,"TFG");
-
+        InputStream jks_stream = res.openRawResource(R.raw.store);
+        factory = SslUtil.getSocketFactory(jks_stream);
+    /*
         try {
             ca.close();
             client_cert.close();
@@ -185,7 +183,7 @@ public class Connection{
         } catch (IOException e) {
             Log.v("Conn::constructor", Arrays.toString(e.getStackTrace()));
         }
-
+    */
     }
 
     /*

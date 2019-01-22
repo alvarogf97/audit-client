@@ -42,6 +42,7 @@ public class ConnectButtonListener implements View.OnClickListener {
 
             if(Connection.get_connection().login(query)){
                 Intent intent = new Intent(this.activity.getApplicationContext(), InsideDeviceActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.activity.hide_dialog();
                 try {
                     intent.putExtra("cwd",response.getString("data"));

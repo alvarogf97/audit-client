@@ -18,6 +18,7 @@ public class CreateRuleButonClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.activity.getApplicationContext(), Create.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.activity.startActivity(intent);
     }
 }

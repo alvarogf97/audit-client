@@ -24,6 +24,7 @@ public class DeviceListItemClickListener implements AdapterView.OnItemClickListe
         Log.e("ItemClick",selected_device.get_name());
         DeviceBook.get_instance().set_selected_device(selected_device);
         Intent intent = new Intent(this.context,DeviceHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.context.startActivity(intent);
     }
 
