@@ -95,7 +95,7 @@ public class ShowRules extends AsyncTaskActivity {
                     this.create_button.setEnabled(true);
                     this.start_animation();
                 }else{
-                    toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                     toast.show();
                     layout.setVisibility(View.VISIBLE);
                     loader.setVisibility(View.GONE);

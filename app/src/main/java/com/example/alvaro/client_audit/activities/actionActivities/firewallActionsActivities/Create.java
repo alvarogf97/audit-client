@@ -71,7 +71,7 @@ public class Create extends AsyncTaskActivity implements DialogActivity {
                 toast.show();
                 this.finish();
             }else{
-                toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                 toast.show();
                 this.execute_button.setEnabled(true);
             }

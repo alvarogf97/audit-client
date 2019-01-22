@@ -54,7 +54,7 @@ public class Disable extends AsyncTaskActivity {
                 this.finish();
             }else{
                 this.disable_button.setEnabled(true);
-                Toast toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                 toast.show();
             }
         } catch (JSONException e) {

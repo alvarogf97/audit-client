@@ -104,7 +104,7 @@ public class FirewallActivity extends AsyncTaskActivity {
                 this.button_update_Status.setVisibility(View.VISIBLE);
                 this.set_status(response.getJSONObject("fw_status"));
                 this.is_execute_descriptor = false;
-            } else if(response.getBoolean("status") && this.is_execute_status){
+            } else if(response.getBoolean("status") && this.is_execute_status && is_admin){
                 Log.e("execute_status:","true");
                 this.status_list.setVisibility(View.VISIBLE);
                 this.set_status(response);
@@ -117,14 +117,16 @@ public class FirewallActivity extends AsyncTaskActivity {
                     toast = Toast.makeText(this.getApplicationContext(), "Firewall enabled", Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
-                    toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 this.action_list.setEnabled(true);
                 this.is_execute_enable = false;
                 this.update_status();
+            }else if(response.getBoolean("status") && !is_admin){
+                this.show_error(R.drawable.ic_lock, getResources().getString(R.string.no_admin));
             }else{
-                this.show_error();
+                this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
             }
         } catch (JSONException e) {
             Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
@@ -134,6 +136,9 @@ public class FirewallActivity extends AsyncTaskActivity {
     private void set_status(JSONObject response) throws JSONException {
         JSONObject status_data = response.getJSONObject("data");
         is_admin = response.getBoolean("administrator");
+        if(!is_admin){
+
+        }
         List<StatusFirewall> status_items = new ArrayList<>();
         Iterator<String> data_iter = status_data.keys();
         while (data_iter.hasNext()){
@@ -173,14 +178,20 @@ public class FirewallActivity extends AsyncTaskActivity {
         }
     }
 
-    private void show_error(){
+    private void show_error(int image, String text){
         this.action_text.setVisibility(View.GONE);
         this.status_text.setVisibility(View.GONE);
         this.action_list.setVisibility(View.GONE);
         this.button_update_Status.setVisibility(View.GONE);
         this.status_list.setVisibility(View.GONE);
+
+        this.error_image.setImageResource(image);
+        this.error_text.setText(text);
         this.error_image.setVisibility(View.VISIBLE);
         this.error_text.setVisibility(View.VISIBLE);
+
+        this.loader.setVisibility(View.GONE);
+        this.loader_status.setVisibility(View.GONE);
     }
 
     private List<FirewallAction> getActions(JSONObject response){

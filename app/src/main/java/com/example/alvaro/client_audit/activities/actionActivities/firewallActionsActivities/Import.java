@@ -68,7 +68,7 @@ public class Import extends AsyncTaskActivity {
                     toast.show();
                     this.finish();
                 }else{
-                    toast = Toast.makeText(this.getApplicationContext(), "You do not have privileges", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 this.is_restoring = false;
