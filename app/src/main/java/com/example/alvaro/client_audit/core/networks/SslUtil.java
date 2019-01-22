@@ -22,12 +22,15 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.Security;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
@@ -51,7 +54,8 @@ public class SslUtil {
             X509CertificateHolder caCertHolder = (X509CertificateHolder) reader.readObject();
             reader.close();
 
-            X509Certificate caCert = certificateConverter.getCertificate(caCertHolder);
+            CertificateFactory cFact = CertificateFactory.getInstance("X509");
+            X509Certificate caCert = (X509Certificate)cFact.generateCertificate(new ByteArrayInputStream(caCertHolder.getEncoded()));
 
             /*
              * Load client certificate
@@ -60,7 +64,7 @@ public class SslUtil {
             X509CertificateHolder certHolder = (X509CertificateHolder) reader.readObject();
             reader.close();
 
-            X509Certificate cert = certificateConverter.getCertificate(certHolder);
+            X509Certificate cert = (X509Certificate)cFact.generateCertificate(new ByteArrayInputStream(certHolder.getEncoded()));
 
             /*
              * Load client private key
