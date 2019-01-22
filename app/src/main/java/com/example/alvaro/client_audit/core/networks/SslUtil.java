@@ -9,15 +9,12 @@ package com.example.alvaro.client_audit.core.networks;
  */
 
 import android.util.Log;
-
-import org.conscrypt.Conscrypt;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.InputStream;
 import java.security.KeyStore;
-import java.security.Security;
 import java.util.Arrays;
 
 public class SslUtil {
