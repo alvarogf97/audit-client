@@ -9,7 +9,6 @@ package com.example.alvaro.client_audit.core.networks;
  */
 
 import android.util.Log;
-
 import org.spongycastle.cert.X509CertificateHolder;
 import org.spongycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.spongycastle.jce.provider.BouncyCastleProvider;
@@ -118,6 +117,7 @@ public class SslUtil {
 
         } catch (Exception e) {
             Log.e("SSL::Factory", Arrays.toString(e.getStackTrace()));
+            Log.e("SSL::FACTORY",e.getMessage());
         }
 
         return null;

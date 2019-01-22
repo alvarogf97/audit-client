@@ -171,6 +171,7 @@ public class Connection{
         private Constructor
      */
 
+    //TODO
     private Connection(){
         InputStream ca = res.openRawResource(R.raw.ca_cert);
         InputStream client_cert = res.openRawResource(R.raw.client_cert);
