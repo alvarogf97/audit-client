@@ -123,10 +123,10 @@ public class FirewallActivity extends AsyncTaskActivity {
                 this.action_list.setEnabled(true);
                 this.is_execute_enable = false;
                 this.update_status();
+            }else if(!response.getBoolean("status")){
+                this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
             }else if(!is_admin){
                 this.show_error(R.drawable.ic_lock, getResources().getString(R.string.no_admin));
-            }else{
-                this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
             }
         } catch (JSONException e) {
             Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
