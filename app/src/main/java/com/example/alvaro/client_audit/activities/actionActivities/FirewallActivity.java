@@ -49,6 +49,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     public boolean is_execute_status;
     public boolean is_execute_enable;
     public boolean is_execute_descriptor;
+    private boolean is_compatible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,58 +97,69 @@ public class FirewallActivity extends AsyncTaskActivity {
     public void stop_animation(Object... objects) {
         JSONObject response = (JSONObject) objects[0];
         try {
-            if (response.getBoolean("status") && this.is_execute_descriptor) {
-                actions = this.getActions(response);
-                adapter.addAll(this.filterActions(actions));
-                loader.setVisibility(View.GONE);
-                this.action_list.setVisibility(View.VISIBLE);
-                this.button_update_Status.setVisibility(View.VISIBLE);
-                this.set_status(response.getJSONObject("fw_status"));
+            if (this.is_execute_descriptor) {
+                is_compatible = response.getBoolean("status");
+                is_admin = response.getJSONObject("fw_status").getBoolean("administrator");
+                Log.e("compatible=",String.valueOf(is_compatible));
+                Log.e("admin=",String.valueOf(is_admin));
+                if(is_compatible && is_admin){
+                    actions = this.getActions(response);
+                    adapter.addAll(this.filterActions(actions));
+                    loader.setVisibility(View.GONE);
+                    this.action_list.setVisibility(View.VISIBLE);
+                    this.button_update_Status.setVisibility(View.VISIBLE);
+                    this.set_status(response.getJSONObject("fw_status"));
+                }else if(!is_compatible){
+                    Log.e("error","error");
+                    this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
+                }else{
+                    this.show_error(R.drawable.ic_lock, getResources().getString(R.string.no_admin));
+                }
                 this.is_execute_descriptor = false;
-            } else if(response.getBoolean("status") && this.is_execute_status && is_admin){
-                Log.e("execute_status:","true");
+            } else if(this.is_execute_status && is_compatible && is_admin){
                 this.status_list.setVisibility(View.VISIBLE);
                 this.set_status(response);
                 this.button_update_Status.setEnabled(true);
                 this.loader_status.setVisibility(View.GONE);
                 this.is_execute_status = false;
-            }else if(this.is_execute_enable){
+            }else if(this.is_execute_enable && is_compatible && is_admin) {
                 Toast toast;
-                if(response.getBoolean("status")){
+                if (response.getBoolean("status")) {
                     toast = Toast.makeText(this.getApplicationContext(), "Firewall enabled", Toast.LENGTH_SHORT);
                     toast.show();
-                }else{
+                } else {
                     toast = Toast.makeText(this.getApplicationContext(), "Whoops, some errors found :(", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 this.action_list.setEnabled(true);
                 this.is_execute_enable = false;
                 this.update_status();
-            }else if(!response.getBoolean("status")){
-                this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
             }else if(!is_admin){
                 this.show_error(R.drawable.ic_lock, getResources().getString(R.string.no_admin));
             }
         } catch (JSONException e) {
             Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
+            Log.e("firewall_response",e.getMessage());
+            Log.e("firewall_respones", String.valueOf(is_admin));
         }
     }
 
     private void set_status(JSONObject response) throws JSONException {
         JSONObject status_data = response.getJSONObject("data");
+        Log.e("status_data",status_data.toString());
         is_admin = response.getBoolean("administrator");
-        if(!is_admin){
-
+        if(is_admin){
+            List<StatusFirewall> status_items = new ArrayList<>();
+            Iterator<String> data_iter = status_data.keys();
+            while (data_iter.hasNext()){
+                String key = data_iter.next();
+                boolean is_active = status_data.getBoolean(key);
+                status_items.add(new StatusFirewall(key, is_active));
+            }
+            adapter_status.clear();
+            adapter_status.addAll(status_items);
         }
-        List<StatusFirewall> status_items = new ArrayList<>();
-        Iterator<String> data_iter = status_data.keys();
-        while (data_iter.hasNext()){
-            String key = data_iter.next();
-            boolean is_active = status_data.getBoolean(key);
-            status_items.add(new StatusFirewall(key, is_active));
-        }
-        adapter_status.clear();
-        adapter_status.addAll(status_items);
+        Log.e("admin",String.valueOf(is_admin));
     }
 
     public void update_status(){
