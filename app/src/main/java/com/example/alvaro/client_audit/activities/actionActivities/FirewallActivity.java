@@ -123,7 +123,7 @@ public class FirewallActivity extends AsyncTaskActivity {
                 this.action_list.setEnabled(true);
                 this.is_execute_enable = false;
                 this.update_status();
-            }else if(response.getBoolean("status") && !is_admin){
+            }else if(!is_admin){
                 this.show_error(R.drawable.ic_lock, getResources().getString(R.string.no_admin));
             }else{
                 this.show_error(R.drawable.ic_warning, getResources().getString(R.string.firewall_incompatible));
