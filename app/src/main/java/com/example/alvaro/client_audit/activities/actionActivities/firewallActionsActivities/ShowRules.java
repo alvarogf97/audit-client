@@ -145,9 +145,10 @@ public class ShowRules extends AsyncTaskActivity {
         for(int i = 0; i<data.length(); i++){
             JSONObject json_rule = data.getJSONObject(i);
             String rule_number = String.valueOf(json_rule.getInt("number"));
+            String rule_name = json_rule.getString("name");
             DeleteRuleButonClickListener listener = new DeleteRuleButonClickListener(this);
             NodeTreeViewAdapter.NodeItem node =
-                    new NodeTreeViewAdapter.NodeItem(rule_number,"", R.drawable.ic_fw_rule,0, true,listener);
+                    new NodeTreeViewAdapter.NodeItem(rule_number,rule_name, R.drawable.ic_fw_rule,0, true,listener);
             listener.setNode(node);
             TreeNode new_node = new TreeNode(node).setViewHolder(new NodeTreeViewAdapter(this.getApplicationContext()));
             JSONObject rule_kwargs = json_rule.getJSONObject("kwargs");

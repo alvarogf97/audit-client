@@ -26,11 +26,11 @@
                 android:id="@+id/erasable_button"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="231dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="248dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@android:color/holo_red_light"
                 android:text="@string/delete"
                 android:visibility="gone" />
@@ -62,15 +62,15 @@
 
             <TextView
                 android:id="@+id/node_value"
-                android:layout_width="271dp"
-                android:layout_height="47dp"
+                android:layout_width="302dp"
+                android:layout_height="37dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="20dp"
                 android:layout_toEndOf="@+id/node_image"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 tools:text="node value" />
         </RelativeLayout>
 

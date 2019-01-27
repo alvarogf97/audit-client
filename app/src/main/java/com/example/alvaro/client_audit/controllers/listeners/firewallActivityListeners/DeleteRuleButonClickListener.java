@@ -1,8 +1,6 @@
 package com.example.alvaro.client_audit.controllers.listeners.firewallActivityListeners;
 
 import android.view.View;
-import android.widget.Toast;
-
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.ShowRules;
 import com.example.alvaro.client_audit.controllers.adapters.NodeTreeViewAdapter;
 
