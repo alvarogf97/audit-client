@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import com.example.alvaro.client_audit.activities.actionActivities.FirewallActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.ChainActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Disable;
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Export;
 import com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities.Import;
@@ -41,6 +42,11 @@ public class ActionListClickListener implements AdapterView.OnItemClickListener 
             Intent intent = new Intent(this.activity.getApplicationContext(), ShowRules.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.activity.startActivity(intent);
+        }else if(selected_action.getName().equals("view chains")){
+            Intent intent = new Intent(this.activity.getApplicationContext(), ChainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.activity.startActivity(intent);
         }
+
     }
 }
