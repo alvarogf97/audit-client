@@ -16,7 +16,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/export"
+        android:text="@string/create_fw_new_rule"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
