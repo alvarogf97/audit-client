@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alvaro.client_audit.R;
@@ -21,11 +23,9 @@ import com.example.alvaro.client_audit.core.entities.Chain;
 import com.example.alvaro.client_audit.core.entities.FirewallAction;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +38,8 @@ public class ChainActivity extends AsyncTaskActivity {
     private Button add_button;
     private EditText chain_name_edit;
     private FirewallChainAdapter adapter;
+    private TextView reload_text_view;
+    private ImageView reload_warning_image;
 
     private boolean is_getting_chains;
     private boolean is_flushing_chain;
@@ -61,6 +63,9 @@ public class ChainActivity extends AsyncTaskActivity {
         this.add_button = (Button) findViewById(R.id.button_create_chain);
         this.update_button = (Button) findViewById(R.id.button_update_cahins);
         this.loader = (SpinKitView) findViewById(R.id.chain_loader);
+
+        this.reload_text_view = (TextView) findViewById(R.id.reload_text_view);
+        this.reload_warning_image = (ImageView) findViewById(R.id.reload_image_view);
 
         this.add_button.setOnClickListener(new CreateChainButtonClickListener(this));
         this.update_button.setOnClickListener(new UpdateChainButtonClickListener(this));
@@ -93,7 +98,7 @@ public class ChainActivity extends AsyncTaskActivity {
                 if(response.getBoolean("status")){
                     Toast toast = Toast.makeText(this, "policy changed correctly", Toast.LENGTH_SHORT);
                     toast.show();
-                    this.get_chains();
+                    this.show_reload();
                 }else{
                     Toast toast = Toast.makeText(this, "Cannot change policy", Toast.LENGTH_SHORT);
                     toast.show();
@@ -137,6 +142,16 @@ public class ChainActivity extends AsyncTaskActivity {
         }
     }
 
+    private void show_reload(){
+        this.loader.setVisibility(View.GONE);
+        this.chain_list_view.setVisibility(View.GONE);
+        this.chain_name_edit.setVisibility(View.GONE);
+        this.update_button.setVisibility(View.GONE);
+        this.add_button.setVisibility(View.GONE);
+        this.reload_text_view.setVisibility(View.VISIBLE);
+        this.reload_warning_image.setVisibility(View.VISIBLE);
+    }
+
     private void load(){
         this.adapter.clear();
         this.loader.setIndeterminateDrawable(this.w);
@@ -160,10 +175,10 @@ public class ChainActivity extends AsyncTaskActivity {
         FirewallAction action = FirewallActivity.getActionByName("view chains");
         JSONObject query = new JSONObject();
         try {
+            this.is_getting_chains = true;
             query.put("command", action.getCommand());
             query.put("args", action.getArgs());
             Connection.get_connection().execute_command(query, this);
-            this.is_getting_chains = true;
         } catch (JSONException e) {
             Log.e("getting chains", Arrays.toString(e.getStackTrace()));
         }
@@ -175,11 +190,11 @@ public class ChainActivity extends AsyncTaskActivity {
         JSONObject query = new JSONObject();
         JSONObject args = new JSONObject();
         try {
+            this.is_flushing_chain = true;
             query.put("command",action.getCommand());
             args.put("name",chain.getName());
             query.put("args",args);
             Connection.get_connection().execute_command(query, this);
-            this.is_flushing_chain = true;
         } catch (JSONException e) {
             Log.e("flush chain", Arrays.toString(e.getStackTrace()));
         }
@@ -193,11 +208,11 @@ public class ChainActivity extends AsyncTaskActivity {
             JSONObject query = new JSONObject();
             JSONObject args = new JSONObject();
             try {
+                this.is_creating_chain = true;
                 query.put("command",action.getCommand());
                 args.put("name",chain_name);
                 query.put("args",args);
                 Connection.get_connection().execute_command(query, this);
-                this.is_creating_chain = true;
             } catch (JSONException e) {
                 Log.e("create chain", Arrays.toString(e.getStackTrace()));
             }
@@ -213,11 +228,11 @@ public class ChainActivity extends AsyncTaskActivity {
         JSONObject query = new JSONObject();
         JSONObject args = new JSONObject();
         try {
+            this.is_deleting_chain = true;
             query.put("command",action.getCommand());
             args.put("name",chain.getName());
             query.put("args",args);
             Connection.get_connection().execute_command(query, this);
-            this.is_deleting_chain = true;
         } catch (JSONException e) {
             Log.e("remove chain", Arrays.toString(e.getStackTrace()));
         }
@@ -230,12 +245,12 @@ public class ChainActivity extends AsyncTaskActivity {
         JSONObject query = new JSONObject();
         JSONObject args = new JSONObject();
         try {
+            this.is_changing_policy = true;
             query.put("command",action.getCommand());
             args.put("name",chain.getName());
             args.put("policy",chain.getPolicy());
             query.put("args",args);
             Connection.get_connection().execute_command(query, this);
-            this.is_changing_policy = true;
         } catch (JSONException e) {
             Log.e("change chain policy", Arrays.toString(e.getStackTrace()));
         }
@@ -246,7 +261,8 @@ public class ChainActivity extends AsyncTaskActivity {
         for(int i = 0; i<chain_list.length(); i++){
             try {
                 JSONObject json_chain = chain_list.getJSONObject(i);
-                Chain chain = new Chain(json_chain.getString("name"), json_chain.getString("policy"), json_chain.getBoolean("is_removable"));
+                Chain chain = new Chain(json_chain.getString("name"), json_chain.getString("policy"),
+                        json_chain.getBoolean("is_removable"), json_chain.getBoolean("is_changeable"));
                 chain.setChange_policy_listener(new ChangeChainPolicyButtonClickListener(this,chain));
                 chain.setDelete_listener(new DeleteChainButtonClickListener(this,chain));
                 chain.setFlush_listener(new FlushChainButtonClickListener(this,chain));

@@ -44,4 +44,5 @@
     <string name="change_policy">change policy</string>
     <string name="flush">flush</string>
     <string name="chains">Firewall chains</string>
+    <string name="reload">Please, reload application to see changes</string>
 </resources>

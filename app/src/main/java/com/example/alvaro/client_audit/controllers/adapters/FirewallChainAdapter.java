@@ -40,13 +40,22 @@ public class FirewallChainAdapter extends ArrayAdapter<Chain> {
         holder.chain_name.setText(chain.getName());
         holder.chain_policy.setText(chain.getPolicy());
         holder.imageView.setImageResource(R.drawable.ic_chain);
+
         if(!chain.isRemovable()){
             holder.delete_chain_button.setVisibility(View.GONE);
         }else{
+            holder.delete_chain_button.setVisibility(View.VISIBLE);
             holder.delete_chain_button.setOnClickListener(chain.getDelete_listener());
         }
+
+        if(!chain.isChangeable()){
+            holder.change_policy_button.setVisibility(View.GONE);
+        }else{
+            holder.change_policy_button.setVisibility(View.VISIBLE);
+            holder.change_policy_button.setOnClickListener(chain.getChange_policy_listener());
+        }
+
         holder.flush_chain_button.setOnClickListener(chain.getFlush_listener());
-        holder.change_policy_button.setOnClickListener(chain.getChange_policy_listener());
 
         return convertView;
     }

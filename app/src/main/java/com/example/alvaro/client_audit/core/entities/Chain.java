@@ -9,14 +9,16 @@ public class Chain {
     private String name;
     private String policy;
     private boolean is_removable;
+    private boolean is_changeable;
     private ChangeChainPolicyButtonClickListener change_policy_listener;
     private FlushChainButtonClickListener flush_listener;
     private DeleteChainButtonClickListener delete_listener;
 
-    public Chain(String name, String policy, boolean is_removable){
+    public Chain(String name, String policy, boolean is_removable, boolean is_changeable){
         this.name = name;
         this.policy = policy;
         this.is_removable = is_removable;
+        this.is_changeable = is_changeable;
     }
 
     public String getName(){
@@ -41,6 +43,10 @@ public class Chain {
 
     public ChangeChainPolicyButtonClickListener getChange_policy_listener() {
         return change_policy_listener;
+    }
+
+    public boolean isChangeable(){
+        return this.is_changeable;
     }
 
     public FlushChainButtonClickListener getFlush_listener() {
