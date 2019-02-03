@@ -1,12 +1,4 @@
 package com.example.alvaro.client_audit.core.networks;
-/**
- * Utility class to read encrypted PEM files and generate a
- * SSL Socket Factory based on the provided certificates.
- * The original code is by Sharon Asher (link below). I have adapt
- * it to android os using spongy castle
- *
- * Reference - https://gist.github.com/sharonbn/4104301"
- */
 
 import android.util.Log;
 import javax.net.ssl.KeyManagerFactory;

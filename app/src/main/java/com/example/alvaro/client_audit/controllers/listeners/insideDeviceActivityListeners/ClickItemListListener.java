@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.actionActivities.FirewallActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.HardwareActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.NetworkActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.PortsActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.ProcessesActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.UpnpActivity;
@@ -39,7 +39,9 @@ public class ClickItemListListener implements AdapterView.OnItemClickListener {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Network).equals(selected_menu_option)){
-            this.make_toast();
+            Intent intent = new Intent(this.activity.getApplicationContext(), NetworkActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Upnp).equals(selected_menu_option)){
             Intent intent = new Intent(this.activity.getApplicationContext(),UpnpActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

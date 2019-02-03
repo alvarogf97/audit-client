@@ -45,4 +45,11 @@
     <string name="flush">flush</string>
     <string name="chains">Firewall chains</string>
     <string name="reload">Please, reload application to see changes</string>
+    <string name="network">Network analysis</string>
+    <string name="change">change graph</string>
+    <string name="anomalies">Network anomalies</string>
+    <string name="graph_input_size_time">Input | size/time</string>
+    <string name="graph_output_size_time">Output | size/time</string>
+    <string name="graph_input_size_port">Input | size/port</string>
+    <string name="graph_output_size_port">Output | size/port</string>
 </resources>
