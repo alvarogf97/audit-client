@@ -13,8 +13,10 @@ import android.support.v7.app.AlertDialog;
 
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
+import com.example.alvaro.client_audit.controllers.adapters.LegendAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.GraphTypeOnClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.OpenDialogClickListener;
+import com.example.alvaro.client_audit.core.entities.LegendItem;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -29,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class NetworkActivity extends AsyncTaskActivity {
 
@@ -37,7 +40,7 @@ public class NetworkActivity extends AsyncTaskActivity {
     private boolean is_analysing;
     private boolean is_adding_exception;
     private GraphView graph;
-    private ListView anomalies_list;
+    private ListView graph_legend;
     private Button change_button;
     private SpinKitView loader;
     private TextView info;
@@ -45,6 +48,8 @@ public class NetworkActivity extends AsyncTaskActivity {
     private TextView n_t_2;
     private ListView graph_options;
     private AlertDialog dialog;
+    private Button re_scan;
+    private Button anomalies_button;
 
     private List<NetworkMeasure> input_measures;
     private List<NetworkMeasure> output_measures;
@@ -54,6 +59,10 @@ public class NetworkActivity extends AsyncTaskActivity {
     private LineGraphSeries<DataPoint> output_size_time_graph;
     private BarGraphSeries<DataPoint> input_size_port_graph;
     private BarGraphSeries<DataPoint> output_size_port_graph;
+
+    private List<LegendItem> input_legend;
+    private List<LegendItem> output_legend;
+    private LegendAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +77,20 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.is_adding_exception = false;
         this.loader = (SpinKitView) findViewById(R.id.anim_load_network);
         this.change_button = (Button) findViewById(R.id.button_change_graph);
-        this.anomalies_list = (ListView) findViewById(R.id.abnormal_measure_list);
+        this.graph_legend = (ListView) findViewById(R.id.legend_list);
         this.graph = (GraphView) findViewById(R.id.graph);
+        this.anomalies_button = (Button) findViewById(R.id.re_start_analysis_button);
+        this.re_scan = (Button) findViewById(R.id.button_n_anomalies);
         this.info = (TextView) findViewById(R.id.info_n_text);
         this.n_t_1 = (TextView) findViewById(R.id.n_t_1);
         this.n_t_2 = (TextView) findViewById(R.id.n_t_2);
         this.change_button.setOnClickListener(new OpenDialogClickListener(this));
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(1);
+        this.adapter = new LegendAdapter(this);
+        this.graph_legend.setAdapter(adapter);
         this.create_dialog();
         this.start_animation();
     }
@@ -109,8 +126,12 @@ public class NetworkActivity extends AsyncTaskActivity {
             this.graph.addSeries(this.output_size_time_graph);
         }else if(gr == 2){
             this.graph.addSeries(this.input_size_port_graph);
+            adapter.clear();
+            adapter.addAll(this.input_legend);
         }else if(gr == 3) {
             this.graph.addSeries(this.output_size_port_graph);
+            adapter.clear();
+            adapter.addAll(this.output_legend);
         }
     }
     @Override
@@ -118,22 +139,26 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.loader.setIndeterminateDrawable(this.w);
         this.loader.setVisibility(View.VISIBLE);
         this.info.setVisibility(View.VISIBLE);
-        this.anomalies_list.setVisibility(View.GONE);
+        this.graph_legend.setVisibility(View.GONE);
         this.change_button.setVisibility(View.GONE);
         this.graph.setVisibility(View.GONE);
         this.n_t_1.setVisibility(View.GONE);
         this.n_t_2.setVisibility(View.GONE);
+        this.re_scan.setVisibility(View.GONE);
+        this.anomalies_button.setVisibility(View.GONE);
         this.start_analysis(false);
     }
 
     private void show_all(){
         this.loader.setVisibility(View.GONE);
         this.info.setVisibility(View.GONE);
-        this.anomalies_list.setVisibility(View.VISIBLE);
+        this.graph_legend.setVisibility(View.VISIBLE);
         this.change_button.setVisibility(View.VISIBLE);
         this.graph.setVisibility(View.VISIBLE);
         this.n_t_1.setVisibility(View.VISIBLE);
         this.n_t_2.setVisibility(View.VISIBLE);
+        this.re_scan.setVisibility(View.VISIBLE);
+        this.anomalies_button.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -196,12 +221,17 @@ public class NetworkActivity extends AsyncTaskActivity {
 
     private void generate_graphs(){
 
-        Log.e("sdfdsf",Arrays.toString(NetworkMeasure.to_size_port(this.input_measures)));
         this.input_size_time_graph = new LineGraphSeries<>(NetworkMeasure.to_size_time(this.input_measures));
         this.output_size_time_graph = new LineGraphSeries<>(NetworkMeasure.to_size_time(this.output_measures));
-        this.input_size_port_graph = new BarGraphSeries<>(NetworkMeasure.to_size_port(this.input_measures));
-        this.output_size_port_graph = new BarGraphSeries<>(NetworkMeasure.to_size_port(this.output_measures));
 
+        List<Object> result_input = NetworkMeasure.to_size_port(this.input_measures);
+        List<Object> result_output = NetworkMeasure.to_size_port(this.output_measures);
+
+        this.input_size_port_graph = new BarGraphSeries<>((DataPoint[]) result_input.get(0));
+        this.output_size_port_graph = new BarGraphSeries<>((DataPoint[]) result_output.get(0));
+
+        this.input_legend = LegendItem.getItemsFromMap( (Map<Integer,Integer>)result_input.get(1));
+        this.output_legend = LegendItem.getItemsFromMap( (Map<Integer,Integer>)result_output.get(1));
 
         this.input_size_time_graph.setTitle("Input | size/time");
         this.input_size_time_graph.setAnimated(true);
@@ -216,11 +246,10 @@ public class NetworkActivity extends AsyncTaskActivity {
             }
         });
 
-        this.input_size_port_graph.setDrawValuesOnTop(true);
-        this.input_size_port_graph.setValuesOnTopColor(Color.RED);
         this.input_size_port_graph.setSpacing(50);
         this.input_size_port_graph.setTitle("Input | size/port");
         this.input_size_port_graph.setAnimated(true);
+
 
         this.output_size_port_graph.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
@@ -229,8 +258,6 @@ public class NetworkActivity extends AsyncTaskActivity {
             }
         });
 
-        this.output_size_port_graph.setDrawValuesOnTop(true);
-        this.output_size_port_graph.setValuesOnTopColor(Color.RED);
         this.output_size_port_graph.setSpacing(50);
         this.output_size_port_graph.setTitle("Output | size/port");
         this.output_size_port_graph.setAnimated(true);

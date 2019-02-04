@@ -52,4 +52,6 @@
     <string name="graph_output_size_time">Output | size/time</string>
     <string name="graph_input_size_port">Input | size/port</string>
     <string name="graph_output_size_port">Output | size/port</string>
+    <string name="legend">Legend</string>
+    <string name="abnormal_button">anomalies</string>
 </resources>

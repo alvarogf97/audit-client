@@ -11,7 +11,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NetworkMeasure {
 
@@ -100,22 +102,52 @@ public class NetworkMeasure {
         List<NetworkMeasure> mapped_list = NetworkMeasure.map_time(measure_list);
         DataPoint[] dataPoints = new DataPoint[mapped_list.size()];
         int index = 0;
+        int min = mapped_list.get(0).getSize();
+        int max = mapped_list.get(0).getSize();
         for(NetworkMeasure m : mapped_list){
             dataPoints[index] = new DataPoint(index, m.getSize());
+            if(m.getSize() < min){
+                min = m.getSize();
+            }
+            if(m.getSize() > max){
+                max = m.getSize();
+            }
             index++;
         }
-        return dataPoints;
+        return normalize(dataPoints, min, max);
     }
 
-    public static DataPoint[] to_size_port(List<NetworkMeasure> measure_list){
+    private static DataPoint[] normalize(DataPoint[] dataPoints, int min, int max){
+        DataPoint[] result = new DataPoint[dataPoints.length];
+        for(int i = 0; i<dataPoints.length; i++){
+            DataPoint dp = dataPoints[i];
+            result[i] = new DataPoint(dp.getX(),((dp.getY()-min)/(max-min)));
+        }
+        return result;
+    }
+
+    public static List<Object> to_size_port(List<NetworkMeasure> measure_list){
         List<NetworkMeasure> mapped_list = NetworkMeasure.map_port(measure_list);
+        Map<Integer, Integer> port_dict = new HashMap<>();
         DataPoint[] dataPoints = new DataPoint[mapped_list.size()];
         int index = 0;
+        int min = mapped_list.get(0).getSize();
+        int max = mapped_list.get(0).getSize();
         for(NetworkMeasure m : mapped_list ){
-            dataPoints[index] = new DataPoint(m.getPort(), m.getSize());
+            dataPoints[index] = new DataPoint(index,m.getSize());
+            port_dict.put(index, m.getPort());
+            if(m.getSize() < min){
+                min = m.getSize();
+            }
+            if(m.getSize() > max){
+                max = m.getSize();
+            }
             index++;
         }
-        return dataPoints;
+        List<Object> result = new ArrayList<>();
+        result.add(normalize(dataPoints, min, max));
+        result.add(port_dict);
+        return result;
     }
 
     private static List<NetworkMeasure> map_time(List<NetworkMeasure> measureList){
@@ -128,6 +160,12 @@ public class NetworkMeasure {
                 result.add(m);
             }
         }
+        result.sort(new Comparator<NetworkMeasure>() {
+            @Override
+            public int compare(NetworkMeasure o1, NetworkMeasure o2) {
+                return Double.compare(o1.getTimestamp(), o2.getTimestamp());
+            }
+        });
         return result;
     }
 
@@ -144,7 +182,7 @@ public class NetworkMeasure {
         result.sort(new Comparator<NetworkMeasure>() {
             @Override
             public int compare(NetworkMeasure o1, NetworkMeasure o2) {
-                return Double.compare(o1.getTimestamp(), o2.getTimestamp());
+                return Integer.compare(o1.getPort(), o2.getPort());
             }
         });
         return result;
