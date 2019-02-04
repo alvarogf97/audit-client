@@ -16,6 +16,7 @@ import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.controllers.adapters.LegendAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.GraphTypeOnClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.OpenDialogClickListener;
+import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.ReStartOnClickListener;
 import com.example.alvaro.client_audit.core.entities.LegendItem;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
 import com.example.alvaro.client_audit.core.networks.Connection;
@@ -37,8 +38,6 @@ public class NetworkActivity extends AsyncTaskActivity {
 
     private String[] graph_options_string ;
 
-    private boolean is_analysing;
-    private boolean is_adding_exception;
     private GraphView graph;
     private ListView graph_legend;
     private Button change_button;
@@ -53,7 +52,7 @@ public class NetworkActivity extends AsyncTaskActivity {
 
     private List<NetworkMeasure> input_measures;
     private List<NetworkMeasure> output_measures;
-    private List<NetworkMeasure> abnormal_measures;
+    public static List<NetworkMeasure> abnormal_measures;
 
     private LineGraphSeries<DataPoint> input_size_time_graph;
     private LineGraphSeries<DataPoint> output_size_time_graph;
@@ -73,8 +72,6 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.graph_options_string[1] = this.getString(R.string.graph_output_size_time);
         this.graph_options_string[2] = this.getString(R.string.graph_input_size_port);
         this.graph_options_string[3] = this.getString(R.string.graph_output_size_port);
-        this.is_analysing = false;
-        this.is_adding_exception = false;
         this.loader = (SpinKitView) findViewById(R.id.anim_load_network);
         this.change_button = (Button) findViewById(R.id.button_change_graph);
         this.graph_legend = (ListView) findViewById(R.id.legend_list);
@@ -89,6 +86,7 @@ public class NetworkActivity extends AsyncTaskActivity {
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(0);
         graph.getViewport().setMaxY(1);
+        this.re_scan.setOnClickListener(new ReStartOnClickListener(this));
         this.adapter = new LegendAdapter(this);
         this.graph_legend.setAdapter(adapter);
         this.create_dialog();
@@ -136,6 +134,11 @@ public class NetworkActivity extends AsyncTaskActivity {
     }
     @Override
     public void start_animation() {
+        this.hide_all();
+        this.start_analysis(false);
+    }
+
+    private void hide_all(){
         this.loader.setIndeterminateDrawable(this.w);
         this.loader.setVisibility(View.VISIBLE);
         this.info.setVisibility(View.VISIBLE);
@@ -146,7 +149,6 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.n_t_2.setVisibility(View.GONE);
         this.re_scan.setVisibility(View.GONE);
         this.anomalies_button.setVisibility(View.GONE);
-        this.start_analysis(false);
     }
 
     private void show_all(){
@@ -165,26 +167,21 @@ public class NetworkActivity extends AsyncTaskActivity {
     public void stop_animation(Object... objects) {
         JSONObject response = (JSONObject) objects[0];
         try {
-            if(this.is_analysing){
-                int response_code = response.getInt("code");
-                this.is_analysing = false;
-                if(response_code == -1){
-                    this.info.setText(response.getString("PCAP cannot be installed"));
-                }else if(response_code == 1){
-                    JSONObject data = response.getJSONObject("data");
-                    this.input_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("input"));
-                    this.output_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("output"));
-                    this.abnormal_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("abnormal_input"));
-                    generate_graphs();
-                    this.graph.addSeries(this.input_size_time_graph);
-                    this.show_all();
-                }else if(response_code == 2){
-                    this.info.setText("no data found");
-                }else{
-                    this.info.setText(response.getString("data"));
-                }
-            }else if(this.is_adding_exception){
-                //TODO
+            int response_code = response.getInt("code");
+            if(response_code == -1){
+                this.info.setText(response.getString("PCAP cannot be installed"));
+            }else if(response_code == 1){
+                JSONObject data = response.getJSONObject("data");
+                this.input_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("input"));
+                this.output_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("output"));
+                abnormal_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("abnormal_input"));
+                generate_graphs();
+                this.graph.addSeries(this.input_size_time_graph);
+                this.show_all();
+            }else if(response_code == 2){
+                this.info.setText("no data found");
+            }else{
+                this.info.setText(response.getString("data"));
             }
         } catch (JSONException e) {
             Log.e("get network r", Arrays.toString(e.getStackTrace()));
@@ -199,23 +196,9 @@ public class NetworkActivity extends AsyncTaskActivity {
                 command += " new";
             }
             query.put("command",command);
-            this.is_analysing = true;
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("network analysis", Arrays.toString(e.getStackTrace()));
-        }
-    }
-
-    public void add_measure_exception(NetworkMeasure measure){
-        JSONObject query = new JSONObject();
-        try {
-            String command = "add network measure exception";
-            query.put("command",command);
-            query.put("args", measure.to_json());
-            this.is_adding_exception = true;
-            Connection.get_connection().execute_command(query, this);
-        } catch (JSONException e) {
-            Log.e("adding m exception", Arrays.toString(e.getStackTrace()));
         }
     }
 

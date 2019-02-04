@@ -54,4 +54,8 @@
     <string name="graph_output_size_port">Output | size/port</string>
     <string name="legend">Legend</string>
     <string name="abnormal_button">anomalies</string>
+    <string name="size">Size:</string>
+    <string name="hour">Hour:</string>
+    <string name="Process">Process:</string>
+    <string name="exception">add as exception</string>
 </resources>

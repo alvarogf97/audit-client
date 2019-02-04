@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_chain" />
-                            <entry key="sourceFile" value="C:\Users\alvaro\Desktop\chain.svg" />
+                            <entry key="outputName" value="ic_alarm" />
+                            <entry key="sourceFile" value="C:\Users\Alvaro\Desktop\alarm.svg" />
                           </map>
                         </option>
                       </PersistentState>
