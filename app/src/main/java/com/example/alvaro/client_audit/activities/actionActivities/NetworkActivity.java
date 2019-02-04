@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import com.example.alvaro.client_audit.controllers.adapters.LegendAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.GraphTypeOnClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.OpenDialogClickListener;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.ReStartOnClickListener;
+import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.ShowAnomaliesClickListener;
 import com.example.alvaro.client_audit.core.entities.LegendItem;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
 import com.example.alvaro.client_audit.core.networks.Connection;
@@ -49,6 +51,8 @@ public class NetworkActivity extends AsyncTaskActivity {
     private AlertDialog dialog;
     private Button re_scan;
     private Button anomalies_button;
+    private TextView not_found_text;
+    private ImageView not_found_image;
 
     private List<NetworkMeasure> input_measures;
     private List<NetworkMeasure> output_measures;
@@ -72,12 +76,14 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.graph_options_string[1] = this.getString(R.string.graph_output_size_time);
         this.graph_options_string[2] = this.getString(R.string.graph_input_size_port);
         this.graph_options_string[3] = this.getString(R.string.graph_output_size_port);
+        this.not_found_image = (ImageView) findViewById(R.id.not_found_image);
+        this.not_found_text = (TextView) findViewById(R.id.n_f_n);
         this.loader = (SpinKitView) findViewById(R.id.anim_load_network);
         this.change_button = (Button) findViewById(R.id.button_change_graph);
         this.graph_legend = (ListView) findViewById(R.id.legend_list);
         this.graph = (GraphView) findViewById(R.id.graph);
-        this.anomalies_button = (Button) findViewById(R.id.re_start_analysis_button);
-        this.re_scan = (Button) findViewById(R.id.button_n_anomalies);
+        this.re_scan= (Button) findViewById(R.id.re_start_analysis_button);
+        this.anomalies_button = (Button) findViewById(R.id.button_n_anomalies);
         this.info = (TextView) findViewById(R.id.info_n_text);
         this.n_t_1 = (TextView) findViewById(R.id.n_t_1);
         this.n_t_2 = (TextView) findViewById(R.id.n_t_2);
@@ -87,10 +93,17 @@ public class NetworkActivity extends AsyncTaskActivity {
         graph.getViewport().setMinY(0);
         graph.getViewport().setMaxY(1);
         this.re_scan.setOnClickListener(new ReStartOnClickListener(this));
+        this.anomalies_button.setOnClickListener(new ShowAnomaliesClickListener(this));
         this.adapter = new LegendAdapter(this);
         this.graph_legend.setAdapter(adapter);
         this.create_dialog();
         this.start_animation();
+    }
+
+    public void show_no(){
+        this.hide_all();
+        this.not_found_text.setVisibility(View.VISIBLE);
+        this.not_found_image.setVisibility(View.VISIBLE);
     }
 
     public void create_dialog(){
@@ -169,7 +182,8 @@ public class NetworkActivity extends AsyncTaskActivity {
         try {
             int response_code = response.getInt("code");
             if(response_code == -1){
-                this.info.setText(response.getString("PCAP cannot be installed"));
+                this.not_found_text.setText("PCAP cannot be installed");
+                this.show_no();
             }else if(response_code == 1){
                 JSONObject data = response.getJSONObject("data");
                 this.input_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("input"));
@@ -179,7 +193,8 @@ public class NetworkActivity extends AsyncTaskActivity {
                 this.graph.addSeries(this.input_size_time_graph);
                 this.show_all();
             }else if(response_code == 2){
-                this.info.setText("no data found");
+                this.not_found_text.setText("No network data found!");
+                this.show_no();
             }else{
                 this.info.setText(response.getString("data"));
             }

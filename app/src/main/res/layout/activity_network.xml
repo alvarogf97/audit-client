@@ -123,4 +123,34 @@
         android:elevation="10dp"
         android:text="@string/rescan" />
 
+    <ImageView
+        android:id="@+id/not_found_image"
+        android:layout_width="212dp"
+        android:layout_height="203dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="100dp"
+        android:contentDescription="@string/warning"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_error_404" />
+
+    <TextView
+        android:id="@+id/n_f_n"
+        android:layout_width="251dp"
+        android:layout_height="58dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="69dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
 </RelativeLayout>

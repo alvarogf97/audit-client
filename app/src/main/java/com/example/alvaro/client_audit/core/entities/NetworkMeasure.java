@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class NetworkMeasure {
 
@@ -236,4 +237,21 @@ public class NetworkMeasure {
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NetworkMeasure that = (NetworkMeasure) o;
+        return port == that.port &&
+                size == that.size &&
+                Double.compare(that.timestamp, timestamp) == 0 &&
+                is_input == that.is_input &&
+                Objects.equals(process_name, that.process_name) &&
+                Objects.equals(hour, that.hour);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port, process_name, size, timestamp, hour, is_input);
+    }
 }
