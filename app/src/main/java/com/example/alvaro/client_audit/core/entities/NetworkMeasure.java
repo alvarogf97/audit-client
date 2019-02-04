@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class NetworkMeasure {
@@ -96,19 +97,23 @@ public class NetworkMeasure {
     }
 
     public static DataPoint[] to_size_time(List<NetworkMeasure> measure_list){
-        DataPoint[] dataPoints = new DataPoint[measure_list.size()];
+        List<NetworkMeasure> mapped_list = NetworkMeasure.map_time(measure_list);
+        DataPoint[] dataPoints = new DataPoint[mapped_list.size()];
         int index = 0;
-        for(NetworkMeasure m : NetworkMeasure.map_time(measure_list) ){
-            dataPoints[index] = new DataPoint(m.getSize(), m.getTimestamp());
+        for(NetworkMeasure m : mapped_list){
+            dataPoints[index] = new DataPoint(index, m.getSize());
+            index++;
         }
         return dataPoints;
     }
 
     public static DataPoint[] to_size_port(List<NetworkMeasure> measure_list){
-        DataPoint[] dataPoints = new DataPoint[measure_list.size()];
+        List<NetworkMeasure> mapped_list = NetworkMeasure.map_port(measure_list);
+        DataPoint[] dataPoints = new DataPoint[mapped_list.size()];
         int index = 0;
-        for(NetworkMeasure m : NetworkMeasure.map_port(measure_list) ){
-            dataPoints[index] = new DataPoint(m.getSize(), m.getPort());
+        for(NetworkMeasure m : mapped_list ){
+            dataPoints[index] = new DataPoint(m.getPort(), m.getSize());
+            index++;
         }
         return dataPoints;
     }
@@ -136,6 +141,12 @@ public class NetworkMeasure {
                 result.add(m);
             }
         }
+        result.sort(new Comparator<NetworkMeasure>() {
+            @Override
+            public int compare(NetworkMeasure o1, NetworkMeasure o2) {
+                return Double.compare(o1.getTimestamp(), o2.getTimestamp());
+            }
+        });
         return result;
     }
 

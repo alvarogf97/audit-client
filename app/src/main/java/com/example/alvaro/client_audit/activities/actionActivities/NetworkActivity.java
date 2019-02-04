@@ -76,7 +76,6 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.change_button.setOnClickListener(new OpenDialogClickListener(this));
         this.create_dialog();
         this.start_animation();
-        this.start_analysis(false);
     }
 
     public void create_dialog(){
@@ -124,6 +123,7 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.graph.setVisibility(View.GONE);
         this.n_t_1.setVisibility(View.GONE);
         this.n_t_2.setVisibility(View.GONE);
+        this.start_analysis(false);
     }
 
     private void show_all(){
@@ -150,7 +150,7 @@ public class NetworkActivity extends AsyncTaskActivity {
                     this.input_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("input"));
                     this.output_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("output"));
                     this.abnormal_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("abnormal_input"));
-                    this.generate_graphs();
+                    generate_graphs();
                     this.graph.addSeries(this.input_size_time_graph);
                     this.show_all();
                 }else if(response_code == 2){
@@ -195,10 +195,13 @@ public class NetworkActivity extends AsyncTaskActivity {
     }
 
     private void generate_graphs(){
+
+        Log.e("sdfdsf",Arrays.toString(NetworkMeasure.to_size_port(this.input_measures)));
         this.input_size_time_graph = new LineGraphSeries<>(NetworkMeasure.to_size_time(this.input_measures));
         this.output_size_time_graph = new LineGraphSeries<>(NetworkMeasure.to_size_time(this.output_measures));
         this.input_size_port_graph = new BarGraphSeries<>(NetworkMeasure.to_size_port(this.input_measures));
         this.output_size_port_graph = new BarGraphSeries<>(NetworkMeasure.to_size_port(this.output_measures));
+
 
         this.input_size_time_graph.setTitle("Input | size/time");
         this.input_size_time_graph.setAnimated(true);
