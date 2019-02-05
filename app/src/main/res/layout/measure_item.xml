@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -16,23 +16,33 @@
         app:cardElevation="10dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp">
 
+            <ImageView
+                android:id="@+id/imageView_anomaly"
+                android:layout_width="69dp"
+                android:layout_height="59dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="38dp"
+                android:contentDescription="@string/next"
+                app:srcCompat="@drawable/ic_alarm" />
+
             <TextView
                 android:id="@+id/measure_port"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="102dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="200dp"
                 android:text="@string/port"
                 android:textAlignment="viewStart"
                 android:textSize="14sp"
@@ -40,7 +50,7 @@
 
             <TextView
                 android:id="@+id/measure_port_text"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -54,14 +64,13 @@
 
             <TextView
                 android:id="@+id/measure_size"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="102dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginEnd="200dp"
                 android:text="@string/size"
                 android:textAlignment="viewStart"
                 android:textSize="14sp"
@@ -69,7 +78,7 @@
 
             <TextView
                 android:id="@+id/measure_size_text"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -83,14 +92,13 @@
 
             <TextView
                 android:id="@+id/measure_hour"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="102dp"
                 android:layout_marginTop="70dp"
-                android:layout_marginEnd="200dp"
                 android:text="@string/hour"
                 android:textAlignment="viewStart"
                 android:textSize="14sp"
@@ -98,7 +106,7 @@
 
             <TextView
                 android:id="@+id/measure_hour_text"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -112,14 +120,13 @@
 
             <TextView
                 android:id="@+id/measure_process"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="102dp"
                 android:layout_marginTop="100dp"
-                android:layout_marginEnd="200dp"
                 android:text="@string/Process"
                 android:textAlignment="viewStart"
                 android:textSize="14sp"
@@ -127,7 +134,7 @@
 
             <TextView
                 android:id="@+id/measure_process_text"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -142,7 +149,7 @@
             <Button
                 android:id="@+id/add_exception_button"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="211dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -154,18 +161,6 @@
                 android:elevation="10dp"
                 android:text="@string/exception" />
 
-            <ImageView
-                android:id="@+id/imageView_anomaly"
-                android:layout_width="69dp"
-                android:layout_height="59dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="60dp"
-                android:contentDescription="@string/next"
-                app:srcCompat="@drawable/ic_alarm" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

@@ -189,6 +189,7 @@ public class NetworkActivity extends AsyncTaskActivity {
                 this.input_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("input"));
                 this.output_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("output"));
                 abnormal_measures = NetworkMeasure.get_list_from_json(data.getJSONArray("abnormal_input"));
+                abnormal_measures.addAll(NetworkMeasure.get_list_from_json(data.getJSONArray("abnormal_output")));
                 generate_graphs();
                 this.graph.addSeries(this.input_size_time_graph);
                 this.show_all();
@@ -197,6 +198,7 @@ public class NetworkActivity extends AsyncTaskActivity {
                 this.show_no();
             }else{
                 this.info.setText(response.getString("data"));
+                this.start_analysis(false);
             }
         } catch (JSONException e) {
             Log.e("get network r", Arrays.toString(e.getStackTrace()));
