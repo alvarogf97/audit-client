@@ -38,6 +38,7 @@ public class VulnersActivity extends AsyncTaskActivity {
     private TextView search;
     private TextView status;
     private Button rescan;
+    private boolean onExecute;
 
     /*
         On create
@@ -47,7 +48,7 @@ public class VulnersActivity extends AsyncTaskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vulners);
-
+        this.onExecute = false;
         search = (TextView) findViewById(R.id.search_vulner_node);
         status = (TextView) findViewById(R.id.vulner_status);
         search.addTextChangedListener(new FilterTextListener(this));
@@ -80,6 +81,7 @@ public class VulnersActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         rescan.setEnabled(false);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
@@ -94,6 +96,7 @@ public class VulnersActivity extends AsyncTaskActivity {
     }
 
     public void re_scan(){
+        this.onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
         status.setVisibility(View.VISIBLE);
@@ -137,6 +140,8 @@ public class VulnersActivity extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("stopVulner",Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
 
     }
@@ -216,5 +221,12 @@ public class VulnersActivity extends AsyncTaskActivity {
 
     public JSONObject getResponse(){
         return this.response;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alvaro.client_audit.R;
-import com.example.alvaro.client_audit.activities.NetworkAnomaliesActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.NetworkAnomaliesActivity;
 import com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners.AddExceptionClickListener;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
 

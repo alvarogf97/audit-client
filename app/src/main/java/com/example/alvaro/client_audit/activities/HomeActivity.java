@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
     private CardsAdapter cardsAdapter;
+    private boolean onExecute;
 
     @Override
     /*
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        this.onExecute = false;
         //new CloseConnectionExceptionHandler(this.getApplicationContext());
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null){
@@ -87,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
         start animation while asyncTask
      */
     public void start_animation(){
+        this.onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
         this.cards.setVisibility(View.GONE);
@@ -105,5 +108,13 @@ public class HomeActivity extends AppCompatActivity {
         this.add_button.setEnabled(true);
         this.uptade_button.setEnabled(true);
         Log.e("stopAnim","stoped");
+        this.onExecute = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

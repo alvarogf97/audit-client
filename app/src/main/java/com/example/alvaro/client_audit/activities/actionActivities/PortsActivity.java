@@ -33,6 +33,7 @@ public class PortsActivity extends AsyncTaskActivity {
     private TextView search;
     private String filter;
     private boolean in_process = false;
+    private boolean onExecute;
 
     /*
         On create
@@ -43,6 +44,7 @@ public class PortsActivity extends AsyncTaskActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ports);
 
+        this.onExecute = false;
         this.layout = (RelativeLayout) findViewById(R.id.ports_layout);
         this.search = (TextView) findViewById(R.id.search_port_node);
         loader = (SpinKitView) findViewById(R.id.ports_anim_load);
@@ -59,6 +61,7 @@ public class PortsActivity extends AsyncTaskActivity {
     @Override
     public void start_animation() {
         if(!in_process){
+            this.onExecute = true;
             loader.setVisibility(View.VISIBLE);
             loader.setIndeterminateDrawable(this.w);
             search.setEnabled(false);
@@ -109,6 +112,8 @@ public class PortsActivity extends AsyncTaskActivity {
             }
         } catch (Exception e) {
             Log.e("stopAnimationPorts",Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
         in_process =false;
     }
@@ -177,5 +182,11 @@ public class PortsActivity extends AsyncTaskActivity {
         return this.response;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
+    }
 
 }

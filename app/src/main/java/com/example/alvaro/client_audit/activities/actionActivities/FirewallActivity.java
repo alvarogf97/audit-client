@@ -50,11 +50,13 @@ public class FirewallActivity extends AsyncTaskActivity {
     public boolean is_execute_enable;
     public boolean is_execute_descriptor;
     private boolean is_compatible;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firewall);
+        this.onExecute = false;
         this.is_execute_status = false;
         this.w_w = new ThreeBounce();
         this.is_execute_enable = false;
@@ -84,6 +86,7 @@ public class FirewallActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         this.is_execute_descriptor = true;
         this.loader.setVisibility(View.VISIBLE);
         this.action_list.setVisibility(View.GONE);
@@ -141,10 +144,13 @@ public class FirewallActivity extends AsyncTaskActivity {
             Log.e("firewall_response",Arrays.toString(e.getStackTrace()));
             Log.e("firewall_response",e.getMessage());
             Log.e("firewall_respones", String.valueOf(is_admin));
+        } finally {
+            this.onExecute = false;
         }
     }
 
     private void set_status(JSONObject response) throws JSONException {
+        this.onExecute = true;
         JSONObject status_data = response.getJSONObject("data");
         Log.e("status_data",status_data.toString());
         is_admin = response.getBoolean("administrator");
@@ -163,6 +169,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     }
 
     public void update_status(){
+        this.onExecute = true;
         JSONObject query = new JSONObject();
         try {
             this.is_execute_status = true;
@@ -179,6 +186,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     }
 
     public void execute_firewall_action(FirewallAction action){
+        this.onExecute = true;
         JSONObject query = new JSONObject();
         try {
             this.action_list.setEnabled(false);
@@ -234,6 +242,7 @@ public class FirewallActivity extends AsyncTaskActivity {
     }
 
     private void execute_query(){
+        this.onExecute = true;
         JSONObject query = new JSONObject();
         try {
             query.put("command","firewall descriptor");
@@ -257,5 +266,12 @@ public class FirewallActivity extends AsyncTaskActivity {
             i++;
         }
         return action;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

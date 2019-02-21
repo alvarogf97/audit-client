@@ -67,10 +67,13 @@ public class NetworkActivity extends AsyncTaskActivity {
     private List<LegendItem> output_legend;
     private LegendAdapter adapter;
 
+    private boolean onExecute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network);
+        this.onExecute = false;
         this.graph_options_string = new String[4];
         this.graph_options_string[0] = this.getString(R.string.graph_input_size_time);
         this.graph_options_string[1] = this.getString(R.string.graph_output_size_time);
@@ -147,6 +150,7 @@ public class NetworkActivity extends AsyncTaskActivity {
     }
     @Override
     public void start_animation() {
+        this.onExecute = true;
         this.hide_all();
         this.start_analysis(false);
     }
@@ -200,6 +204,8 @@ public class NetworkActivity extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("get network r", Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -259,5 +265,12 @@ public class NetworkActivity extends AsyncTaskActivity {
         this.output_size_port_graph.setSpacing(50);
         this.output_size_port_graph.setTitle("Output | size/port");
         this.output_size_port_graph.setAnimated(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

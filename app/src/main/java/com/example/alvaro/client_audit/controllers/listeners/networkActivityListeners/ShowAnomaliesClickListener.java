@@ -3,7 +3,7 @@ package com.example.alvaro.client_audit.controllers.listeners.networkActivityLis
 import android.content.Intent;
 import android.view.View;
 
-import com.example.alvaro.client_audit.activities.NetworkAnomaliesActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.NetworkAnomaliesActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.NetworkActivity;
 
 public class ShowAnomaliesClickListener implements View.OnClickListener {

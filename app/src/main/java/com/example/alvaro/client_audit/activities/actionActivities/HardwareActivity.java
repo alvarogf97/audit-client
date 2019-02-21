@@ -27,6 +27,7 @@ public class HardwareActivity extends AsyncTaskActivity {
     private JSONObject response;
     private RelativeLayout layout;
     private SpinKitView loader;
+    private boolean onExecute;
 
     /*
         On create
@@ -36,7 +37,7 @@ public class HardwareActivity extends AsyncTaskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hardware);
-
+        this.onExecute = false;
         loader = (SpinKitView) findViewById(R.id.hardware_anim_load);
 
         this.layout = (RelativeLayout) findViewById(R.id.hardware_activity_layout);
@@ -58,6 +59,7 @@ public class HardwareActivity extends AsyncTaskActivity {
      */
     @Override
     public void start_animation() {
+        this.onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
     }
@@ -80,6 +82,7 @@ public class HardwareActivity extends AsyncTaskActivity {
         tView.setDefaultAnimation(true);
         this.layout.addView(tView.getView());
         loader.setVisibility(View.GONE);
+        this.onExecute = false;
     }
 
     /*
@@ -151,6 +154,13 @@ public class HardwareActivity extends AsyncTaskActivity {
         }
 
         return result;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 
 

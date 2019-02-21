@@ -23,6 +23,8 @@ public class AddDeviceActivity extends AppCompatActivity {
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
 
+    boolean onExecute;
+
     /*
         On create
      */
@@ -31,7 +33,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_device_activity);
-
+        onExecute = false;
         b_create = (Button) findViewById(R.id.button_create);
         device_name = (TextView) findViewById(R.id.device_name);
         device_ip = (TextView) findViewById(R.id.device_ip);
@@ -47,6 +49,7 @@ public class AddDeviceActivity extends AppCompatActivity {
      */
 
     public void start_animation(){
+        onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
         b_create.setEnabled(false);
@@ -57,6 +60,7 @@ public class AddDeviceActivity extends AppCompatActivity {
      */
 
     public void stop_animation(boolean res){
+        onExecute = false;
         this.loader.setVisibility(View.GONE);
         if(!res){
             this.make_toast();
@@ -74,6 +78,13 @@ public class AddDeviceActivity extends AppCompatActivity {
     public void make_toast(){
         Toast toast = Toast.makeText(this.getApplicationContext(), "Cannot create device", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 
 }

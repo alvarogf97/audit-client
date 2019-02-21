@@ -42,11 +42,13 @@ public class Export extends AsyncTaskActivity implements DialogActivity {
     private Argument selected_Argument;
     private ListView argument_list_view;
     private Button execute_button;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+        this.onExecute = false;
         this.export_action = FirewallActivity.getActionByName("export settings");
         this.argument_list = JsonParsers.parse_JSON_firewall_arguments(this.export_action.getArgs());
         this.argument_list_view = (ListView) findViewById(R.id.export_firewall_arguments_list);
@@ -61,7 +63,7 @@ public class Export extends AsyncTaskActivity implements DialogActivity {
 
     @Override
     public void start_animation() {
-
+        this.onExecute = true;
     }
 
     @Override
@@ -80,6 +82,8 @@ public class Export extends AsyncTaskActivity implements DialogActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -119,6 +123,7 @@ public class Export extends AsyncTaskActivity implements DialogActivity {
     }
 
     public void execute_action(){
+        this.onExecute = true;
         JSONObject query = new JSONObject();
         try {
             query.put("command",this.export_action.getCommand());
@@ -126,6 +131,13 @@ public class Export extends AsyncTaskActivity implements DialogActivity {
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("status", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
         }
     }
 

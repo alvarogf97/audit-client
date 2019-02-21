@@ -51,11 +51,13 @@ public class UpnpActionActivity extends AsyncTaskActivity {
     private TextView dialog_arg_type;
     private EditText dialog_arg_value;
 
+    private boolean onExectue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upnp_action);
-
+        this.onExectue = false;
         args = JsonParsers.parse_string(this.getIntent().getExtras().getString("args"));
         action_name = (TextView) findViewById(R.id.action_name);
         inputs = (ListView) findViewById(R.id.input_list);
@@ -111,7 +113,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
-
+        this.onExectue = true;
     }
 
     @Override
@@ -127,6 +129,8 @@ public class UpnpActionActivity extends AsyncTaskActivity {
             }
         } catch (Exception e) {
             Log.e("stopanimationUpnp",Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExectue = false;
         }
     }
 
@@ -139,6 +143,7 @@ public class UpnpActionActivity extends AsyncTaskActivity {
     }
 
     public void execute_query() throws JSONException {
+        this.onExectue = true;
         JSONObject query = new JSONObject();
         query.put("command","upnp exec");
         JSONObject args = new JSONObject();

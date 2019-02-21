@@ -1,9 +1,8 @@
 package com.example.alvaro.client_audit.controllers.listeners.networkActivityListeners;
 
-import android.app.Activity;
 import android.view.View;
 
-import com.example.alvaro.client_audit.activities.NetworkAnomaliesActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.NetworkAnomaliesActivity;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
 
 public class AddExceptionClickListener implements View.OnClickListener {

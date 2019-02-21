@@ -38,6 +38,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
     private Device device;
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
+    private boolean onExecute;
 
     /*
         On create
@@ -46,7 +47,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_home);
-
+        this.onExecute = false;
         this.delete_button = (FloatingActionButton) findViewById(R.id.delete_button);
         this.edit_button = (FloatingActionButton) findViewById(R.id.button_edit);
         this.b_connect = (Button) findViewById(R.id.button_connect);
@@ -103,6 +104,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
         start animation while asyncTask
     */
     public void start_animation(){
+        this.onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(w);
         b_connect.setVisibility(View.GONE);
@@ -116,6 +118,7 @@ public class DeviceHomeActivity extends AppCompatActivity {
         b_connect.setVisibility(View.VISIBLE);
         this.update_device_info();
         this.loader.setVisibility(View.GONE);
+        this.onExecute = false;
     }
 
     public void create_dialog(){
@@ -144,6 +147,13 @@ public class DeviceHomeActivity extends AppCompatActivity {
         this.password.setText("");
         this.error_msg.setText("");
         dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 
     public void hide_dialog(){

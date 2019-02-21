@@ -16,12 +16,13 @@ import com.github.ybq.android.spinkit.style.ThreeBounce;
 
 public class EditDeviceActivity extends AppCompatActivity {
 
-    TextView device_name;
-    TextView device_ip;
-    TextView device_port;
-    Button b_save;
+    private TextView device_name;
+    private TextView device_ip;
+    private TextView device_port;
+    private Button b_save;
     private SpinKitView loader;
     private ThreeBounce w = new ThreeBounce();
+    private boolean onExecute;
 
 
     /*
@@ -31,7 +32,7 @@ public class EditDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_device);
-
+        this.onExecute = false;
         b_save = (Button) findViewById(R.id.button_save);
         device_name = (TextView) findViewById(R.id.device_edit_name);
         device_ip = (TextView) findViewById(R.id.device_edit_ip);
@@ -52,6 +53,7 @@ public class EditDeviceActivity extends AppCompatActivity {
         start animation while asyncTask
      */
     public void start_animation(){
+        this.onExecute = true;
         this.loader.setVisibility(View.VISIBLE);
         this.loader.setIndeterminateDrawable(w);
         b_save.setEnabled(false);
@@ -69,6 +71,7 @@ public class EditDeviceActivity extends AppCompatActivity {
             DeviceBook.get_instance().update_adapter();
             this.finish();
         }
+        this.onExecute = false;
     }
 
     /*
@@ -77,5 +80,12 @@ public class EditDeviceActivity extends AppCompatActivity {
     public void make_toast(){
         Toast toast = Toast.makeText(this.getApplicationContext(), "Cannot create device", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

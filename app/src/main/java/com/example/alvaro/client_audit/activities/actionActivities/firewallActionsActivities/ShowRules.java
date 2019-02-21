@@ -38,11 +38,13 @@ public class ShowRules extends AsyncTaskActivity {
     private FloatingActionButton reload_rules;
     public boolean is_getting_rules;
     public boolean is_deleting_rule;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rules);
+        this.onExecute = false;
         is_getting_rules = false;
         is_deleting_rule = false;
         this.loader = (SpinKitView) findViewById(R.id.show_rules_anim_load);
@@ -61,6 +63,7 @@ public class ShowRules extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
         this.reload_rules.setEnabled(false);
@@ -104,10 +107,13 @@ public class ShowRules extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("view_rules", Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
     private void execute_query(){
+        this.onExecute = true;
         FirewallAction get_files_action = FirewallActivity.getActionByName("view rules");
         JSONObject query = new JSONObject();
         try {
@@ -121,6 +127,7 @@ public class ShowRules extends AsyncTaskActivity {
     }
 
     public void delete_query(int rule_number){
+        this.onExecute = true;
         FirewallAction get_files_action = FirewallActivity.getActionByName("remove rule");
         JSONObject query = new JSONObject();
         JSONObject args = new JSONObject();
@@ -174,5 +181,12 @@ public class ShowRules extends AsyncTaskActivity {
         tView.setDefaultAnimation(true);
         this.layout.removeAllViews();
         this.layout.addView(tView.getView());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

@@ -29,11 +29,13 @@ public class Import extends AsyncTaskActivity {
     private ListView file_list_view;
     private SpinKitView loader;
     private FileAdapter adapter;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
+        this.onExecute = false;
         this.is_restoring = false;
         this.is_getting_files = false;
         this.file_list_view = (ListView) findViewById(R.id.import_file_list);
@@ -46,6 +48,7 @@ public class Import extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         file_list_view.setVisibility(View.GONE);
         loader.setIndeterminateDrawable(this.w);
         loader.setVisibility(View.VISIBLE);
@@ -77,6 +80,8 @@ public class Import extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -89,6 +94,7 @@ public class Import extends AsyncTaskActivity {
     }
 
     public void execute_query(){
+        this.onExecute = true;
         this.is_getting_files = true;
         FirewallAction get_files_action = FirewallActivity.getActionByName("files");
         JSONObject query = new JSONObject();
@@ -102,6 +108,7 @@ public class Import extends AsyncTaskActivity {
     }
 
     public void restore_firewall(File selected_file){
+        this.onExecute = true;
         this.is_restoring = true;
         FirewallAction import_settings_action = FirewallActivity.getActionByName("import settings");
         JSONObject query = new JSONObject();
@@ -118,6 +125,13 @@ public class Import extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("restore_firewall", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
         }
     }
 }

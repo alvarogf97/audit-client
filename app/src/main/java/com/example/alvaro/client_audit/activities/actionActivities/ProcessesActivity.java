@@ -168,5 +168,12 @@ public class ProcessesActivity extends AsyncTaskActivity {
         return this.response;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!in_process) {
+            super.onBackPressed();
+        }
+    }
+
 
 }

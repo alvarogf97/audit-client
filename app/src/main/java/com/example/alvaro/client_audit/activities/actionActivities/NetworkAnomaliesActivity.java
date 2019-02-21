@@ -1,4 +1,4 @@
-package com.example.alvaro.client_audit.activities;
+package com.example.alvaro.client_audit.activities.actionActivities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.alvaro.client_audit.R;
+import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.NetworkActivity;
 import com.example.alvaro.client_audit.controllers.adapters.AnomalyAdapter;
 import com.example.alvaro.client_audit.core.entities.NetworkMeasure;
@@ -17,7 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
 
-public class NetworkAnomaliesActivity extends AsyncTaskActivity{
+public class NetworkAnomaliesActivity extends AsyncTaskActivity {
 
     private ListView anomalies_list_view;
     private ImageView success_image;
@@ -25,11 +26,13 @@ public class NetworkAnomaliesActivity extends AsyncTaskActivity{
     private SpinKitView loader;
     private AnomalyAdapter adapter;
     private NetworkMeasure current_measure;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_anomalies);
+        this.onExecute = false;
         this.anomalies_list_view = (ListView) findViewById(R.id.abnormal_list);
         this.success_image = (ImageView) findViewById(R.id.success_image);
         this.success_text = (TextView) findViewById(R.id.n_a_f);
@@ -51,6 +54,7 @@ public class NetworkAnomaliesActivity extends AsyncTaskActivity{
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         loader.setIndeterminateDrawable(this.w);
         loader.setVisibility(View.VISIBLE);
         anomalies_list_view.setVisibility(View.GONE);
@@ -81,6 +85,8 @@ public class NetworkAnomaliesActivity extends AsyncTaskActivity{
             }
         } catch (JSONException e) {
             Log.e("NAAST", Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -95,6 +101,13 @@ public class NetworkAnomaliesActivity extends AsyncTaskActivity{
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("adding m exception", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
         }
     }
 }

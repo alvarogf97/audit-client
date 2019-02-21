@@ -36,12 +36,13 @@ public class UpnpActivity extends AsyncTaskActivity {
     private String filter;
     private TextView search;
     private Button rescan;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upnp);
-
+        this.onExecute = false;
         search = (TextView) findViewById(R.id.search_upnp_node);
         search.addTextChangedListener(new FilterTextListener(this));
         filter = search.getText().toString();
@@ -75,6 +76,7 @@ public class UpnpActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         rescan.setEnabled(false);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminateDrawable(this.w);
@@ -106,6 +108,8 @@ public class UpnpActivity extends AsyncTaskActivity {
             rescan.setEnabled(true);
         } catch (Exception e) {
             Log.e("stopAnimationPorts",Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -185,5 +189,12 @@ public class UpnpActivity extends AsyncTaskActivity {
 
     public void setExecutionArgs(JSONObject args){
         this.execution_args = args;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

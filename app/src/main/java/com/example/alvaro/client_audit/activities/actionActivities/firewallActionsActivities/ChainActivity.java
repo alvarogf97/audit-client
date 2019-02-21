@@ -46,6 +46,7 @@ public class ChainActivity extends AsyncTaskActivity {
     private boolean is_creating_chain;
     private boolean is_deleting_chain;
     private boolean is_changing_policy;
+    private boolean onExecute;
     private List<Chain> chain_list;
 
     @Override
@@ -57,7 +58,7 @@ public class ChainActivity extends AsyncTaskActivity {
         this.is_creating_chain = false;
         this.is_deleting_chain = false;
         this.is_changing_policy = false;
-
+        this.onExecute = false;
         this.chain_list_view = (ListView) findViewById(R.id.chain_listView);
         this.chain_name_edit = (EditText) findViewById(R.id.chain_name_edit);
         this.add_button = (Button) findViewById(R.id.button_create_chain);
@@ -78,6 +79,7 @@ public class ChainActivity extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         this.get_chains();
     }
 
@@ -139,6 +141,8 @@ public class ChainActivity extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("chainActivity", Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -171,6 +175,7 @@ public class ChainActivity extends AsyncTaskActivity {
     }
 
     public void get_chains(){
+        this.onExecute = true;
         this.load();
         FirewallAction action = FirewallActivity.getActionByName("view chains");
         JSONObject query = new JSONObject();
@@ -185,6 +190,7 @@ public class ChainActivity extends AsyncTaskActivity {
     }
 
     public void flush_chain(Chain chain){
+        this.onExecute = true;
         this.load();
         FirewallAction action = FirewallActivity.getActionByName("flush chain");
         JSONObject query = new JSONObject();
@@ -201,6 +207,7 @@ public class ChainActivity extends AsyncTaskActivity {
     }
 
     public void create_chain(){
+        this.onExecute = true;
         String chain_name = this.chain_name_edit.getText().toString();
         if(!chain_name.equals("") && !chain_name.contains(" ")){
             this.load();
@@ -223,6 +230,7 @@ public class ChainActivity extends AsyncTaskActivity {
     }
 
     public void delete_chain(Chain chain){
+        this.onExecute = true;
         this.load();
         FirewallAction action = FirewallActivity.getActionByName("remove chain");
         JSONObject query = new JSONObject();
@@ -239,6 +247,7 @@ public class ChainActivity extends AsyncTaskActivity {
     }
 
     public void change_policy(Chain chain){
+        this.onExecute = true;
         this.load();
         chain.changePolicy();
         FirewallAction action = FirewallActivity.getActionByName("policy chain");
@@ -272,5 +281,12 @@ public class ChainActivity extends AsyncTaskActivity {
             }
         }
         return chains;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.alvaro.client_audit.activities.actionActivities.firewallActionsActivities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,11 +23,13 @@ public class Disable extends AsyncTaskActivity {
 
     private SpinKitView loader;
     private Button disable_button;
+    private boolean onExecute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disable);
+        this.onExecute = false;
         this.loader = (SpinKitView) findViewById(R.id.disable_fw_anim_load);
         this.disable_button = (Button) findViewById(R.id.button_disable_firewall);
         this.disable_button.setOnClickListener(new DisableFirewallButtonListener(this));
@@ -36,6 +37,7 @@ public class Disable extends AsyncTaskActivity {
 
     @Override
     public void start_animation() {
+        this.onExecute = true;
         this.disable_button.setEnabled(false);
         this.loader.setIndeterminateDrawable(this.w);
         this.loader.setVisibility(View.VISIBLE);
@@ -59,6 +61,8 @@ public class Disable extends AsyncTaskActivity {
             }
         } catch (JSONException e) {
             Log.e("disable_fw", Arrays.toString(e.getStackTrace()));
+        } finally {
+            this.onExecute = false;
         }
     }
 
@@ -71,6 +75,13 @@ public class Disable extends AsyncTaskActivity {
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("descriptor", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!onExecute) {
+            super.onBackPressed();
         }
     }
 }
