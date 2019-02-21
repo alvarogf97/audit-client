@@ -18,7 +18,7 @@ Adb (optional)
 Gradle
 ```
 
-### Installing
+## Installing
 
 You can download apk from [here]() or compile it by yourself. Next install it in your device.
 
@@ -30,7 +30,7 @@ Clone this repository on a folder in your computer:
 https://github.com/alvarogf97/Client_Audit
 ```
 
-###Android studio
+### Android studio
 
 Open the project cloned previously with android studio and follow these steps:
 
@@ -44,7 +44,7 @@ Open the project cloned previously with android studio and follow these steps:
 
 Your unsigned apk is now located in ProjectName\app\build\outputs\apk
 
-###Command line
+### Command line
 Go to folder that contains cloned project and run:
 
 ```
