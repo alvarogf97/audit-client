@@ -28,6 +28,7 @@ public class YaraScanActivity extends AsyncTaskActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yara_scan);
+        this.is_scan_active = false;
         this.process_scanner = (CardView) findViewById(R.id.card_process_scan);
         this.files_scanner = (CardView) findViewById(R.id.card_file_scan);
         this.process_scanner.setOnClickListener(new OnProcesScanClickListener(this));
@@ -48,6 +49,7 @@ public class YaraScanActivity extends AsyncTaskActivity {
         this.in_process = false;
         try {
             if(response.getBoolean("status")){
+                this.is_scan_active = true;
                 Intent intent = new Intent(this, ScanResultsActivity.class);
                 intent.putExtra("is_scan_active", this.is_scan_active);
                 intent.putExtra("scan_type", 2);
@@ -78,6 +80,7 @@ public class YaraScanActivity extends AsyncTaskActivity {
         try {
             in_process = true;
             query.put("command","yarascan is active");
+            query.put("args", new JSONObject());
             Connection.get_connection().execute_command(query, this);
         } catch (JSONException e) {
             Log.e("yara_check_scan", Arrays.toString(e.getStackTrace()));

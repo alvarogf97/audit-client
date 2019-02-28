@@ -36,7 +36,7 @@ public class InfectedProcessAdapter extends ArrayAdapter<InfectedProcess> {
 
         holder.name.setText(infected.getName());
         holder.pid.setText(infected.getPid());
-        holder.pid.setText(infected.getLocation());
+        holder.location.setText(infected.getLocation());
         ArrayAdapter<String> rules_adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1);
         rules_adapter.addAll(infected.getRules());
         holder.rules.setAdapter(rules_adapter);

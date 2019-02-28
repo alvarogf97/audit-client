@@ -1,7 +1,12 @@
 package com.example.alvaro.client_audit.core.entities;
 
-import org.json.JSONArray;
+import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.alvaro.client_audit.core.utils.JsonParsers.parse_JSON_string_array;
@@ -18,6 +23,29 @@ public class InfectedProcess {
         this.pid = pid;
         this.location = location;
         this.rules = parse_JSON_string_array(rules);
+    }
+
+    public InfectedProcess(JSONObject infected_object){
+        try {
+            this.name = infected_object.getString("name");
+            this.pid = infected_object.getString("pid");
+            this.location = infected_object.getString("location");
+            this.rules = parse_JSON_string_array(infected_object.getJSONArray("rules"));
+        } catch (JSONException e) {
+            Log.e("InfectedProcConstr", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public static List<InfectedProcess> from_JSON_array(JSONArray array){
+        List<InfectedProcess> infected = new ArrayList<>();
+        for(int i = 0; i<array.length(); i++){
+            try {
+                infected.add(new InfectedProcess(array.getJSONObject(i)));
+            } catch (JSONException e) {
+                Log.e("fromJSONarrayProc", Arrays.toString(e.getStackTrace()));
+            }
+        }
+        return infected;
     }
 
     public String getName() {

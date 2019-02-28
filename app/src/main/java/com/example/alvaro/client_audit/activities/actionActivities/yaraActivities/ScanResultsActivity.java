@@ -8,6 +8,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.alvaro.client_audit.R;
 import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
+import com.example.alvaro.client_audit.controllers.adapters.InfectedFileAdapter;
+import com.example.alvaro.client_audit.controllers.adapters.InfectedProcessAdapter;
+import com.example.alvaro.client_audit.core.entities.InfectedFile;
+import com.example.alvaro.client_audit.core.entities.InfectedProcess;
 import com.example.alvaro.client_audit.core.networks.Connection;
 import com.github.ybq.android.spinkit.SpinKitView;
 
@@ -34,6 +38,9 @@ public class ScanResultsActivity extends AsyncTaskActivity {
         setContentView(R.layout.activity_scan_results);
         this.onExecute = false;
         Intent intent = this.getIntent();
+        this.loader = (SpinKitView) findViewById(R.id.scan_loader);
+        this.result_list = (ListView) findViewById(R.id.scan_result_list);
+        this.result_text = (TextView) findViewById(R.id.scan_text_info);
         this.scan_type = intent.getExtras().getInt("scan_type");
         this.is_scan_active = intent.getExtras().getBoolean("is_scan_active");
         if (this.scan_type == 1){
@@ -48,6 +55,7 @@ public class ScanResultsActivity extends AsyncTaskActivity {
     public void start_animation() {
         loader.setIndeterminateDrawable(this.w);
         result_list.setVisibility(View.GONE);
+        result_text.setVisibility(View.VISIBLE);
         loader.setVisibility(View.VISIBLE);
         this.scan();
     }
@@ -58,7 +66,18 @@ public class ScanResultsActivity extends AsyncTaskActivity {
         this.onExecute = false;
         try {
             if(response.getBoolean("status")){
-
+                if(this.scan_type == 2){
+                    InfectedProcessAdapter processAdapter = new InfectedProcessAdapter(this);
+                    processAdapter.addAll(InfectedProcess.from_JSON_array(response.getJSONArray("data")));
+                    this.result_list.setAdapter(processAdapter);
+                }else{
+                    InfectedFileAdapter fileAdapter = new InfectedFileAdapter(this);
+                    fileAdapter.addAll(InfectedFile.from_JSON_array(response.getJSONArray("data")));
+                    this.result_list.setAdapter(fileAdapter);
+                }
+                this.loader.setVisibility(View.GONE);
+                this.result_text.setVisibility(View.GONE);
+                this.result_list.setVisibility(View.VISIBLE);
             }else{
                 this.result_text.setText(response.getString("data"));
                 this.scan();

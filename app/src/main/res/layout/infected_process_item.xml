@@ -35,7 +35,7 @@
                     android:layout_height="96dp"
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_infected_file" />
+                    android:src="@drawable/ic_virus" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

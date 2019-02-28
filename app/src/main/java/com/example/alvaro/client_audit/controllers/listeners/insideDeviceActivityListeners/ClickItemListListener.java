@@ -13,6 +13,7 @@ import com.example.alvaro.client_audit.activities.actionActivities.PortsActivity
 import com.example.alvaro.client_audit.activities.actionActivities.ProcessesActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.UpnpActivity;
 import com.example.alvaro.client_audit.activities.actionActivities.VulnersActivity;
+import com.example.alvaro.client_audit.activities.actionActivities.yaraActivities.YaraScanActivity;
 
 public class ClickItemListListener implements AdapterView.OnItemClickListener {
 
@@ -55,7 +56,9 @@ public class ClickItemListListener implements AdapterView.OnItemClickListener {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.activity.startActivity(intent);
         }else if(this.activity.getString(R.string.Audit).equals(selected_menu_option)){
-            this.make_toast();
+            Intent intent = new Intent(this.activity.getApplicationContext(), YaraScanActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.activity.startActivity(intent);
         }else{
             this.make_toast();
         }
