@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alvaro.client_audit">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,8 +11,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.actionActivities.NetworkAnomaliesActivity"></activity>
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.actionActivities.yaraActivities.FileSearchActivity" android:noHistory="true"/>
+        <activity android:name=".activities.actionActivities.yaraActivities.ScanResultsActivity" android:noHistory="true"/>
+        <activity android:name=".activities.actionActivities.yaraActivities.YaraScanActivity" android:noHistory="true"/>
+        <activity android:name=".activities.actionActivities.NetworkAnomaliesActivity" />
         <activity android:name=".activities.actionActivities.NetworkActivity" />
         <activity android:name=".activities.actionActivities.firewallActionsActivities.ChainActivity" />
         <activity android:name=".activities.actionActivities.firewallActionsActivities.Create" />

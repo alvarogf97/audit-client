@@ -47,5 +47,17 @@ public class JsonParsers {
         return arguments;
     }
 
+    public static List<String> parse_JSON_string_array(JSONArray array){
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i<array.length(); i++){
+            try {
+                result.add(array.getString(i));
+            } catch (JSONException e) {
+                Log.e("parsinStringArray", Arrays.toString(e.getStackTrace()));
+            }
+        }
+        return result;
+    }
+
 
 }

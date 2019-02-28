@@ -15,7 +15,7 @@
     <string name="Upnp">Upnp devices</string>
     <string name="Firewall">Firewall</string>
     <string name="Vulnerabilities">Vulnerabilities</string>
-    <string name="Audit">Audit</string>
+    <string name="Audit">Malware scan</string>
     <string name="search">search</string>
     <string name="rescan">re-scan</string>
     <string name="input">inputs</string>
@@ -59,4 +59,12 @@
     <string name="Process">Process:</string>
     <string name="exception">add as exception</string>
     <string name="no_a_found">no anomalies found!</string>
+    <string name="process_scanner">Memory processes scanner</string>
+    <string name="file_scanner">File scanner</string>
+    <string name="filename">filename</string>
+    <string name="pid">Pid</string>
+    <string name="process_name">Name</string>
+    <string name="location">Location</string>
+    <string name="path">Path</string>
+    <string name="size_2">Size</string>
 </resources>
