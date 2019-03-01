@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         this.onExecute = false;
-        //new CloseConnectionExceptionHandler(this.getApplicationContext());
+        new CloseConnectionExceptionHandler(this.getApplicationContext());
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null){
             String toast_text = bundle.getString(CloseConnectionExceptionHandler.EXTRA_CLOSE_HANDLER);
