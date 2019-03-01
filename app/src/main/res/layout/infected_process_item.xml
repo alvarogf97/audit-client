@@ -51,7 +51,7 @@
 
                         <TextView
                             android:id="@+id/textView12"
-                            android:layout_width="80dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/process_name"
@@ -73,7 +73,7 @@
 
                         <TextView
                             android:id="@+id/textView11"
-                            android:layout_width="80dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/pid"
@@ -95,7 +95,7 @@
 
                         <TextView
                             android:id="@+id/textView17"
-                            android:layout_width="80dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/location"
@@ -116,10 +116,11 @@
 
             <ListView
                 android:id="@+id/process_infected_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
 

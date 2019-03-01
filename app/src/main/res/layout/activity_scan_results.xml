@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.actionActivities.yaraActivities.ScanResultsActivity">
 
+    <ImageView
+        android:id="@+id/scan_allright"
+        android:layout_width="wrap_content"
+        android:layout_height="149dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="133dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_success" />
+
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scan_loader"
         style="@style/SpinKitView.ChasingDots"

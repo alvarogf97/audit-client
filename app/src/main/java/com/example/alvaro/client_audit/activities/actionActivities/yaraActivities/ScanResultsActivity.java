@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.alvaro.client_audit.R;
@@ -25,6 +26,7 @@ public class ScanResultsActivity extends AsyncTaskActivity {
     private SpinKitView loader;
     private ListView result_list;
     private TextView result_text;
+    private ImageView image_allright;
 
     private int scan_type;
     private boolean is_scan_active;
@@ -38,6 +40,7 @@ public class ScanResultsActivity extends AsyncTaskActivity {
         setContentView(R.layout.activity_scan_results);
         this.onExecute = false;
         Intent intent = this.getIntent();
+        this.image_allright = (ImageView) findViewById(R.id.scan_allright);
         this.loader = (SpinKitView) findViewById(R.id.scan_loader);
         this.result_list = (ListView) findViewById(R.id.scan_result_list);
         this.result_text = (TextView) findViewById(R.id.scan_text_info);
@@ -69,14 +72,25 @@ public class ScanResultsActivity extends AsyncTaskActivity {
                 if(this.scan_type == 2){
                     InfectedProcessAdapter processAdapter = new InfectedProcessAdapter(this);
                     processAdapter.addAll(InfectedProcess.from_JSON_array(response.getJSONArray("data")));
+                    if(processAdapter.isEmpty()){
+                        this.image_allright.setVisibility(View.VISIBLE);
+                        this.result_text.setText("No malware found in memory");
+                    }else{
+                        this.result_text.setVisibility(View.GONE);
+                    }
                     this.result_list.setAdapter(processAdapter);
                 }else{
                     InfectedFileAdapter fileAdapter = new InfectedFileAdapter(this);
                     fileAdapter.addAll(InfectedFile.from_JSON_array(response.getJSONArray("data")));
+                    if(fileAdapter.isEmpty()){
+                        this.image_allright.setVisibility(View.VISIBLE);
+                        this.result_text.setText("No malware found in file(s)");
+                    }else{
+                        this.result_text.setVisibility(View.GONE);
+                    }
                     this.result_list.setAdapter(fileAdapter);
                 }
                 this.loader.setVisibility(View.GONE);
-                this.result_text.setVisibility(View.GONE);
                 this.result_list.setVisibility(View.VISIBLE);
             }else{
                 this.result_text.setText(response.getString("data"));
