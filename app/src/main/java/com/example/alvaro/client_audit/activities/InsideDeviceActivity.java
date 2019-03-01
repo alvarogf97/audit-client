@@ -17,6 +17,7 @@ public class InsideDeviceActivity extends AppCompatActivity {
 
     private ListView menu;
     private List<String> menu_items;
+    public static String cwd;
 
     /*
         On create
@@ -28,7 +29,7 @@ public class InsideDeviceActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        String cwd = intent.getExtras().getString("cwd");
+        cwd = intent.getExtras().getString("cwd");
 
         this.menu_items = new ArrayList<>(Arrays.asList(
                 getString(R.string.Hardware),
