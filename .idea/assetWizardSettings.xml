@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_virus" />
-                            <entry key="sourceFile" value="C:\Users\Alvaro\Desktop\virus.svg" />
+                            <entry key="outputName" value="ic_file" />
+                            <entry key="sourceFile" value="C:\Users\Alvaro\Desktop\file.svg" />
                           </map>
                         </option>
                       </PersistentState>
