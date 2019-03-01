@@ -1,5 +1,6 @@
 package com.example.alvaro.client_audit.activities.actionActivities.yaraActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.example.alvaro.client_audit.activities.AsyncTaskActivity;
 import com.example.alvaro.client_audit.activities.InsideDeviceActivity;
 import com.example.alvaro.client_audit.controllers.adapters.DocumentAdapter;
 import com.example.alvaro.client_audit.controllers.listeners.FileSearchActivityListeners.OnDocumentClickListener;
+import com.example.alvaro.client_audit.controllers.listeners.FileSearchActivityListeners.OnDocumentLongClickListener;
 import com.example.alvaro.client_audit.core.entities.Document;
 import com.example.alvaro.client_audit.core.networks.Connection;
 
@@ -30,6 +32,7 @@ public class FileSearchActivity extends AsyncTaskActivity {
         setContentView(R.layout.activity_file_search);
         this.file_system = (ListView) findViewById(R.id.file_list);
         this.file_system.setOnItemClickListener(new OnDocumentClickListener(this));
+        this.file_system.setOnItemLongClickListener(new OnDocumentLongClickListener(this));
         this.cwd = InsideDeviceActivity.cwd;
         this.onExecute = false;
         this.adapter = new DocumentAdapter(this);
@@ -68,6 +71,19 @@ public class FileSearchActivity extends AsyncTaskActivity {
         } catch (JSONException e) {
             Log.e("get_folder_content", Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    public void launch_scanner(Document document){
+        Intent intent = new Intent(this, ScanResultsActivity.class);
+        intent.putExtra("is_scan_active", false);
+        if(document.isIs_file()){
+            intent.putExtra("scan_type", 0);
+            intent.putExtra("filename", document.getAbs_path());
+        }else{
+            intent.putExtra("scan_type", 1);
+            intent.putExtra("directory", document.getAbs_path());
+        }
+        this.startActivity(intent);
     }
 
     @Override
