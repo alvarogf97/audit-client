@@ -20,7 +20,7 @@ Gradle
 
 ## Installing
 
-You can download apk from [here]() or compile it by yourself. Next install it in your device.
+You can download apk from [here](https://github.com/alvarogf97/Client_Audit/releases) or compile it by yourself. Next install it in your device.
 
 ## Build with
 
